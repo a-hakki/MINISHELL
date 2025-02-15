@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:10:45 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/15 18:20:37 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/15 18:23:51 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	main() {
 	char	*s = readline("minishell>");
-	if (s)
+	while (s)
 	{
 		printf("%s\n", s);
 		free(s);
+		s = readline("minishell>");
 	}
 	return 0;
 }
