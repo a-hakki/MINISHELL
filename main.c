@@ -6,10 +6,18 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:10:45 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/15 17:15:02 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/15 18:20:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "minishell.h"
 
-int main()
+int	main() {
+	char	*s = readline("minishell>");
+	if (s)
+	{
+		printf("%s\n", s);
+		free(s);
+	}
+	return 0;
+}
