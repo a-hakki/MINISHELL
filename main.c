@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 17:10:45 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/16 09:18:30 by ahakki           ###   ########.fr       */
+/*   Created: 2025/02/16 15:12:37 by ahakki            #+#    #+#             */
+/*   Updated: 2025/02/16 15:12:38 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	main() {
-	char	*s = readline("minishell>");
-	while (s)
-	{
-		printf("%s\n", s);
-		free(s);
-		s = readline("minishell>");
-	}
-	return (0);
-}
