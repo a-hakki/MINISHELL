@@ -9,16 +9,26 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-all: $(NAME)
+LIBFT_DIR = ./libft
+
+lib = $(LIBFT_DIR)/libft.a
+
+
+all: $(lib) $(NAME)
+
+$(lib):
+	make -C $(LIBFT_DIR)
 
 $(NAME): $(object)
-	$(CC) $(CFLAGS) $(object) -lreadline -lncurses -o $(NAME)
+	$(CC) $(CFLAGS) $(object) $(lib) -lreadline -lncurses -o $(NAME)
 
 clean:
 	rm -rf $(object)
+	make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -rf $(NAME)
+	make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
