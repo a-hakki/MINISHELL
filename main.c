@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:10:45 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/17 08:51:33 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/17 09:06:52 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **env)
 	char	**paths;
 	char	*cmd_path;
 	int		i;
-	pid_t	pid;
+	int		pid;
 
 	(void)ac;
 	(void)av;
@@ -61,7 +61,7 @@ int	main(int ac, char **av, char **env)
 		input = readline("minishell> ");
 		if (!input)
 			break;
-		// add_history(input);
+		add_history(input);
 		args = ft_split(input, ' ');
 		if (!args)
 		{
