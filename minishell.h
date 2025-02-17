@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:11:01 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/17 12:27:18 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/17 13:48:08 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_node
 {
     char *head;
     char *left;
+    char *operation;
     char *right;
     struct s_node *child;
 } t_node;
