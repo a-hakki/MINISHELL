@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:10:45 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/17 09:06:52 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/17 09:11:54 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	main(int ac, char **av, char **env)
 		ft_free("2",args);
 		ft_free("2",paths);
 		free(input);
-		// clear_history();
 	}
+	clear_history();
 	return (0);
 }
