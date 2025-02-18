@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:10:45 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/17 16:51:31 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/18 09:36:47 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void    sigint_handler(int sig)
 void	foo(int sig)
 {
 	(void)sig;
-	kill(getpid(), -9);
+	kill(0, -9);
 }
 
 int main(int ac, char **av, char **env)
