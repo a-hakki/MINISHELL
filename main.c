@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:10:45 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/18 09:36:47 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/18 09:38:55 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void    sigint_handler(int sig)
 {
     (void)sig;
     write(1, "\nminishell> ", 12);
+    rl_replace_line("", 1);
 }
 
 void	foo(int sig)
