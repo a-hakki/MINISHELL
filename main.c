@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:10:45 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/18 09:50:16 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:03:57 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	foo(int sig)
 	kill(0, -9);
 }
 
-static int	*ft_strchr(const char *s, int c)
+static int	ft_strchr2(const char *s, int c)
 {
 	int		i;
 	char	ch;
@@ -94,7 +94,7 @@ int main(int ac, char **av, char **env)
             break;
         if (*input)
         {
-            if (ft_strchr(input, '|'))
+            if (ft_strchr2(input, '|'))
             {
                 add_history(input);
                 args = ft_split(input, ' ');
