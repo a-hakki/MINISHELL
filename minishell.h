@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/18 18:46:24 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/19 10:49:39 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,24 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+
+typedef struct s_check
+{
+    char        dquot;
+    char        squot;
+    char        rpar;
+    char        par;
+    char        special;
+}            t_check;
+
+
 typedef struct s_shell
 {
     char        **envp;
     char        *cmd;
 	t_list	    *args;
 	t_list      *tmp;
+    t_check     check;
 }            t_shell;
 
 

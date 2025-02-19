@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/18 18:25:30 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/19 11:03:08 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,59 @@ t_shell	g_vars;
 
 void	fill_args(char *str)
 {
-	int	str_i;
-	int	k;
+	int		str_i;
+	int		k;
+	char	*c;
 
 	str_i = 0;
 	k = 0;
 	while (str[str_i])
 	{
-		if (str[str_i] && (ft_isalnum(str[str_i]) || !ft_strchr(",./*-+=&%$#@!", str[str_i])))
+		if (str[str_i] && (ft_isalnum(str[str_i]) || !ft_strchr("\"\'()", str[str_i])))
 		{
 			k = str_i;
-			while (ft_isalnum(str[str_i]))
+			while (str[str_i] && (ft_isalnum(str[str_i]) || !ft_strchr("\"\'()", str[str_i])))
 				str_i++;
 			if (str_i > k)
 				ft_lstadd_back(&g_vars.args, ft_lstnew(ft_strndup(str + k, str_i - k)));
 		}
 		else if (str[str_i])
 		{
+			if (str[str_i] == '"')
+				g_vars.check.dquot++;
+			if (str[str_i] == '\'')
+				g_vars.check.squot++;
+			if (str[str_i] == '(')
+				g_vars.check.par++;
+			if (str[str_i] == ')')
+				g_vars.check.par--;
 			ft_lstadd_back(&g_vars.args, ft_lstnew(ft_strndup(&str[str_i], 1)));
 			str_i++;
 		}
 	}
 	g_vars.tmp = g_vars.args;
-	while (g_vars.tmp)
+	if ((g_vars.check.dquot % 2) || (g_vars.check.squot % 2) || (g_vars.check.par % 2))
+		g_vars.check.special = 2;
+	else {	
+		while (g_vars.tmp)
+		{
+			str_i = 0;
+			c = (char *)g_vars.tmp->content;
+			while (c[str_i])
+			{
+				if (ft_strchr(",./*-;+=&%$#@!", c[str_i]))
+					g_vars.check.special = 1;
+				str_i++;
+			}
+			g_vars.tmp = g_vars.tmp->next;
+		}
+	}
+	g_vars.tmp = g_vars.args;
+	if (g_vars.check.special == 2)
+		printf("invalid syntax : something is missing \" or ' or ( or )\n");
+	if (g_vars.check.special == 1)
+		printf("invalid character => : , ; . / * - + = & %% $ # @ ! \n");
+	while (g_vars.tmp && g_vars.check.special == 0)
 	{
 		printf("%s\n", (char *)g_vars.tmp->content);
 		g_vars.tmp = g_vars.tmp->next;
@@ -78,6 +108,10 @@ void prompt_loop(void)
 	while (1)
 	{
 		g_vars.cmd = read_cmd(g_vars.cmd);
+		g_vars.check.dquot = 0;
+		g_vars.check.squot = 0;
+		g_vars.check.par = 0;
+		g_vars.check.special = 0;
 		if (!g_vars.cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
 		parse_command();
@@ -88,6 +122,7 @@ void prompt_loop(void)
 
 int	main(int ac, char **av, char **envp)
 {
+	printf("pid = %d\n", getpid());
 	(void)av;
 	if (ac != 1)
 		return (EXIT_FAILURE);

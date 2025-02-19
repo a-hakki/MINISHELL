@@ -9,7 +9,7 @@ ha chno drt :<br>
 ha chno drt :<br>
 ha chno drt :<br>
 ha chno khassak tkammal : <br>
-ha fin kayn lmochkil : ---<br>
+lmochkil 1 : ctr+D makhdamach ghi tan3ti '(' tikhssar lprogramm<br>
 
 I DIDNT DO ANYTHING LABR7 U know BUT I THINK NOW WE HAVE THE EXTRACTION OF THE STRINGS IS CORRECT<br>
 NOW TRY TO SEE IF THE QUOTES AND DOUBLE QUOTES AND PARANTHESIS AND ALWAYS CLOSED<br>
