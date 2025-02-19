@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/19 11:03:08 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/19 13:56:03 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,38 @@
 
 t_shell	g_vars;
 
+int	ft_check(void)
+{
+	int 	str_i;
+	char	*c;
+	g_vars.tmp = g_vars.args;
+	if ((g_vars.check.dquot % 2) || (g_vars.check.squot % 2) || (g_vars.check.par % 2))
+		g_vars.check.special = 2;
+	else {	
+		while (g_vars.tmp)
+		{
+			str_i = 0;
+			c = (char *)g_vars.tmp->content;
+			while (c[str_i])
+			{
+				if (ft_strchr(",./*-;+=&%$#@!", c[str_i]))
+					g_vars.check.special = 1;
+				str_i++;
+			}
+			g_vars.tmp = g_vars.tmp->next;
+		}
+	}
+	if (g_vars.check.special == 2 || g_vars.check.fpar == ')' || g_vars.check.lpar == '(')
+		return (printf("invalid syntax : something is missing \" or ' or ( or )\n"), 0);
+	if (g_vars.check.special == 1)
+		return (printf("invalid character => : , ; . / * - + = & %% $ # @ ! \n"), 0);
+	return (1);
+}
+
 void	fill_args(char *str)
 {
 	int		str_i;
 	int		k;
-	char	*c;
 
 	str_i = 0;
 	k = 0;
@@ -40,39 +67,31 @@ void	fill_args(char *str)
 			if (str[str_i] == '\'')
 				g_vars.check.squot++;
 			if (str[str_i] == '(')
+			{
 				g_vars.check.par++;
+				g_vars.check.lpar = '(';
+				if (g_vars.check.fpar == 0)
+					g_vars.check.fpar = '(';
+			}
 			if (str[str_i] == ')')
+			{
 				g_vars.check.par--;
+				g_vars.check.lpar = ')';
+				if (g_vars.check.fpar == 0)
+					g_vars.check.fpar = ')';
+			}
 			ft_lstadd_back(&g_vars.args, ft_lstnew(ft_strndup(&str[str_i], 1)));
 			str_i++;
 		}
 	}
-	g_vars.tmp = g_vars.args;
-	if ((g_vars.check.dquot % 2) || (g_vars.check.squot % 2) || (g_vars.check.par % 2))
-		g_vars.check.special = 2;
-	else {	
-		while (g_vars.tmp)
+	if (ft_check())
+	{
+		g_vars.tmp = g_vars.args;
+		while (g_vars.tmp && g_vars.check.special == 0)
 		{
-			str_i = 0;
-			c = (char *)g_vars.tmp->content;
-			while (c[str_i])
-			{
-				if (ft_strchr(",./*-;+=&%$#@!", c[str_i]))
-					g_vars.check.special = 1;
-				str_i++;
-			}
+			printf("%s\n", (char *)g_vars.tmp->content);
 			g_vars.tmp = g_vars.tmp->next;
 		}
-	}
-	g_vars.tmp = g_vars.args;
-	if (g_vars.check.special == 2)
-		printf("invalid syntax : something is missing \" or ' or ( or )\n");
-	if (g_vars.check.special == 1)
-		printf("invalid character => : , ; . / * - + = & %% $ # @ ! \n");
-	while (g_vars.tmp && g_vars.check.special == 0)
-	{
-		printf("%s\n", (char *)g_vars.tmp->content);
-		g_vars.tmp = g_vars.tmp->next;
 	}
 }
 
@@ -112,6 +131,8 @@ void prompt_loop(void)
 		g_vars.check.squot = 0;
 		g_vars.check.par = 0;
 		g_vars.check.special = 0;
+		g_vars.check.fpar = 0;
+		g_vars.check.lpar = 0;
 		if (!g_vars.cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
 		parse_command();

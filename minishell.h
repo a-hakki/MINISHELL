@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/19 10:49:39 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/19 13:49:28 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_check
     char        rpar;
     char        par;
     char        special;
+    char        fpar;
+    char        lpar;
 }            t_check;
 
 
