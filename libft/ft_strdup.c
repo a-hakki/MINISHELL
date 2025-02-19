@@ -3,35 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aelsayed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:12:53 by ahakki            #+#    #+#             */
-/*   Updated: 2024/11/04 16:12:57 by ahakki           ###   ########.fr       */
+/*   Created: 2024/10/22 12:31:38 by aelsayed          #+#    #+#             */
+/*   Updated: 2024/10/28 13:15:42 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char const *src)
 {
-	size_t	len;
-	size_t	i;
-	char	*sor;
-	char	*scopy;
+	unsigned int	i;
+	char			*dest;
+	int				len;
 
-	if (!s)
-		return (NULL);
-	len = ft_strlen(s);
 	i = 0;
-	sor = (char *)s;
-	scopy = malloc(len +1);
-	if (scopy == NULL)
+	if (!src)
 		return (NULL);
-	while (i < len)
+	len = ft_strlen(src);
+	dest = (char *)malloc(len + 1);
+	if (!dest)
+		return (NULL);
+	while (src[i])
 	{
-		scopy[i] = sor[i];
+		dest[i] = src[i];
 		i++;
 	}
-	scopy[i] = '\0';
-	return (scopy);
+	dest[i] = '\0';
+	return (dest);
 }

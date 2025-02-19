@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aelsayed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 14:24:44 by ahakki            #+#    #+#             */
-/*   Updated: 2024/11/06 14:24:46 by ahakki           ###   ########.fr       */
+/*   Created: 2024/10/24 16:22:55 by aelsayed          #+#    #+#             */
+/*   Updated: 2024/10/29 22:05:01 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_list	*ft_lstlast(t_list	*lst)
 {
 	if (!lst)
 		return (NULL);

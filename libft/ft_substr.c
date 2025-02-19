@@ -3,47 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aelsayed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:16:39 by ahakki            #+#    #+#             */
-/*   Updated: 2024/11/04 16:16:40 by ahakki           ###   ########.fr       */
+/*   Created: 2024/10/22 12:35:04 by aelsayed          #+#    #+#             */
+/*   Updated: 2024/11/04 13:35:49 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ftb_length(char *s)
+static size_t	slen(char const *str)
 {
-	size_t	len;
+	size_t	i;
 
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
+	char	*sub;
 	size_t	i;
-	char	*dst;
-	char	*src;
 
 	if (!s)
 		return (NULL);
-	src = (char *)s;
-	i = 0;
-	if (start >= ftb_length(src))
-		len = 0;
-	else if (len > ftb_length(src + start))
-		len = ftb_length(src + start);
-	dst = malloc(sizeof(char) * (len + 1));
-	if (!dst)
-		return (NULL);
-	while (i < len && src[i + start])
+	if (start >= slen(s))
 	{
-		dst[i] = src[start + i];
-		i++;
+		sub = (char *)malloc(1);
+		if (!sub)
+			return (NULL);
+		sub[0] = '\0';
+		return (sub);
 	}
-	dst[i] = '\0';
-	return (dst);
+	if (start + len >= slen(s))
+		len = slen(s) - start;
+	sub = (char *)malloc(len + 1);
+	if (!sub)
+		return (NULL);
+	i = 0;
+	while (s[start] && i < len)
+		sub[i++] = s[start++];
+	sub[i] = '\0';
+	return (sub);
 }

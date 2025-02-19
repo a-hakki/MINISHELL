@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   lst_addfront.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 15:25:02 by ahakki            #+#    #+#             */
-/*   Updated: 2024/11/19 18:16:00 by ahakki           ###   ########.fr       */
+/*   Created: 2025/02/16 19:20:07 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/02/16 19:30:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_putchar(int fd, char c)
+void	lst_addfront(t_lst **lst, t_lst *new)
 {
-	return (write(fd, &c, 1));
+	if (!new || !lst)
+		return ;
+	new->next = *lst;
+	*lst = new;
 }

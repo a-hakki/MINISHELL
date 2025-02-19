@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isvalid.c                                       :+:      :+:    :+:   */
+/*   lst_clear.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 13:12:35 by ahakki            #+#    #+#             */
-/*   Updated: 2024/11/19 18:15:15 by ahakki           ###   ########.fr       */
+/*   Created: 2025/02/16 19:21:38 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/02/16 19:30:28 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isvalid(const char c)
+void	lst_clear(t_lst **lst)
 {
-	int		i;
-	char	ch;
-	char	*s;
+	t_lst	*store;
 
-	s = "cspiduxX%";
-	i = 0;
-	ch = (char)c;
-	while (s[i])
+	if (lst && *lst)
 	{
-		if (s[i] == ch)
-			return (1);
-		i++;
+		while (*lst)
+		{
+			store = (*lst)->next;
+			free(*lst);
+			*lst = store;
+		}
+		*lst = NULL;
 	}
-	return (0);
 }

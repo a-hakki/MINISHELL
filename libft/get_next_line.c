@@ -3,112 +3,109 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 09:46:28 by ahakki            #+#    #+#             */
-/*   Updated: 2025/01/14 20:49:55 by ahakki           ###   ########.fr       */
+/*   Created: 2025/01/11 23:56:08 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/02/15 16:24:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_strjoin2(char *s1, char *s2)
+static char	*freed(char *store, char *buffer)
 {
-	int		len1;
-	int		len2;
-	int		i;
-	char	*returned;
+	if (store)
+	{
+		free(store);
+		store = NULL;
+	}
+	if (buffer)
+	{
+		free(buffer);
+		buffer = NULL;
+	}
+	return (NULL);
+}
 
-	if (!s1 && !s2)
+static char	*fetch_segment(char *store, int fd)
+{
+	char	*buffer;
+	char	*total;
+	ssize_t	readbytes;
+
+	readbytes = 1;
+	buffer = (char *)malloc(BUFFER_SIZE + 1);
+	if (!buffer || !store)
+		return (freed(store, buffer));
+	while (readbytes > 0 && ft_strchr_index(store, '\n') == -1)
+	{
+		readbytes = read(fd, buffer, BUFFER_SIZE);
+		if (readbytes == -1)
+			return (freed(store, buffer));
+		buffer[readbytes] = '\0';
+		total = ft_strjoin(store, buffer);
+		if (!total)
+			return (freed(store, buffer));
+		free(store);
+		store = total;
+	}
+	free(buffer);
+	return (store);
+}
+
+static char	*segment_to_newline(char *store)
+{
+	char	*line;
+	int		position;
+
+	position = 0;
+	if (!store || !*store)
 		return (NULL);
-	i = -1;
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	returned = malloc(sizeof(char) * len1 + len2 + 1);
-	if (!returned)
-		return (free(s1), s1 = NULL, NULL);
-	while (s1[++i])
-		returned[i] = s1[i];
-	i = 0;
-	while (s2[i])
-	{
-		returned[len1 + i] = s2[i];
-		i++;
-	}
-	returned[len1 + i] = '\0';
-	free(s1);
-	return (returned);
+	while (store[position] != '\n' && store[position])
+		position++;
+	if (!store[1])
+		line = ft_strndup(store, 1);
+	else if (!store[position])
+		line = ft_strndup(store, position);
+	else
+		line = ft_strndup(store, position + 1);
+	return (line);
 }
 
-static void	protected_alloc(char **saved, char **allocated)
+static char	*clear_till_newline(char *store)
 {
-	if (!*saved)
-	{
-		*saved = ft_strdup("");
-		if (!*saved)
-			*saved = NULL;
-	}
-	*allocated = malloc((size_t)BUFFER_SIZE + 1);
-	if (!*allocated)
-	{
-		if (*saved)
-			free(*saved);
-		*saved = NULL;
-	}
-}
+	int		position;
+	char	*new_store;
 
-static void	ft_fre(char **saved, char **allocated)
-{
-	free(*saved);
-	*saved = NULL;
-	free(*allocated);
-	allocated = NULL;
-}
-
-static char	*ft_get_line(char **saved, int readen)
-{
-	char	*temp_saved;
-	char	*pos;
-
-	if (readen > 0)
-	{
-		temp_saved = *saved;
-		pos = ft_strchr(temp_saved, '\n');
-		*saved = ft_strdup(pos + 1);
-		*(pos + 1) = '\0';
-		return (temp_saved);
-	}
-	temp_saved = ft_strdup(*saved);
-	free(*saved);
-	*saved = NULL;
-	return (temp_saved);
+	position = 0;
+	while (store[position] != '\n' && store[position])
+		position++;
+	if (!store[position])
+		return (freed(store, NULL));
+	new_store = ft_substr(store, position + 1, ft_strlen(store));
+	free(store);
+	return (new_store);
 }
 
 char	*get_next_line(int fd)
 {
-	static char		*saved;
-	char			*allocated;
-	int				readen;
+	static char	*store;
+	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 0x7FFFFFFF)
+		return (free(store), NULL);
+	if (!store)
+		store = ft_strndup("", 0);
+	store = fetch_segment(store, fd);
+	if (!store)
 		return (NULL);
-	protected_alloc(&saved, &allocated);
-	if (!saved || !allocated)
-		return (ft_fre(&saved, &allocated), NULL);
-	readen = 1;
-	while (!(ft_strchr(saved, '\n')) && readen > 0)
+	line = segment_to_newline(store);
+	if (!line)
 	{
-		readen = read(fd, allocated, BUFFER_SIZE);
-		if (readen == 0)
-			break ;
-		if (readen == -1)
-			return (ft_fre(&saved, &allocated), NULL);
-		allocated[readen] = '\0';
-		saved = ft_strjoin2(saved, allocated);
-		if (!saved)
-			return (ft_fre(&saved, &allocated), NULL);
+		free(store);
+		store = NULL;
+		return (NULL);
 	}
-	if (ft_strcmp(saved, "") == 0)
-		return (ft_fre(&saved, &allocated), NULL);
-	return (free(allocated), ft_get_line(&saved, readen));
+	store = clear_till_newline(store);
+	return (line);
 }

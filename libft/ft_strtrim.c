@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:16:30 by ahakki            #+#    #+#             */
-/*   Updated: 2025/01/21 13:28:41 by ahakki           ###   ########.fr       */
+/*   Created: 2024/10/28 18:23:17 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/01/12 13:15:41 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char *s1, char *set)
+char	*ft_strtrim(char const *s, char const *set)
 {
-	size_t	i;
-	size_t	start;
-	size_t	end;
+	unsigned int	start;
+	unsigned int	end;
 
-	if (!s1 || !set)
-		return (NULL);
-	i = 0;
-	while (s1[i] && ft_strchr(set, s1[i]))
-		i++;
-	start = i;
-	i = ft_strlen(s1) - 1;
-	while (i > start && ft_strchr(set, s1[i]))
-		i--;
-	end = i + 1;
-	return (ft_substr(s1, start, end - start));
+	start = 0;
+	end = 0;
+	if (*s == '\0')
+		return ((char *)ft_calloc(1, 1));
+	while (s[end])
+		end++;
+	end--;
+	while (ft_strchr(set, s[start]) && s[start])
+		start++;
+	while (ft_strchr(set, s[end]) && end)
+		end--;
+	return (ft_substr(s, start, end - start + 1));
 }

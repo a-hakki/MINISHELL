@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strchr_index.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 14:06:12 by ahakki            #+#    #+#             */
-/*   Updated: 2024/11/20 14:02:29 by ahakki           ###   ########.fr       */
+/*   Created: 2025/01/11 23:49:35 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/01/11 23:53:52 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_putstr(int fd, const char *s)
+int	ft_strchr_index(const char *s, char c)
 {
 	int	i;
-	int	len;
 
 	i = 0;
-	len = 0;
-	if (!s)
-		return (ft_putstr(fd, "(null)"));
-	while (s[len])
+	while (s[i])
 	{
-		i = write(fd, &s[len], 1);
-		if (i == -1)
-			return (-1);
-		len++;
+		if (s[i] == c)
+			return (i);
+		i++;
 	}
-	return (len);
+	return (-1);
 }

@@ -3,40 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:15:53 by ahakki            #+#    #+#             */
-/*   Updated: 2024/11/04 16:15:59 by ahakki           ###   ########.fr       */
+/*   Created: 2024/10/22 12:34:24 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/01/12 13:15:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *str, const char *sub, size_t n)
+char	*ft_strnstr(char const *str, char const *to_find, size_t len)
 {
 	size_t	i;
 	size_t	j;
-	char	*st1;
-	char	*st2;
 
 	i = 0;
 	j = 0;
-	st1 = (char *)str;
-	st2 = (char *)sub;
-	if (!st1 && n == 0)
-		return (NULL);
-	if (*st2 == '\0')
-		return (st1);
-	while (st1[i] && i < n)
+	if (to_find[i] == '\0')
+		return ((char *)str);
+	while (str[i] && i < len)
 	{
-		while (st1[i + j] == st2[j] && (i + j) < n)
+		while (str[i] == to_find[j] && i < len)
 		{
+			i++;
 			j++;
-			if (st2[j] == '\0')
-				return (st1 + i);
+			if (to_find[j] == '\0')
+				return ((char *)&str[i - j]);
 		}
-		j = 0;
+		i = i - j;
 		i++;
+		j = 0;
 	}
 	return (NULL);
 }

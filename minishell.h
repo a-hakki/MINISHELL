@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 17:11:01 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/17 13:48:08 by ahakki           ###   ########.fr       */
+/*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/02/18 18:46:24 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "libft/libft.h"
+# include "signal.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "./libft/libft.h"
 
-typedef struct s_node
+typedef struct s_shell
 {
-    char *head;
-    char *left;
-    char *operation;
-    char *right;
-    struct s_node *child;
-} t_node;
+    char        **envp;
+    char        *cmd;
+	t_list	    *args;
+	t_list      *tmp;
+}            t_shell;
+
 
 #endif

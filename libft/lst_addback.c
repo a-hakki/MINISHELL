@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_math.c                                          :+:      :+:    :+:   */
+/*   lst_addback.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 19:53:06 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/05 21:19:36 by ahakki           ###   ########.fr       */
+/*   Created: 2025/02/16 19:20:54 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/02/16 19:30:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_abs(int a)
+void	lst_addback(t_lst **lst, t_lst *new)
 {
-	return ((a >= 0) * a + (a < 0) * -a);
-}
+	t_lst	*end;
 
-int	ft_max(int a, int b)
-{
-	return ((a >= b) * a + (a < b) * b);
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+		*lst = new;
+	else
+	{
+		end = *lst;
+		while (end->next != NULL)
+			end = end->next;
+		end->next = new;
+	}
 }

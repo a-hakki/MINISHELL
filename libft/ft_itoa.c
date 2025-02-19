@@ -3,59 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aelsayed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 10:12:22 by ahakki            #+#    #+#             */
-/*   Updated: 2024/11/01 10:12:30 by ahakki           ###   ########.fr       */
+/*   Created: 2024/10/22 12:28:29 by aelsayed          #+#    #+#             */
+/*   Updated: 2024/10/28 13:14:41 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_counter(long i)
+static int	calcul(int nb)
 {
-	int	c;
+	unsigned int	nigga;
+	int				cnt;
 
-	c = 0;
-	if (i < 0)
+	cnt = 0;
+	if (nb < 0)
+		nigga = -nb;
+	else
+		nigga = nb;
+	while (nigga)
 	{
-		i = -i;
-		c = 1;
+		nigga /= 10;
+		cnt++;
 	}
-	if (i == 0)
-		c++;
-	while (i > 0)
-	{
-		c++;
-		i = i / 10;
-	}
-	return (c);
+	if (nb < 0)
+		return (cnt + 2);
+	if (nb > 0)
+		return (cnt + 1);
+	else
+		return (2);
 }
 
 char	*ft_itoa(int nb)
 {
+	char	*arr;
 	int		i;
-	char	*ch;
-	long	n;	
+	long	n;
 
 	n = nb;
-	i = ft_counter(n);
-	ch = (char *)malloc(i + 1);
-	if (!ch)
-		return (NULL);
-	if (n == 0)
-		ch[0] = '0';
-	ch[i] = '\0';
-	i = i - 1;
-	if (n < 0)
-	{
+	i = calcul(nb);
+	if (nb < 0)
 		n = -n;
-		ch[0] = '-';
-	}
-	while (n > 0)
+	arr = (char *)malloc(i);
+	if (!arr)
+		return (NULL);
+	arr[i - 1] = '\0';
+	while (n)
 	{
-		ch[i--] = (n % 10) + 48;
-		n /= 10;
+		i--;
+		arr[i - 1] = (n % 10) + 48;
+		n = n / 10;
 	}
-	return (ch);
+	if (nb < 0)
+		arr[0] = '-';
+	if (nb == 0)
+		arr[0] = 48;
+	return (arr);
 }

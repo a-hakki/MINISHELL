@@ -3,149 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 17:10:45 by ahakki            #+#    #+#             */
-/*   Updated: 2025/02/18 17:03:57 by ahakki           ###   ########.fr       */
+/*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/02/18 18:25:30 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+// your important task to create variadic function to set the variables to 0;
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+t_shell	g_vars;
 
-char	*ft_strjoin_with_slash(const char *s1, const char *s2)
+void	fill_args(char *str)
 {
-	char	*new_str;
-	int		i, j;
+	int	str_i;
+	int	k;
 
-	if (!s1 || !s2)
-		return (NULL);
-	new_str = malloc(strlen(s1) + strlen(s2) + 2);
-	if (!new_str)
-		return (NULL);
-	i = 0;
-	while (s1[i])
+	str_i = 0;
+	k = 0;
+	while (str[str_i])
 	{
-		new_str[i] = s1[i];
-		i++;
+		if (str[str_i] && (ft_isalnum(str[str_i]) || !ft_strchr(",./*-+=&%$#@!", str[str_i])))
+		{
+			k = str_i;
+			while (ft_isalnum(str[str_i]))
+				str_i++;
+			if (str_i > k)
+				ft_lstadd_back(&g_vars.args, ft_lstnew(ft_strndup(str + k, str_i - k)));
+		}
+		else if (str[str_i])
+		{
+			ft_lstadd_back(&g_vars.args, ft_lstnew(ft_strndup(&str[str_i], 1)));
+			str_i++;
+		}
 	}
-	new_str[i++] = '/';
-	j = 0;
-	while (s2[j])
-		new_str[i++] = s2[j++];
-	new_str[i] = '\0';
-	return (new_str);
+	g_vars.tmp = g_vars.args;
+	while (g_vars.tmp)
+	{
+		printf("%s\n", (char *)g_vars.tmp->content);
+		g_vars.tmp = g_vars.tmp->next;
+	}
 }
 
-void    sigint_handler(int sig)
+
+void	parse_command(void)
 {
-    (void)sig;
-    write(1, "\nminishell> ", 12);
+	g_vars.args = NULL;
+	fill_args(g_vars.cmd);
 }
 
-void	foo(int sig)
+char	*read_cmd(char *cmd)
+{
+	cmd = readline("\033[1;32mminishell$ \033[0m");
+	if (!cmd || !ft_strcmp("exit", cmd))
+		return (NULL);
+	if (*cmd)
+		add_history(cmd);
+	return (cmd);
+}
+
+void foo(int sig)
 {
 	(void)sig;
-	kill(0, -9);
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-static int	ft_strchr2(const char *s, int c)
+void prompt_loop(void)
 {
-	int		i;
-	char	ch;
-
-	i = 0;
-	ch = (char)c;
-	while (s[i])
+	signal(SIGINT, foo);
+	while (1)
 	{
-		if (s[i] == ch)
-			return (1);
-		i++;
+		g_vars.cmd = read_cmd(g_vars.cmd);
+		if (!g_vars.cmd)
+			return (rl_clear_history(), exit(EXIT_SUCCESS));
+		parse_command();
+		free(g_vars.cmd);
+		ft_lstclear(&g_vars.args, free);
 	}
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	(void)av;
+	if (ac != 1)
+		return (EXIT_FAILURE);
+	g_vars.envp = envp;
+	prompt_loop();
 	return (0);
 }
-
-int main(int ac, char **av, char **env)
-{
-    char    *input;
-    char    **args;
-    char    **paths;
-    char    *cmd_path;
-    int     i;
-    int     pid;
-
-    (void)ac;
-    (void)av;
-    signal(SIGINT, sigint_handler);
-    signal(SIGQUIT, foo);
-    while (1)
-    {
-        input = readline("minishell> ");
-        if (!input)
-            break;
-        if (*input)
-        {
-            if (ft_strchr2(input, '|'))
-            {
-                add_history(input);
-                args = ft_split(input, ' ');
-                if (!args)
-                {
-                    perror("Memory allocation failed");
-                    free(input);
-                }
-                i = 0;
-                paths = NULL;
-                while (env[i])
-                {
-                    if (!strncmp(env[i], "PATH=", 5))
-                    {
-                        paths = ft_split(env[i] + 5, ':');
-                        break;
-                    }
-                    i++;
-                }
-                if (!paths)
-                {
-                    perror("PATH variable not found");
-                    ft_free("2", args);
-                    free(input);
-                    continue;
-                }
-                pid = fork();
-                if (pid == 0)
-                {
-                    i = 0;
-                    while (paths[i])
-                    {
-                        cmd_path = ft_strjoin_with_slash(paths[i], args[0]);
-                        execve(cmd_path, args, env);
-                        free(cmd_path);
-                        i++;
-                    }
-                    perror("Command not found");
-                    exit(127);
-                }
-                else if (pid > 0)
-                    wait(NULL);
-                else
-                    perror("Fork failed");
-                ft_free("2", args);
-                ft_free("2", paths);
-            }
-        }
-        free(input);
-    }
-    clear_history();
-    return (0);
-}
-
