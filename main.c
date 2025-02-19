@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/19 13:56:03 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/19 14:15:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_check(void)
 			c = (char *)g_vars.tmp->content;
 			while (c[str_i])
 			{
-				if (ft_strchr(",./*-;+=&%$#@!", c[str_i]))
+				if (ft_strchr(";#", c[str_i]))
 					g_vars.check.special = 1;
 				str_i++;
 			}
@@ -39,8 +39,30 @@ int	ft_check(void)
 	if (g_vars.check.special == 2 || g_vars.check.fpar == ')' || g_vars.check.lpar == '(')
 		return (printf("invalid syntax : something is missing \" or ' or ( or )\n"), 0);
 	if (g_vars.check.special == 1)
-		return (printf("invalid character => : , ; . / * - + = & %% $ # @ ! \n"), 0);
+		return (printf("invalid character => ; or #\n"), 0);
 	return (1);
+}
+
+void	ft_isvalid(char *str, int str_i)
+{
+	if (str[str_i] == '"')
+		g_vars.check.dquot++;
+	if (str[str_i] == '\'')
+		g_vars.check.squot++;
+	if (str[str_i] == '(')
+	{
+		g_vars.check.par++;
+		g_vars.check.lpar = '(';
+		if (g_vars.check.fpar == 0)
+			g_vars.check.fpar = '(';
+	}
+	if (str[str_i] == ')')
+	{
+		g_vars.check.par--;
+		g_vars.check.lpar = ')';
+		if (g_vars.check.fpar == 0)
+			g_vars.check.fpar = ')';
+	}
 }
 
 void	fill_args(char *str)
@@ -52,34 +74,17 @@ void	fill_args(char *str)
 	k = 0;
 	while (str[str_i])
 	{
-		if (str[str_i] && (ft_isalnum(str[str_i]) || !ft_strchr("\"\'()", str[str_i])))
+		if (str[str_i] && (ft_isalnum(str[str_i]) || !ft_strchr("\"\'()|&", str[str_i])))
 		{
 			k = str_i;
-			while (str[str_i] && (ft_isalnum(str[str_i]) || !ft_strchr("\"\'()", str[str_i])))
+			while (str[str_i] && (ft_isalnum(str[str_i]) || !ft_strchr("\"\'()|&", str[str_i])))
 				str_i++;
 			if (str_i > k)
 				ft_lstadd_back(&g_vars.args, ft_lstnew(ft_strndup(str + k, str_i - k)));
 		}
 		else if (str[str_i])
 		{
-			if (str[str_i] == '"')
-				g_vars.check.dquot++;
-			if (str[str_i] == '\'')
-				g_vars.check.squot++;
-			if (str[str_i] == '(')
-			{
-				g_vars.check.par++;
-				g_vars.check.lpar = '(';
-				if (g_vars.check.fpar == 0)
-					g_vars.check.fpar = '(';
-			}
-			if (str[str_i] == ')')
-			{
-				g_vars.check.par--;
-				g_vars.check.lpar = ')';
-				if (g_vars.check.fpar == 0)
-					g_vars.check.fpar = ')';
-			}
+			ft_isvalid(str, str_i);
 			ft_lstadd_back(&g_vars.args, ft_lstnew(ft_strndup(&str[str_i], 1)));
 			str_i++;
 		}
