@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:22:36 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/19 18:19:36 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:30:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,11 @@ void	ft_init(char *format, ...)
 		{
 			ptr = va_arg(args, int *);
 			*ptr = 0;
-			i++;
 		}
 		else if (format[i] == 'c')
 		{
 			str = va_arg(args, char *);
 			*str = 0;
-			i++;
 		}
 		i++;
 	}

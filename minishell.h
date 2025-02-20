@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/19 18:28:30 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:26:44 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,21 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-enum Error
+typedef enum error
 {
 	SYNTAX,
 	CHARS,
 	CMD_NOT_FOUND
-};
+}			t_error;
 
 typedef struct s_check
 {
-	char		dquot;
-	char		squot;
-	char		rpar;
-	char		lpar;
-	char		par;
-	char		special;
-	char		fpar;
+	int		dquot;
+	int		squot;
+	int		lpar;
+	int		fpar;
+	int		par;
+	int		special;
 }				t_check;
 
 typedef struct s_shell
