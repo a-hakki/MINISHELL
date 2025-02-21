@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_chars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 18:31:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:43:43 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,36 @@ void	add_node(char const *s, size_t n)
 	ft_lstadd_back(&g_vars.args, ft_lstnew(ft_strndup(s, n)));
 }
 
-void	fill_args(char *str)
+int	betweenquotes(char	*str, char c)
+{
+	int	i;
+	int start;
+	int end;
+
+	ft_init("iiiiiiii", &g_vars.check.dquot, &g_vars.check.squot, \
+		&g_vars.check.par, &g_vars.check.special, &g_vars.check.fpar, \
+			&g_vars.check.lpar, &i, &start);
+	if (!str)
+		return 0;
+	while (str[i] && str[i] != c)
+		i++;
+	if (str[i] == c)
+		start = i + 1;
+	end = ft_strlen(str);
+	while (start && end > start && str[end] != c)
+		end--;
+	if (start != end)
+	{
+		while (str[start] && start < end)
+			ft_isvalid(str[start++]);
+		if ((g_vars.check.dquot % 2) || (g_vars.check.squot % 2) \
+			|| (g_vars.check.par % 2))
+			g_vars.check.special = 2;
+	}
+	return (g_vars.check.special);
+}
+
+int	fill_args(char *str)
 {
 	int		str_i;
 	int		k;
@@ -104,7 +133,14 @@ void	fill_args(char *str)
 			str_i++;
 		}
 	}
-	g_vars.tmp = g_vars.args;
-	ft_check();
-	ft_lstiter(g_vars.tmp, printf);
+	if (ft_check())
+	{
+		g_vars.tmp = g_vars.args;
+		int i = betweenquotes(str, '\'');
+		int j = betweenquotes(str, '\"');
+		if (i == 2 || j == 2 || g_vars.check.fpar == ')' \
+			|| g_vars.check.lpar == '(')
+			return (throw_error(SYNTAX), 0);
+	}
+	return (ft_lstiter(g_vars.tmp, printf), 0);
 }
