@@ -17,9 +17,13 @@ rak katprinti fkilta lhalat
 khassak tprinti ghi mni ikon valide!
 
 input </br>
-```minishell$ "hello (world_ ' h'__)" ```</br>
+```
+minishell$ "hello (world_ ' h'__)"
+```</br>
 output</br>
-```"hello (world_ ' h'__)"```</br>
+```
+"hello (world_ ' h'__)"
+```</br>
 
 -------------------------------
 there's a new line out of nowhere 🙂;
