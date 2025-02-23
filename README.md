@@ -23,3 +23,14 @@ minishell$ "hello (world_ ' h'__)"
 
 -------------------------------
 there's a new line out of nowhere 🙂;
+
+---------------------
+# add this alias
+```alias c="clear"
+
+p() {
+    git add .
+    git commit -m "$1"
+    git push
+}```
+---------------------
