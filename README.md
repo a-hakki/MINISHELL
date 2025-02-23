@@ -1,22 +1,7 @@
-
-NO UPDATES FOR TODAY JUST 9ADIT NORM 
-
-sawbt l blan dial the "hello world!"
-
-db hello world kolha f node w7da 
-actually ay 7aja mabin "" kolha f nodew7da kima bghina
-handlitha bou7dha f strtok !!
-
-i handled also >> and << and < >
-and also handled && 
-dakchi sghiiwr walakin kolo f strtok
-mab9ach smitha strtok hhhhhhhhhhh
-
-<cenyer> 02/22 </cenyer></br>
+# 02/22
 rak katprinti fkilta lhalat
-khassak tprinti ghi mni ikon valide!
 
-------------------------
+khassak tprinti ghi mni ikon valide!
 
 there's a new line out of nowhere 🙂;
 
