@@ -16,6 +16,10 @@ mab9ach smitha strtok hhhhhhhhhhh
 rak katprinti fkilta lhalat
 khassak tprinti ghi mni ikon valide!
 
+------------------------
+
+there's a new line out of nowhere 🙂;
+
 input
 ```
 minishell$ "hello (world_ ' h'__)"
@@ -25,9 +29,6 @@ output
 ```
 "hello (world_ ' h'__)"
 ```
-
--------------------------------
-there's a new line out of nowhere 🙂;
 
 ---------------------
 # add this alias
