@@ -15,11 +15,11 @@ mab9ach smitha strtok hhhhhhhhhhh
 <cenyer> 02/22 </cenyer></br>
 rak katprinti fkilta lhalat
 khassak tprinti ghi mni ikon valide!
-----------------------------------
-------- input  ------------
-minishell$ "hello (world_ ' h'__)" 
-------- output ----------
-"hello (world_ ' h'__)" 
+
+input
+```minishell$ "hello (world_ ' h'__)" ```
+output
+```"hello (world_ ' h'__)"```
 
 -------------------------------
 there's a new line out of nowhere 🙂;
