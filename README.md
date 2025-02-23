@@ -12,7 +12,7 @@ and also handled &&
 dakchi sghiiwr walakin kolo f strtok
 mab9ach smitha strtok hhhhhhhhhhh
 
------------------ 02/22 ----------
+            02/22 
 rak katprinti fkilta lhalat
 khassak tprinti ghi mni ikon valide!
 ----------------------------------
