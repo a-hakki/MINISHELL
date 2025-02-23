@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_chars.c                                      :+:      :+:    :+:   */
+/*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/21 18:49:31 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/22 00:59:02 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	throw_error(int error)
 	if (error == SYNTAX)
 		printf("Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == CHARS)
-		printf("Invalid Character => ; or #\n");
+		printf("Invalid Character => ; or \\ or #\n");
 }
 
 int	ft_check(void)
@@ -37,7 +37,7 @@ int	ft_check(void)
 			str_i = 0;
 			while (((char *)g_vars.tmp->content)[str_i])
 			{
-				if (ft_strchr(";#", ((char *)g_vars.tmp->content)[str_i++]))
+				if (ft_strchr(";#\\", ((char *)g_vars.tmp->content)[str_i++]))
 					g_vars.check.special = 1;
 			}
 			g_vars.tmp = g_vars.tmp->next;
@@ -73,23 +73,22 @@ int	ft_isvalid(char c)
 	}
 	return (TRUE);
 }
+
 int	betweenquotes(char	*str, char c)
 {
 	int	i;
-	int start;
-	int end;
+	int	start;
+	int	end;
 
-	ft_init("iiiiiiii", &g_vars.check.dquot, &g_vars.check.squot, \
+	ft_init(8, &g_vars.check.dquot, &g_vars.check.squot, \
 		&g_vars.check.par, &g_vars.check.special, &g_vars.check.fpar, \
 			&g_vars.check.lpar, &i, &start);
-	if (!str)
-		return 0;
 	while (str[i] && str[i] != c)
 		i++;
 	if (str[i] == c)
 		start = i + 1;
 	end = ft_strlen(str);
-	while (start && end > start && str[end] != c)
+	while (end > start && str[end] != c)
 		end--;
 	if (start != end)
 	{
@@ -99,28 +98,36 @@ int	betweenquotes(char	*str, char c)
 			|| (g_vars.check.par % 2))
 			g_vars.check.special = 2;
 	}
-	return (g_vars.check.special);
-} 
+	return (g_vars.check.special++);
+}
 
+void	add_node(char *token)
+{
+	char	*trim;
+
+	trim = ft_strtrim(token, " ");
+	free(token);
+	ft_lstadd_back(&g_vars.args, ft_lstnew(trim));
+}
 
 int	fill_args(char *str)
 {
 	char	*token;
 
-	token = ft_strtok(str, "\"\'()|&");
+	token = ft_strtok(str, "\"\'()|&><");
 	while (token)
 	{
 		if (ft_strchr("\"\'()|&", *token))
 			ft_isvalid(*token);
-		ft_lstadd_back(&g_vars.args, ft_lstnew(token));
-		token = ft_strtok(NULL, "\"\'()|&");
+		add_node(token);
+		token = ft_strtok(NULL, "\"\'()|&><");
 	}
 	if (ft_check())
 	{
 		g_vars.tmp = g_vars.args;
-		int i = betweenquotes(str, '\'');
-		int j = betweenquotes(str, '\"');
-		if (i == 2 || j == 2 || g_vars.check.fpar == ')' \
+		betweenquotes(str, '\'');
+		betweenquotes(str, '\"');
+		if (g_vars.check.special > 1 || g_vars.check.fpar == ')' \
 			|| g_vars.check.lpar == '(')
 			return (throw_error(SYNTAX), 0);
 	}
