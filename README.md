@@ -16,14 +16,15 @@ mab9ach smitha strtok hhhhhhhhhhh
 rak katprinti fkilta lhalat
 khassak tprinti ghi mni ikon valide!
 
-input </br>
+input
 ```
 minishell$ "hello (world_ ' h'__)"
-```</br>
-output</br>
+```
+
+output
 ```
 "hello (world_ ' h'__)"
-```</br>
+```
 
 -------------------------------
 there's a new line out of nowhere 🙂;
