@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/22 00:59:02 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:56:31 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,58 @@ void	add_node(char *token)
 	free(token);
 	ft_lstadd_back(&g_vars.args, ft_lstnew(trim));
 }
+int	count_char(char *str, char c)
+{
+	int	count = 0;
+	while (*str)
+	{
+		if (*str == c)
+			count++;
+		str++;
+	}
+	return (count);
+}
+
+char *new_join(char *str, char c)
+{
+    int i;
+	int	in_quote;
+	int j;
+    char *result;
+
+	ft_init(2, &i, &j, &in_quote);
+    if (!str)
+        return (NULL);
+    if (count_char(str, c) % 2 != 0)
+        return (NULL);
+    result = malloc(sizeof(char) * (strlen(str) + 1));
+    if (!result)
+        return (NULL);
+
+    while (str[i])
+    {
+        if (str[i] == c)
+            in_quote = !in_quote;
+        else
+            result[j++] = str[i];
+        i++;
+    }
+    result[j] = '\0';
+    // free(str);
+    return (result);
+}
+
+
+
 
 int	fill_args(char *str)
 {
 	char	*token;
 
+	str = new_join(str, '\'');
+	str = new_join(str, '\"');
+	if (!str)
+		return (1);
 	token = ft_strtok(str, "\"\'()|&><");
 	while (token)
 	{
