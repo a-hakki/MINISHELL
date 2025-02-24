@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/24 11:56:31 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/24 12:08:56 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,8 @@ int	fill_args(char *str)
 {
 	char	*token;
 
-	str = new_join(str, '\'');
-	str = new_join(str, '\"');
+	// str = new_join(str, '\'');
+	// str = new_join(str, '\"');
 	if (!str)
 		return (1);
 	token = ft_strtok(str, "\"\'()|&><");
