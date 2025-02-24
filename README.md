@@ -1,3 +1,10 @@
+# 02/24
+
+zadt new_join bash dir lina lkhadma li dwina 3liha
+kan 3ndi wahd double free hayato lmohim rah madartch valgraind tatji o testi dakchi
+
+
+
 # 02/22
 rak katprinti fkilta lhalat
 
