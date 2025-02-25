@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/24 12:08:56 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/25 14:08:10 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,11 @@ char *new_join(char *str, char c)
 	int j;
     char *result;
 
-	ft_init(2, &i, &j, &in_quote);
+	ft_init(3, &i, &j, &in_quote);
     if (!str)
         return (NULL);
     if (count_char(str, c) % 2 != 0)
-        return (NULL);
+        return (free(str), NULL);
     result = malloc(sizeof(char) * (strlen(str) + 1));
     if (!result)
         return (NULL);
@@ -146,7 +146,7 @@ char *new_join(char *str, char c)
         i++;
     }
     result[j] = '\0';
-    // free(str);
+    free(str);
     return (result);
 }
 
@@ -157,8 +157,8 @@ int	fill_args(char *str)
 {
 	char	*token;
 
-	// str = new_join(str, '\'');
-	// str = new_join(str, '\"');
+	str = new_join(str, '\'');
+	str = new_join(str, '\"');
 	if (!str)
 		return (1);
 	token = ft_strtok(str, "\"\'()|&><");
