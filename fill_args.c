@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/25 14:08:10 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/25 17:38:25 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,10 @@ void	add_node(char *token)
 	free(token);
 	ft_lstadd_back(&g_vars.args, ft_lstnew(trim));
 }
+
 int	count_char(char *str, char c)
 {
-	int	count = 0;
+	int (count) = 0;
 	while (*str)
 	{
 		if (*str == c)
@@ -121,37 +122,29 @@ int	count_char(char *str, char c)
 	return (count);
 }
 
-char *new_join(char *str, char c)
+char	*new_join(char *str, char c)
 {
-    int i;
-	int	in_quote;
-	int j;
-    char *result;
+	char	*result;
 
-	ft_init(3, &i, &j, &in_quote);
-    if (!str)
-        return (NULL);
-    if (count_char(str, c) % 2 != 0)
-        return (free(str), NULL);
-    result = malloc(sizeof(char) * (strlen(str) + 1));
-    if (!result)
-        return (NULL);
-
-    while (str[i])
-    {
-        if (str[i] == c)
-            in_quote = !in_quote;
-        else
-            result[j++] = str[i];
-        i++;
-    }
-    result[j] = '\0';
-    free(str);
-    return (result);
+	int (i), (j);
+	ft_init(2, &i, &j);
+	if (!str)
+		return (NULL);
+	if (count_char(str, c) % 2)
+		return (free(str), NULL);
+	result = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!result)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == c)
+			result[j++] = str[i];
+		i++;
+	}
+	result[j] = '\0';
+	free(str);
+	return (result);
 }
-
-
-
 
 int	fill_args(char *str)
 {
