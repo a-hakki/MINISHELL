@@ -1,8 +1,7 @@
-# 02/24
+# 02/26
 
-zadt new_join bash dir lina lkhadma li dwina 3liha
-kan 3ndi wahd double free hayato lmohim rah madartch valgraind tatji o testi dakchi
-
+ma9ddich nkhdam walo
+lmohim atl9a wahd lfile smito quotes bdit makamaltch
 
 
 # 02/22
