@@ -1,8 +1,3 @@
-# 02/27
-
-ana o salah
-
-
 # 02/26
 
 ma9ddich nkhdam walo
