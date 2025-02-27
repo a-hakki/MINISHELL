@@ -1,7 +1,13 @@
+# 02/27
+
+ana o salah
+
+
 # 02/26
 
 ma9ddich nkhdam walo
 lmohim atl9a wahd lfile smito quotes bdit makamaltch
+
 
 
 # 02/22
