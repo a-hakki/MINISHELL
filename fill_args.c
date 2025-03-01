@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/27 10:03:59 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/02/28 17:39:06 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	throw_error(int error)
 		printf("Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == CHARS)
 		printf("Invalid Character => ; or \\ or #\n");
+	g_vars.exit = 127;
 }
 
 int	ft_check(void)
@@ -110,54 +111,14 @@ void	add_node(char *token)
 	ft_lstadd_back(&g_vars.args, ft_lstnew(trim));
 }
 
-int	count_char(char *str, char c)
-{
-	int (count) = 0;
-	while (*str)
-	{
-		if (*str == c)
-			count++;
-		str++;
-	}
-	return (count);
-}
-
-char	*new_join(char *str, char c)
-{
-	char	*result;
-
-	int (i), (j);
-	ft_init(2, &i, &j);
-	if (!str)
-		return (NULL);
-	if (count_char(str, c) % 2)
-		return (free(str), NULL);
-	result = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
-	if (!result)
-		return (NULL);
-	while (str[i])
-	{
-		if (str[i] == c)
-			result[j++] = str[i];
-		i++;
-	}
-	result[j] = '\0';
-	free(str);
-	return (result);
-}
-
 int	fill_args(char *str)
 {
 	char	*token;
 
-	str = new_join(str, '\'');
-	str = new_join(str, '\"');
-	if (!str)
-		return (1);
 	token = ft_strtok(str, "\"\'()|&><");
 	while (token)
 	{
-		if (ft_strchr("\"\'()|&", *token))
+		if (ft_strchr("\"\'()|&", *token) && ft_strlen(token) == 1)
 			ft_isvalid(*token);
 		add_node(token);
 		token = ft_strtok(NULL, "\"\'()|&><");

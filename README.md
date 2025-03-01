@@ -1,33 +1,15 @@
-# 02/26
 
-ma9ddich nkhdam walo
-lmohim atl9a wahd lfile smito quotes bdit makamaltch
+lmochkil 1 : ctr+D makhdamach ghi tan3ti '(' tikhssar lprogramm<br>
 
+NO UPDATES FOR TODAY JUST 9ADIT NORM 
 
+sawbt l blan dial the "hello world!"
 
-# 02/22
-rak katprinti fkilta lhalat
+db hello world kolha f node w7da 
+actually ay 7aja mabin "" kolha f nodew7da kima bghina
+handlitha bou7dha f strtok !!
 
-khassak tprinti ghi mni ikon valide!
-
-there's a new line out of nowhere 🙂;
-
-input
-```
-minishell$ "hello (world_ ' h'__)"
-```
-
-output
-```
-"hello (world_ ' h'__)"
-```
-
----------------------
-# add this alias
-```alias c="clear"
-p() {
-    git add .
-    git commit -m "$1"
-    git push
-}```
-
+i handled also >> and << and < >
+and also handled && 
+dakchi sghiiwr walakin kolo f strtok
+mab9ach smitha strtok hhhhhhhhhhh
