@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/03 23:00:33 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/03 23:21:10 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,15 @@ void	add_node(char *token)
 int	fill_args(char *str)
 {
 	char	*token;
+	char	*tmp;
+	char	*tmp1;
 
 	if (!str || !*str)
 		return (0);
-	str = removequotes(str, '"');
-	str = removequotes(str, '\'');
-	token = ft_strtok(str, "\"\'()|&><");
+	tmp = removequotes(str, '"');
+	tmp1 = removequotes(tmp, '\'');
+	free(tmp);
+	token = ft_strtok(tmp1, "\"\'()|&><");
 	while (token)
 	{
 		if (ft_strchr("\"\'()|&", *token) && ft_strlen(token) == 1)
@@ -136,7 +139,7 @@ int	fill_args(char *str)
 	}
 	if (g_vars.check.special > 1 || g_vars.check.fpar == ')' 
 		|| g_vars.check.lpar == '(')
-		return (throw_error(SYNTAX), 0);
+		return (free(tmp1), throw_error(SYNTAX), 0);
 	
 	if (ft_check())
 	{
@@ -144,5 +147,5 @@ int	fill_args(char *str)
 		betweenquotes(str, '\'');
 		betweenquotes(str, '\"');
 	}
-	return (ft_lstiter(g_vars.tmp, printf), 0);
+	return (free(tmp1), ft_lstiter(g_vars.tmp, printf), 0);
 }
