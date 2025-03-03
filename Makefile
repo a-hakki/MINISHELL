@@ -6,7 +6,8 @@ lib = $(LIB_DIR)/libft.a
 
 sources = \
 		main.c \
-		fill_args.c
+		fill_args.c\
+		kharba9_tatsda9.c
 
 object = $(sources:.c=.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtok.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:16:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/23 01:25:20 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:11:30 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ static char	*handle_quotes(char **next_token)
 	start = *next_token;
 	while (**next_token && **next_token != quote)
 		(*next_token)++;
+	if (**next_token == quote && (**next_token) + 1 == quote)
+	{
+		(*next_token)++;
+		(*next_token)++;
+		while (**next_token && **next_token != quote)
+			(*next_token)++;
+	}
 	if (**next_token == quote)
 		(*next_token)++;
 	return (ft_strndup(start, *next_token - start - 1));

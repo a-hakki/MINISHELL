@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/01 10:13:25 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/03 12:58:34 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int	fill_args(char *str)
 
 	if (!str || !*str)
 		return (0);
+	str = removequotes(str, '"');
 	token = ft_strtok(str, "\"\'()|&><");
 	while (token)
 	{
@@ -136,11 +137,11 @@ int	fill_args(char *str)
 		|| g_vars.check.lpar == '(')
 		return (throw_error(SYNTAX), 0);
 	
-	// if (ft_check())
-	// {
+	if (ft_check())
+	{
 		g_vars.tmp = g_vars.args;
-	// 	betweenquotes(str, '\'');
-	// 	betweenquotes(str, '\"');
-	// }
+		betweenquotes(str, '\'');
+		betweenquotes(str, '\"');
+	}
 	return (ft_lstiter(g_vars.tmp, printf), 0);
 }

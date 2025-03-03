@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/28 17:39:54 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/03 12:55:57 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ typedef struct s_shell
 
 // Parsing Functions
 int	fill_args(char *str);
+char	*removequotes(char *str, char quote);
 
 #endif
