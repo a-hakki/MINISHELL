@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/03/03 12:55:35 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/03 22:43:06 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ char	*removequotes(char *str, char quote)
 		}
 		result[j++] = str[i++];
 	}
-	result[j] = '\0';
+	while (j <= len)
+		result[j++] = '\0';
 	free(str);
 	return (result);
 }
