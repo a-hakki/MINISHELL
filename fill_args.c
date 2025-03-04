@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/04 13:44:03 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/04 10:15:21 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	add_node(char *token)
 	free(token);
 	ft_lstadd_back(&g_vars.args, ft_lstnew(trim));
 }
+	// g_vars.cmd = removequotes(g_vars.cmd, '"');
+	// g_vars.cmd = removequotes(g_vars.cmd, '\'');
 
 int	fill_args(void)
 {
@@ -117,9 +119,6 @@ int	fill_args(void)
 
 	if (!g_vars.cmd || !*(g_vars.cmd))
 		return (0);
-	// g_vars.cmd = removequotes(g_vars.cmd, '"');
-	// g_vars.cmd = removequotes(g_vars.cmd, '\'');
-	
 	token = ft_strtok(g_vars.cmd, "\"\'()|&><");
 	while (token)
 	{
@@ -129,21 +128,5 @@ int	fill_args(void)
 		token = ft_strtok(NULL, "\"\'()|&><");
 	}
 	g_vars.tmp = g_vars.args;
-	while (g_vars.tmp && g_vars.tmp->content)
-	{
-		if (ft_strlen((char *)g_vars.tmp->content) == 1)
-			ft_isvalid(((char *)g_vars.tmp->content)[0]);
-		g_vars.tmp = g_vars.tmp->next;
-	}
-	if (g_vars.check.special > 1 || g_vars.check.fpar == ')' 
-		|| g_vars.check.lpar == '(')
-		return (throw_error(SYNTAX), 0);
-	
-	if (ft_check())
-	{
-		g_vars.tmp = g_vars.args;
-		betweenquotes(g_vars.cmd, '\'');
-		betweenquotes(g_vars.cmd, '\"');
-	}
 	return (ft_lstiter(g_vars.tmp, printf), 0);
 }
