@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/03 23:13:32 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/04 13:16:39 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_shell	g_vars;
 void	parse_command(void)
 {
 	g_vars.args = NULL;
-	fill_args(g_vars.cmd);
+	fill_args();
 }
 
 char	*read_cmd(char *cmd)

@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/03/04 01:15:11 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/04 13:48:43 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,28 @@ char	*removequotes(char *str, char quote)
 		}
 		result[j++] = str[i++];
 	}
-	while (j <= len)
-		result[j++] = '\0';
+	result[j] = '\0';
 	return (result);
 }
 
+// char	*checkquotes(char *str, char quote)
+// {
+// 	char	*result;
 
-
+// 	int (i), (j), (len);
+// 	if (!str || !(*str))
+// 		return (NULL);
+// 	len = ft_strlen(str);
+// 	result = malloc(len + 1);
+// 	if (!result)
+// 		return (free(str), NULL);
+// 	while (str[i])
+// 	{
+// 		if (str[i] == quote && str[i + 1] == quote)
+// 		{
+// 			i += 2;
+// 			continue;
+// 		}
+// 		result[j++] = str[i++];
+// 	}
+// }

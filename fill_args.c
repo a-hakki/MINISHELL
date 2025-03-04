@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/03 23:21:10 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/04 13:44:03 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,18 +111,16 @@ void	add_node(char *token)
 	ft_lstadd_back(&g_vars.args, ft_lstnew(trim));
 }
 
-int	fill_args(char *str)
+int	fill_args(void)
 {
 	char	*token;
-	char	*tmp;
-	char	*tmp1;
 
-	if (!str || !*str)
+	if (!g_vars.cmd || !*(g_vars.cmd))
 		return (0);
-	tmp = removequotes(str, '"');
-	tmp1 = removequotes(tmp, '\'');
-	free(tmp);
-	token = ft_strtok(tmp1, "\"\'()|&><");
+	// g_vars.cmd = removequotes(g_vars.cmd, '"');
+	// g_vars.cmd = removequotes(g_vars.cmd, '\'');
+	
+	token = ft_strtok(g_vars.cmd, "\"\'()|&><");
 	while (token)
 	{
 		if (ft_strchr("\"\'()|&", *token) && ft_strlen(token) == 1)
@@ -139,13 +137,13 @@ int	fill_args(char *str)
 	}
 	if (g_vars.check.special > 1 || g_vars.check.fpar == ')' 
 		|| g_vars.check.lpar == '(')
-		return (free(tmp1), throw_error(SYNTAX), 0);
+		return (throw_error(SYNTAX), 0);
 	
 	if (ft_check())
 	{
 		g_vars.tmp = g_vars.args;
-		betweenquotes(str, '\'');
-		betweenquotes(str, '\"');
+		betweenquotes(g_vars.cmd, '\'');
+		betweenquotes(g_vars.cmd, '\"');
 	}
-	return (free(tmp1), ft_lstiter(g_vars.tmp, printf), 0);
+	return (ft_lstiter(g_vars.tmp, printf), 0);
 }
