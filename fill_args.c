@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/05 15:05:36 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/05 16:13:57 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ int	isvalid_op()
 			int (len) = ft_strlen((char *)tmp->content);
 			if (len == 1 && ((char *)tmp->content)[0] == '&')
 				return (throw_error(SYNTAX), FALSE);
-			if (is_op((char *)tmp->content) && (char *)tmp->next && is_op((char *)tmp->next->content))
+			if (is_op((char *)tmp->content) && tmp->next && is_op((char *)tmp->next->content))
 				return (throw_error(SYNTAX), FALSE);
-			if (is_op((char *)tmp->content) && (char *)tmp->next && \
+			if (is_op((char *)tmp->content) && tmp->next && \
 			ft_isspace((char *)tmp->next->content) && \
 			tmp->next->next && is_op((char *)tmp->next->next->content))
 				return (throw_error(SYNTAX), FALSE);
@@ -106,19 +106,29 @@ int	isvalid_op()
 	return (TRUE);
 }
 
-// void	ft_nodejoin()
-// {
-// 	t_list (*tmp) = g_vars.args;
-// 	while (tmp)
-// 	{
-// 		if (!is_op((char *)tmp->content) && (char *)tmp->next && !is_op((char *)tmp->next->content))
-// 		{
-			
-// 		}
-// 		tmp = tmp->next;
-// 	}
-	
-// }
+void	ft_nodejoin()
+{
+	t_list (*tmp) = g_vars.args;
+	t_list (*to_delete);
+	char (*new_content);
+	while (tmp && tmp->next)
+	{
+		if (!is_op((char *)tmp->content) && !is_op((char *)tmp->next->content))
+		{
+			new_content = ft_strjoin((char *)tmp->content, (char *)tmp->next->content);
+			if (!new_content)
+				return;
+			free(tmp->content);
+			tmp->content = new_content;
+			to_delete = tmp->next;
+			tmp->next = tmp->next->next;
+			ft_lstdelone(to_delete, free);
+		}
+		else
+			tmp = tmp->next;
+	}
+}
+
 
 int	fill_args(void)
 {
@@ -133,7 +143,7 @@ int	fill_args(void)
 	}
 	if (!isvalid_quotes() || !isvalid_op())
 		return (FALSE);
-	// ft_nodejoin();
+	ft_nodejoin();
 	g_vars.tmp = g_vars.args;
 	return (ft_lstiter(g_vars.tmp, printf), 0);
 }
