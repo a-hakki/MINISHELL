@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:16:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/04 15:56:29 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/05 03:08:46 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,14 @@ static char	*handle_quotes(char **next_token)
 	char	quote;
 
 	quote = *(*next_token)++;
-	start = *next_token;
+	start = *next_token - 1; // Include the opening quote
 	while (**next_token && **next_token != quote)
 		(*next_token)++;
-	if (**next_token == quote && (**next_token) + 1 == quote)
-	{
-		(*next_token)++;
-		(*next_token)++;
-		while (**next_token && **next_token != quote)
-			(*next_token)++;
-	}
 	if (**next_token == quote)
-		(*next_token)++;
-	return (ft_strndup(start, *next_token - start - 1));
+		(*next_token)++; // Move past the closing quote
+	return (ft_strndup(start, *next_token - start)); // Include the quotes
 }
+
 
 static char	*handle_redirect(char **next_token)
 {
