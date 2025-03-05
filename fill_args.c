@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/05 14:38:16 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/05 15:05:36 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,24 @@ void	throw_error(int error)
 // 	// g_vars.cmd = removequotes(g_vars.cmd, '"');
 // 	// g_vars.cmd = removequotes(g_vars.cmd, '\'');
 
-int	isvalid_quotes()
+int	isvalid_quotes(void)
 {
 	t_list (*tmp) = g_vars.args;
+	int (len);
 	while (tmp)
 	{
 		if (tmp->content)
 		{
-			int (len) = ft_strlen((char *)tmp->content);
-			if (((char *)tmp->content)[0] == '"' && (((char *)tmp->content)[len - 1] != '"' || len == 1))
+			len = ft_strlen((char *)tmp->content);
+			if (((char *)tmp->content)[0] == '"' && \
+			(((char *)tmp->content)[len - 1] != '"' || len == 1))
 				return (throw_error(SYNTAX), FALSE);
 		}
-		tmp = tmp->next;
-	}
-	tmp = g_vars.args;
-	while (tmp)
-	{
 		if (tmp->content)
 		{
-			int (len) = ft_strlen((char *)tmp->content);
-			if (((char *)tmp->content)[0] == '\'' && (((char *)tmp->content)[len - 1] != '\'' || len == 1))
+			len = ft_strlen((char *)tmp->content);
+			if (((char *)tmp->content)[0] == '\'' && \
+			(((char *)tmp->content)[len - 1] != '\'' || len == 1))
 				return (throw_error(SYNTAX), FALSE);
 		}
 		tmp = tmp->next;
@@ -73,6 +71,19 @@ int	is_op(char *str)
 	return (FALSE);
 }
 
+int	ft_isspace(char *str)
+{
+	int (i) = 0;
+	if (str)
+	{
+		while (str[i] == ' ')
+			i++;
+		if (str[i] == '\0')
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
 int	isvalid_op()
 {
 	t_list (*tmp) = g_vars.args;
@@ -85,6 +96,10 @@ int	isvalid_op()
 				return (throw_error(SYNTAX), FALSE);
 			if (is_op((char *)tmp->content) && (char *)tmp->next && is_op((char *)tmp->next->content))
 				return (throw_error(SYNTAX), FALSE);
+			if (is_op((char *)tmp->content) && (char *)tmp->next && \
+			ft_isspace((char *)tmp->next->content) && \
+			tmp->next->next && is_op((char *)tmp->next->next->content))
+				return (throw_error(SYNTAX), FALSE);
 		}
 		tmp = tmp->next;
 	}
@@ -96,16 +111,18 @@ int	isvalid_op()
 // 	t_list (*tmp) = g_vars.args;
 // 	while (tmp)
 // 	{
-// 		if ()
+// 		if (!is_op((char *)tmp->content) && (char *)tmp->next && !is_op((char *)tmp->next->content))
+// 		{
+			
+// 		}
+// 		tmp = tmp->next;
 // 	}
 	
 // }
 
 int	fill_args(void)
 {
-	char	*token;
-	// char	*temp;
-
+	char (*token);
 	if (!g_vars.cmd || !*(g_vars.cmd))
 		return (0);
 	token = ft_strtok(g_vars.cmd, "'\"()|&><");
