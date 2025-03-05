@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/05 16:13:57 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/05 19:29:46 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,18 @@ int	is_op(char *str)
 	return (FALSE);
 }
 
+int	is_par(char *str)
+{
+	if (str)
+	{
+		int (len) = ft_strlen(str);
+		char (c) = str[0];
+		if (len == 1 && (c == '(' || c == ')'))
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
 int	ft_isspace(char *str)
 {
 	int (i) = 0;
@@ -113,7 +125,8 @@ void	ft_nodejoin()
 	char (*new_content);
 	while (tmp && tmp->next)
 	{
-		if (!is_op((char *)tmp->content) && !is_op((char *)tmp->next->content))
+		if (!is_op((char *)tmp->content) && !is_op((char *)tmp->next->content) && \
+		!is_par((char *)tmp->content) && !is_par((char *)tmp->next->content))
 		{
 			new_content = ft_strjoin((char *)tmp->content, (char *)tmp->next->content);
 			if (!new_content)
