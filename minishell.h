@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/05 16:01:41 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/05 20:54:10 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum error
 {
 	SYNTAX,
 	CHARS,
+	OP,
 	CMD_NOT_FOUND
 }			t_error;
 
@@ -48,6 +49,11 @@ typedef struct s_shell
 
 // Parsing Functions
 int		fill_args(void);
-char	*removequotes(char *str, char quote);
+int		isvalid_par(void);
+int		is_op(char *str);
+int		is_par(char *str);
+int		isvalid_quotes(void);
+void	throw_error(int error);
+
 
 #endif

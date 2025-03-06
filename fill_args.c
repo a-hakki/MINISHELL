@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/05 19:29:46 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/06 21:25:21 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,13 @@ extern t_shell	g_vars;
 void	throw_error(int error)
 {
 	if (error == SYNTAX)
-		printf("Invalid Syntax : Something is missing \" or ' or ( or )\n");
-	if (error == CHARS)
-		printf("Invalid Character => ; or \\ or #\n");
+		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
+	if (error == OP)
+		printfd(2, "Invalid Syntax : Error in operators input\n");
 	g_vars.exit = 127;
 }
 
-// void	add_node(char *token)
-// {
-// 	char	*trim;
-
-// 	trim = ft_strtrim(token, " ");
-// 	free(token);
-// 	ft_lstadd_back(&g_vars.args, ft_lstnew(trim));
-// }
-// 	// g_vars.cmd = removequotes(g_vars.cmd, '"');
-// 	// g_vars.cmd = removequotes(g_vars.cmd, '\'');
-
-int	isvalid_quotes(void)
+int	isvalid_op()
 {
 	t_list (*tmp) = g_vars.args;
 	int (len);
@@ -43,86 +32,26 @@ int	isvalid_quotes(void)
 		if (tmp->content)
 		{
 			len = ft_strlen((char *)tmp->content);
-			if (((char *)tmp->content)[0] == '"' && \
-			(((char *)tmp->content)[len - 1] != '"' || len == 1))
-				return (throw_error(SYNTAX), FALSE);
-		}
-		if (tmp->content)
-		{
-			len = ft_strlen((char *)tmp->content);
-			if (((char *)tmp->content)[0] == '\'' && \
-			(((char *)tmp->content)[len - 1] != '\'' || len == 1))
-				return (throw_error(SYNTAX), FALSE);
-		}
-		tmp = tmp->next;
-	}
-	return (TRUE);
-}
-
-int	is_op(char *str)
-{
-	if (str)
-	{
-		int (len) = ft_strlen(str);
-		char (c) = str[0];
-		if (len <= 2 && (c == '&' || c == '|'))
-			return (TRUE);
-	}
-	return (FALSE);
-}
-
-int	is_par(char *str)
-{
-	if (str)
-	{
-		int (len) = ft_strlen(str);
-		char (c) = str[0];
-		if (len == 1 && (c == '(' || c == ')'))
-			return (TRUE);
-	}
-	return (FALSE);
-}
-
-int	ft_isspace(char *str)
-{
-	int (i) = 0;
-	if (str)
-	{
-		while (str[i] == ' ')
-			i++;
-		if (str[i] == '\0')
-			return (TRUE);
-	}
-	return (FALSE);
-}
-
-int	isvalid_op()
-{
-	t_list (*tmp) = g_vars.args;
-	while (tmp)
-	{
-		if (tmp->content)
-		{
-			int (len) = ft_strlen((char *)tmp->content);
 			if (len == 1 && ((char *)tmp->content)[0] == '&')
-				return (throw_error(SYNTAX), FALSE);
+				return (throw_error(OP), FALSE);
 			if (is_op((char *)tmp->content) && tmp->next && is_op((char *)tmp->next->content))
-				return (throw_error(SYNTAX), FALSE);
+				return (throw_error(OP), FALSE);
 			if (is_op((char *)tmp->content) && tmp->next && \
-			ft_isspace((char *)tmp->next->content) && \
-			tmp->next->next && is_op((char *)tmp->next->next->content))
-				return (throw_error(SYNTAX), FALSE);
+				ft_iswhitespace((char *)tmp->next->content) && \
+					tmp->next->next && is_op((char *)tmp->next->next->content))
+				return (throw_error(OP), FALSE);
 		}
 		tmp = tmp->next;
 	}
 	return (TRUE);
 }
 
-void	ft_nodejoin()
+int	ft_nodejoin()
 {
-	t_list (*tmp) = g_vars.args;
-	t_list (*to_delete);
+	t_list (*to_delete), (*tmp) = g_vars.args;
 	char (*new_content);
+	if (tmp && is_op((char *)tmp->content))
+		return (throw_error(OP), FALSE);
 	while (tmp && tmp->next)
 	{
 		if (!is_op((char *)tmp->content) && !is_op((char *)tmp->next->content) && \
@@ -130,7 +59,7 @@ void	ft_nodejoin()
 		{
 			new_content = ft_strjoin((char *)tmp->content, (char *)tmp->next->content);
 			if (!new_content)
-				return;
+				return (FALSE);
 			free(tmp->content);
 			tmp->content = new_content;
 			to_delete = tmp->next;
@@ -140,8 +69,10 @@ void	ft_nodejoin()
 		else
 			tmp = tmp->next;
 	}
+	if (tmp && is_op((char *)tmp->content))
+		return (throw_error(OP), FALSE);
+	return (TRUE);
 }
-
 
 int	fill_args(void)
 {
@@ -154,9 +85,19 @@ int	fill_args(void)
 		ft_lstadd_back(&g_vars.args, ft_lstnew(token));
 		token = ft_strtok(NULL, "'\"()|&><");
 	}
-	if (!isvalid_quotes() || !isvalid_op())
+	if (!isvalid_quotes() || !isvalid_op() || !isvalid_par() || !ft_nodejoin())
 		return (FALSE);
-	ft_nodejoin();
+	
 	g_vars.tmp = g_vars.args;
 	return (ft_lstiter(g_vars.tmp, printf), 0);
 }
+
+// amine shoud implement the fct that parse the peripheric of the paranthesis
+// () )(  &(&)  ()|  ()a : nooooo
+
+
+/* 
+	ban liya khass na dok l cmd khassna n 9assmohom, 
+	like [cmd] [options]
+	is there is < >> << or > call your pipex 
+*/
