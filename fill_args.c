@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/07 03:03:11 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/07 03:24:50 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,3 +79,5 @@ int	fill_args(void)
 
 //we shoud implement the fct that parses the peripheric of the paranthesis
 // () )(  &(&)  ()|  ()a : nooooo
+// >> << ()
+//  (ls )(cat -e M)
