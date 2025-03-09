@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kharba9_tatsda9.c                                  :+:      :+:    :+:   */
+/*   removequotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/03/07 19:51:27 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/08 01:00:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	count_char(char *str, char c)
 {
-	int	count = 0;
+	int (count) = 0;
 	while (*str)
 	{
 		if (*str == c)
@@ -28,13 +28,12 @@ char	*removequotes(char *str)
 {
 	char	*result;
 
-	int (i), (j), (len), (c);
+	int (i), (j), (c);
 	if (!str || !(*str))
 		return (NULL);
 	if (count_char(str, '\'') == 0 && count_char(str, '"') == 0)
 		return (str);
-	len = ft_strlen(str);
-	result = malloc(len + 1);
+	result = (char *)malloc(ft_strlen(str) + 1);
 	if (!result)
 		return (free(str), NULL);
 	ft_init(3, &i, &j, &c);
@@ -51,10 +50,5 @@ char	*removequotes(char *str)
 			result[j++] = str[i++];
 	}
 	result[j] = '\0';
-	return (result);
-}
-
-int main(void)
-{
-	printf("%s", removequotes("\"hchsv\"'\"'\"ugc\""));
+	return (free(str), result);
 }
