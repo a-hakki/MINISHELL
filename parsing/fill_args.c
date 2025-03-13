@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/12 10:15:04 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/13 03:54:38 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,90 +61,50 @@ void	print_array(char **arr)
 		return ;
 	while (arr[i])
 	{
-		printf("words %d : '%s'\n", i, arr[i]);
+		printf("words %d : #%s#\n", i, arr[i]);
 		i++;
 	}
-}
-
-char	**linkedlist_to_array(t_list *tmp_arr)
-{
-	char	**arr;
-
-	int (i), (words);
-	if (!tmp_arr)
-		return (NULL);
-	words = ft_lstsize(tmp_arr);
-	arr = (char **)malloc((words + 1) * sizeof(char *));
-	if (!arr)
-		return (NULL);
-	i = 0;
-	while (i < words && tmp_arr)
-	{
-		arr[i] = ft_strdup(tmp_arr->content);
-		if (!arr[i++])
-			return (ft_free("2", arr), NULL);
-		tmp_arr = tmp_arr->next;
-	}
-	arr[words] = NULL;
-	i = 0;
-	while (arr[i])
-	{
-		arr[i] = removequotes(arr[i]);
-		i++;
-	}
-	print_array(arr);
-	return (arr);
 }
 
 void	split_cmds_args(void)
 {
-	char	*token;
-	t_list	*tmp_arr;
-
 	g_vars.tmp = g_vars.args;
 	while (g_vars.tmp)
 	{
-		tmp_arr = NULL;
-		token = strtok(g_vars.tmp->content, " ");
-		while (token)
+		g_vars.tmp->arr = _ft_split(g_vars.tmp->content, ' ');
+		int (i) = 0;
+		print_array(g_vars.tmp->arr);
+		while (g_vars.tmp->arr[i])
 		{
-			// while (token && *token == ' ')
-			// {
-			// 	free(token);
-			// 	token = strtok(NULL, " ");
-			// }
-			if (token && *token)
-				ft_lstadd_back(&tmp_arr, ft_lstnew(token));
-			token = ft_strtok(NULL, " ");
+			g_vars.tmp->arr[i] = removequotes(g_vars.tmp->arr[i]);
+			i++;
 		}
-		ft_lstiter(tmp_arr, printf);
-		g_vars.tmp->arr = linkedlist_to_array(tmp_arr);
-		printf("maine\n");
-		ft_lstclear(&tmp_arr, free);
+		print_array(g_vars.tmp->arr);
 		g_vars.tmp = g_vars.tmp->next;
 	}
-	ft_lstclear(&tmp_arr, free);
 }
 
 int	fill_args(void)
 {
 	char	*token;
 
-	if (!g_vars.cmd || !*(g_vars.cmd))
+	if (!g_vars.cmd || !*(g_vars.cmd) || ft_iswhitespace(g_vars.cmd))
 		return (FALSE);
 	token = ft_strtok(g_vars.cmd, "'\"()|&><");
 	while (token)
 	{
-		ft_lstadd_back(&g_vars.args, ft_lstnew(token));
-		g_vars.args->arr = NULL;
+		if (!ft_iswhitespace(token))
+		{
+			ft_lstadd_back(&g_vars.args, ft_lstnew(token));
+			g_vars.args->arr = NULL;
+		}
 		token = ft_strtok(NULL, "'\"()|&><");
 	}
-	g_vars.tmp = g_vars.args;
-	ft_lstiter(g_vars.tmp, printf);
 	if (!ft_check())
 		return (FALSE);
+	g_vars.tmp = g_vars.args;
+	ft_lstiter(g_vars.tmp, printf);
 	split_cmds_args();
-	
 	return (TRUE);
 }
 
