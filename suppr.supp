@@ -1,0 +1,4 @@
+{
+	Memcheck:Leak
+	fun:readline
+}

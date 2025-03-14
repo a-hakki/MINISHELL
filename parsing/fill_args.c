@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/13 03:54:38 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/14 00:11:39 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ extern t_shell	g_vars;
 
 void	throw_error(int error)
 {
+	if (g_vars.exit != 0)
+		return ;
 	if (error == SYNTAX)
 		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == OP)
@@ -72,6 +74,8 @@ void	split_cmds_args(void)
 	while (g_vars.tmp)
 	{
 		g_vars.tmp->arr = _ft_split(g_vars.tmp->content, ' ');
+		if (!g_vars.tmp->arr)
+			return ;
 		int (i) = 0;
 		print_array(g_vars.tmp->arr);
 		while (g_vars.tmp->arr[i])
