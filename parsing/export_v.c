@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:04:41 by ahakki            #+#    #+#             */
-/*   Updated: 2025/03/18 00:34:51 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/18 00:35:22 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ char *expand(char *str, char *var, int i)
     char *new = (char *)malloc(sizeof(char) * (len + 1));
     int j = 0;
     int k = 0;
-
-
 
     while (j < i)
     {
