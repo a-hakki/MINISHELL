@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/15 19:57:48 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/03 14:26:12 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	split_cmds_args(void)
 		if (!g_vars.tmp->arr)
 			return ;
 		int (i) = 0;
-		print_array(g_vars.tmp->arr);
+		// print_array(g_vars.tmp->arr);
 		while (g_vars.tmp->arr[i])
 		{
 			g_vars.tmp->arr[i] = removequotes(g_vars.tmp->arr[i]);
