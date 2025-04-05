@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isvalid.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:43:13 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/12 02:00:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/04 10:26:17 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_par(char *str)
 
 int	isvalid_par(void)
 {
-	g_vars.tmp = g_vars.args;
+	g_vars.tmp = g_vars._args;
 	char (c);
 	while (g_vars.tmp)
 	{
@@ -72,7 +72,7 @@ int	isvalid_par(void)
 
 int	isvalid_quotes(void)
 {
-	t_list (*tmp) = g_vars.args;
+	t_list (*tmp) = g_vars._args;
 	int (len);
 	while (tmp)
 	{
@@ -97,7 +97,7 @@ int	isvalid_quotes(void)
 
 int	isvalid_op(void)
 {
-	t_list (*tmp) = g_vars.args;
+	t_list (*tmp) = g_vars._args;
 	int (len);
 	while (tmp)
 	{
@@ -112,6 +112,8 @@ int	isvalid_op(void)
 			if (is_op((char *)tmp->content) && tmp->next && \
 				ft_iswhitespace((char *)tmp->next->content) && \
 					tmp->next->next && is_op((char *)tmp->next->next->content))
+				return (throw_error(OP), FALSE);
+			if (is_op((char *)tmp->content) && !tmp->next)
 				return (throw_error(OP), FALSE);
 		}
 		tmp = tmp->next;

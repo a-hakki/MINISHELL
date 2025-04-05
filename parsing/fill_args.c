@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/03 14:26:12 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/05 09:23:22 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	split_cmds_args(void)
 			g_vars.tmp->arr[i] = removequotes(g_vars.tmp->arr[i]);
 			i++;
 		}
-		print_array(g_vars.tmp->arr);
+		// print_array(g_vars.tmp->arr);
 		g_vars.tmp = g_vars.tmp->next;
 	}
 }
@@ -97,16 +97,14 @@ int	fill_args(void)
 	token = ft_strtok(g_vars.cmd, "'\"()|&><");
 	while (token)
 	{
+		ft_lstadd_back(&g_vars.args, ft_lstnew(token));
+		g_vars.args->arr = NULL;
 		if (!ft_iswhitespace(token))
-		{
-			ft_lstadd_back(&g_vars.args, ft_lstnew(token));
-			g_vars.args->arr = NULL;
-		}
+			ft_lstadd_back(&g_vars._args, ft_lstnew(token));
 		token = ft_strtok(NULL, "'\"()|&><");
 	}
 	if (!ft_check())
 		return (FALSE);
-	g_vars.tmp = g_vars.args;
 	split_cmds_args();
 	return (TRUE);
 }

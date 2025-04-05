@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/13 23:56:12 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/04 10:10:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_shell
 	char		*cmd;
 	char		*cmd_not_found;
 	t_list		*args;
+	t_list		*_args;
 	t_list		*tmp;
 	t_check		check;
 	int			exit;

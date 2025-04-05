@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/03 14:32:27 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/04 18:04:30 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern t_shell	g_vars;
 
 int	isvalid_syntax(void)
 {
-	t_list (*tmp) = g_vars.args;
+	t_list (*tmp) = g_vars._args;
 	while (tmp)
 	{
 		if (tmp->content)
@@ -27,7 +27,7 @@ int	isvalid_syntax(void)
 				return (throw_error(OP), FALSE);
 			if (!is_par((char *)tmp->content) && is_op((char *)tmp->content) && tmp->next && is_par((char *)tmp->next->content) && *(char *)tmp->next->content == ')')
 				return (throw_error(OP), FALSE);
-			if (is_par((char *)tmp->content) && *(char *)tmp->content == '(' && tmp->next && is_op((char *)tmp->next->content))
+			if (is_par((char *)tmp->content) && *(char *)tmp->content == '(' && tmp->next && is_op((char *)tmp->next->content) && *(char *)tmp->next->content != '<')
 				return (throw_error(OP), FALSE);
 			if (is_par((char *)tmp->content) && *(char *)tmp->content == ')' && tmp->next && !is_op((char *)tmp->next->content) && !is_par((char *)tmp->next->content))
 				return (throw_error(OP), FALSE);
