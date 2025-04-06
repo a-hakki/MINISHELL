@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/04 18:04:30 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/06 15:14:21 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ int	ft_check(void)
 	valid += ft_nodejoin();
 	if (valid != 5)
 		return (FALSE);
-	g_vars.tmp = g_vars.args;
 	return (TRUE);
 }
