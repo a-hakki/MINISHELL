@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 10:05:26 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 15:05:24 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,3 @@ int	fill_args(void)
 	split_cmds_args();
 	return (TRUE);
 }
-
-//we shoud implement the fct that parses the peripheric of the paranthesis
-// () )(  &(&)  ()|  ()a : nooooo
-// >> << ()
-//  (ls )(cat -e M)
