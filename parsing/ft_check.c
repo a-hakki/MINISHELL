@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 15:03:17 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 15:10:26 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	isvalid_syntax(void)
 				return (throw_error(OP), FALSE);
 			if (is_par((char *)tmp->content) && *(char *)tmp->content == '(' && tmp->next && is_op((char *)tmp->next->content) && *(char *)tmp->next->content != '<')
 				return (throw_error(OP), FALSE);
-			if (is_par((char *)tmp->content) && *(char *)tmp->content == ')' && tmp->next && !is_op((char *)tmp->next->content) && !is_par((char *)tmp->next->content) && !ft_iswhitespace((char *)tmp->content))
+			if (is_par((char *)tmp->content) && *(char *)tmp->content == ')' && tmp->next && !is_op((char *)tmp->next->content) && !is_par((char *)tmp->next->content) && !ft_iswhitespace((char *)tmp->next->content))
 				return (printf("2\n") ,throw_error(OP), FALSE);
 		}
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/14 01:23:57 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 15:10:08 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,24 @@ void	execution(void)
 	g_vars.tmp = g_vars.args;
 	while (g_vars.tmp)
 	{
-		cmd_path = get_path(g_vars.envp, g_vars.tmp->arr[0]);
-		if (!cmd_path)
+		if (!is_op((char *)g_vars.tmp->content) && !is_par((char *)g_vars.tmp->content) && !ft_iswhitespace((char *)g_vars.tmp->content))
 		{
-			g_vars.tmp = g_vars.tmp->next;
-			continue ;
+			cmd_path = get_path(g_vars.envp, g_vars.tmp->arr[0]);
+			if (!cmd_path)
+			{
+				g_vars.tmp = g_vars.tmp->next;
+				continue ;
+			}
+			pid_t (pid) = fork();
+			if (pid == 0)
+			{
+				if (execve(cmd_path, g_vars.tmp->arr, g_vars.envp) == -1)
+					ft_free("1", cmd_path);
+			}
+			else
+				wait(NULL);
+			free(cmd_path);
 		}
-		pid_t (pid) = fork();
-		if (pid == 0)
-		{
-			if (execve(cmd_path, g_vars.tmp->arr, g_vars.envp) == -1)
-				ft_free("1", cmd_path);
-		}
-		else
-			wait(NULL);
-		free(cmd_path);
 		g_vars.tmp = g_vars.tmp->next;
 	}
 }
