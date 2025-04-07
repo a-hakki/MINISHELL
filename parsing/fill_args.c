@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/06 13:22:20 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 10:05:26 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ int	fill_args(void)
 	{
 		ft_lstadd_back(&g_vars.args, ft_lstnew(token));
 		g_vars.args->arr = NULL;
-		if (!ft_iswhitespace(token))
-			ft_lstadd_back(&g_vars._args, ft_lstnew(token));
+		// if (!ft_iswhitespace(token))
+		// 	ft_lstadd_back(&g_vars._args, ft_lstnew(token));
 		token = ft_strtok(NULL, "'\"()|&><");
 	}
 	if (!ft_check())

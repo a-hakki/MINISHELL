@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:43:13 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/06 13:22:31 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 10:04:23 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_par(char *str)
 
 int	isvalid_par(void)
 {
-	g_vars.tmp = g_vars._args;
+	g_vars.tmp = g_vars.args;
 	char (c);
 	while (g_vars.tmp)
 	{
@@ -72,7 +72,7 @@ int	isvalid_par(void)
 
 int	isvalid_quotes(void)
 {
-	t_list (*tmp) = g_vars._args;
+	t_list (*tmp) = g_vars.args;
 	int (len);
 	while (tmp)
 	{
@@ -97,7 +97,7 @@ int	isvalid_quotes(void)
 
 int	isvalid_op(void)
 {
-	t_list (*tmp) = g_vars._args;
+	t_list (*tmp) = g_vars.args;
 	int (len);
 	while (tmp)
 	{

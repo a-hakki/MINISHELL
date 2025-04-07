@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/06 15:14:21 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 15:03:17 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ extern t_shell	g_vars;
 
 int	isvalid_syntax(void)
 {
-	t_list (*tmp) = g_vars._args;
+	t_list (*tmp) = g_vars.args;
 	while (tmp)
 	{
 		if (tmp->content)
 		{
 			if (is_par((char *)tmp->content) && tmp->next && is_par((char *)tmp->next->content) && *(char *)tmp->content != *(char *)tmp->next->content)
 				return (throw_error(OP), FALSE);
-			if (!is_par((char *)tmp->content) && !is_op((char *)tmp->content) && tmp->next && is_par((char *)tmp->next->content) && *(char *)tmp->next->content == '(')
+			if (!is_par((char *)tmp->content) && !is_op((char *)tmp->content) && !ft_iswhitespace((char *)tmp->content) && tmp->next && is_par((char *)tmp->next->content) && *(char *)tmp->next->content == '(')
 				return (throw_error(OP), FALSE);
 			if (!is_par((char *)tmp->content) && is_op((char *)tmp->content) && tmp->next && is_par((char *)tmp->next->content) && *(char *)tmp->next->content == ')')
 				return (throw_error(OP), FALSE);
 			if (is_par((char *)tmp->content) && *(char *)tmp->content == '(' && tmp->next && is_op((char *)tmp->next->content) && *(char *)tmp->next->content != '<')
 				return (throw_error(OP), FALSE);
-			if (is_par((char *)tmp->content) && *(char *)tmp->content == ')' && tmp->next && !is_op((char *)tmp->next->content) && !is_par((char *)tmp->next->content))
-				return (throw_error(OP), FALSE);
+			if (is_par((char *)tmp->content) && *(char *)tmp->content == ')' && tmp->next && !is_op((char *)tmp->next->content) && !is_par((char *)tmp->next->content) && !ft_iswhitespace((char *)tmp->content))
+				return (printf("2\n") ,throw_error(OP), FALSE);
 		}
 		tmp = tmp->next;
 	}
