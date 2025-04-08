@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 15:15:17 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/08 17:04:32 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	execution(t_shell *vars)
 	vars->tmp = vars->args;
 	while (vars->tmp && vars->tmp->arr)
 	{
-		print_array(vars->tmp->arr);
 		cmd_path = get_path(vars->envp, vars->tmp->arr[0]);
 		if (!cmd_path)
 		{
