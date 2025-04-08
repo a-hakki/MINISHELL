@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 16:41:00 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/08 17:14:38 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_alloc	*ft_malloc(char *format, int len, int wd, int slen);
 // string fnctions
 size_t	ft_strlen(const char *s);
 size_t	ft_arrlen(char **arr);
+void	ft_putarr(char **arr);
 int		ft_count_char(char *str, char c);
 char	*ft_strdup(const char *src);
 char	**ft_arrdup(char **arr);
