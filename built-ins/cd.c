@@ -6,31 +6,99 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/09 10:37:25 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/09 13:59:25 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "../libft/libft.h"
+
+
+void	update_variable(char **variable, char *new_value, char *key)
+{
+	char *tmp;
+	char *joined;
+
+	free(*variable);
+	tmp = ft_strjoin(key, "=");
+	joined = ft_strjoin(tmp, new_value);
+	free(tmp);
+	*variable = joined;
+}
+
+
+void	update_env(char **env, char *key, char* new_value)
+{
+	int i;
+
+	i = 0;
+	if (!key || !new_value)
+		return ;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0 && env[i][ft_strlen(key)] == '=')
+			return (update_variable(&env[i], new_value, key));
+		i++;
+	}
+}
+
+char **dup_env(char **envp)
+{
+	int		i;
+	char	**new_env;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	new_env = malloc(sizeof(char *) * (i + 1));
+	if (!new_env)
+		return (NULL);
+	i = 0;
+	while (envp[i])
+	{
+		new_env[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	new_env[i] = NULL;
+	return (new_env);
+}
+
 
 int	cd(int ac, char **av, char **env)
 {
 	char	*oldpwd;
 	char	*pwd;
+	char	*home;
 	if (ac > 2)
-		dprintf(2, "cd: too many arguments\n");
+		return (dprintf(2, "cd: too many arguments\n"), FALSE);
 	oldpwd = getcwd(NULL, 0);
-	if(chdir(av[1]))
+	if (av[1] == NULL)
+	{
+    	home = getenv("HOME");
+		if (!home || chdir(home) == -1)
+		{
+			dprintf(2, "cd: HOME not set or invalid\n");
+			return (free(oldpwd), FALSE);
+		}
+		pwd = getcwd(NULL, 0);
+	}
+	else if(chdir(av[1]))
 	{
 		dprintf(2, "cd: No such file or directory\n");
 		return (free(oldpwd), FALSE);
 	}
-	pwd = getcwd(NULL, 0);
-	
-	return (TRUE);
+	else
+		pwd = getcwd(NULL, 0);
+	update_env(env, "PWD", pwd);
+	update_env(env, "OLDPWD", oldpwd);
+	return (free(pwd), free(oldpwd), TRUE);
 }
 
 int main(int ac, char **av, char **envp)
 {
-	cd(ac, av, getenv());
+	char **env;
+
+	env = dup_env(envp);
+	cd(ac, av, env);
 	return (0);
 }
