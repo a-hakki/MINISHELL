@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/09 13:59:25 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/09 15:48:43 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int main(int ac, char **av, char **envp)
 	char **env;
 
 	env = dup_env(envp);
+	printf("%s\n", getcwd(NULL, 0));
 	cd(ac, av, env);
+	printf("%s\n", getcwd(NULL, 0));
 	return (0);
 }
