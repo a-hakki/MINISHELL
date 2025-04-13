@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/13 13:26:03 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/13 13:37:33 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int	cd(int ac, char **av, char **env)
 	char	*pwd;
 	char	*home;
 
+	if (ac > 3 || (ac == 3 && ft_strcmp(av[1], "--")))
+		return (dprintf(2, "cd: too many arguments\n"), 0);
 	oldpwd = getcwd(NULL, 0);
 	if (ac == 1 ||(ac == 2 && !ft_strcmp(av[1], "--")))
 	{
