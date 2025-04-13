@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/13 13:37:33 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/13 16:44:18 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ char **dup_env(char **envp)
 int	cd2(char **av, char **env, char *oldpwd)
 {
 	if (av[1][0] == '-' && ft_strcmp(av[1], "--"))
-		dprintf(2, "cd: No such file or directory: %s\n", av[1]);
+		printfd(2, "cd: %s: invalid option\n", av[1]);
 	else if(chdir(av[1]))
 	{
-		dprintf(2, "cd: No such file or directory: %s\n", av[1]);
+		printfd(2, "cd: No such file or directory: %s\n", av[1]);
 		return (free(oldpwd), FALSE);
 	}
 	return (TRUE);
@@ -76,12 +76,12 @@ int	cd3(char **av, char **env, char *oldpwd)
 {
 	if (ft_strcmp(av[1], "--"))
 	{
-		dprintf(2, "cd: string not in pwd: %s\n", av[1]);
+		printfd(2, "cd: string not in pwd: %s\n", av[1]);
 		return (free(oldpwd), FALSE);
 	}
 	if (chdir(av[2]))
 	{
-		dprintf(2, "cd: No such file or directory: %s\n", av[2]);
+		printfd(2, "cd: No such file or directory: %s\n", av[2]);
 		return (free(oldpwd), FALSE);
 	}
 	return (TRUE);
@@ -94,14 +94,14 @@ int	cd(int ac, char **av, char **env)
 	char	*home;
 
 	if (ac > 3 || (ac == 3 && ft_strcmp(av[1], "--")))
-		return (dprintf(2, "cd: too many arguments\n"), 0);
+		return (printfd(2, "cd: too many arguments\n"), 0);
 	oldpwd = getcwd(NULL, 0);
 	if (ac == 1 ||(ac == 2 && !ft_strcmp(av[1], "--")))
 	{
 		home = getenv("HOME");
 		if (!home || chdir(home) == -1)
 		{
-			dprintf(2, "cd: HOME not set or invalid\n");
+			printfd(2, "cd: HOME not set or invalid\n");
 			return (free(oldpwd), FALSE);
 		}
 		pwd = getcwd(NULL, 0);
