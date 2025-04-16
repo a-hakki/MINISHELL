@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:03:58 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/09 16:53:52 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/16 12:32:41 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ int is_option(char *s)
 	int	i;
 
 	i = 1;
+	if (!s)
+		return (FALSE);
 	if (s[0] != '-')
-		return (0);
+		return (FALSE);
 	while (s[i] == 'n')
 		i++;
 	if (s[i] == '\0')
-		return (1);
-	return (0);
+		return (TRUE);
+	return (FALSE);
 }
 
 int	echo(int ac, char **av)
@@ -37,7 +39,7 @@ int	echo(int ac, char **av)
 		return (printf("\n"), TRUE);
 	while (av[i])
 	{
-		if (is_option(av[i]) == 0)
+		if (is_option(av[i]) == FALSE)
 			break ;
 		i++;
 	}
