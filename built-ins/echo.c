@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:03:58 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/17 15:26:30 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/17 17:50:19 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_option(char *s)
 	return (FALSE);
 }
 
-int	echo(int ac, char **av)
+int	echo(int ac, char **av, t_shell *vars)
 {
 	int	i;
 	int	check;
