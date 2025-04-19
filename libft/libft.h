@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 17:14:38 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/18 18:11:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ typedef struct s_list
 {
 	void			*content;
 	char			**arr;
+	int				type;
 	struct s_list	*next;
+	struct s_list	*child;
 }					t_list;
 
 typedef struct s_lst
@@ -91,6 +93,7 @@ char	*ft_strchr(const char *s, int c);
 int		ft_strchr_index(const char *s, char c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strstr(char const *str, char const *to_find);
+int		ft_stristr(char const *str, char const *to_find);
 char	*ft_strnstr(const char *str, const char *to_find, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(char const *s1, char const *s2);
@@ -142,6 +145,8 @@ void	lst_addfront(t_lst **lst, t_lst *new);
 void	lst_clear(t_lst **lst);
 t_lst	*lst_last(t_lst *lst);
 int		lst_size(t_lst *lst);
+t_list  *ft_lstndup(t_list *head, t_list *stop);
+t_list	*ft_lstdup(t_list *head);
 
 // printfd unctions
 int		fd_putnbr(int fd, int n);

@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_lstndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/17 21:37:25 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/04/18 18:01:48 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/04/18 18:10:34 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../libft.h"
 
-int	pwd(int ac, char **av, t_shell *vars)
+t_list	*ft_lstndup(t_list *head, t_list *stop)
 {
-	char	*cwd;
+	t_list	*new;
+	t_list	*lst;
 
-	(void)av;
-	(void)vars;
-	if (ac != 1)
-		return (printfd(2, "pwd: too many arguments\n"), TRUE);
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-		return (perror("getcwd failed"), FALSE);
-	printf("%s\n", cwd);
-	free(cwd);
-	return (TRUE);
+	new = NULL;
+	lst = head;
+	while (lst && lst != stop)
+	{
+		ft_lstadd_back(&new, ft_lstnew(ft_strdup(lst->content)));
+		lst = lst->next;
+	}
+	return (new);
 }

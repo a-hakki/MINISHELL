@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_stristr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/17 21:37:25 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/04/18 11:57:45 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/04/18 12:02:21 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../libft.h"
 
-int	pwd(int ac, char **av, t_shell *vars)
+int ft_stristr(char const *str, char const *to_find)
 {
-	char	*cwd;
+	size_t	i;
+	size_t	j;
 
-	(void)av;
-	(void)vars;
-	if (ac != 1)
-		return (printfd(2, "pwd: too many arguments\n"), TRUE);
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-		return (perror("getcwd failed"), FALSE);
-	printf("%s\n", cwd);
-	free(cwd);
-	return (TRUE);
+	i = 0;
+	j = 0;
+	if (!str || !to_find)
+		return (-1);
+	if (to_find[i] == '\0')
+		return (0);
+	while (str[i])
+	{
+		while (str[i] == to_find[j])
+		{
+			i++;
+			j++;
+			if (to_find[j] == '\0')
+				return (i);
+		}
+		i = i - j;
+		i++;
+		j = 0;
+	}
+	return (-1);
 }

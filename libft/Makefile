@@ -35,8 +35,11 @@ SOURCES = \
 		new/ft_list2arr.c \
 		new/ft_strinsert.c \
 		new/ft_strstr.c \
+		new/ft_stristr.c \
 		new/ft_arrdup.c \
 		new/ft_putarr.c \
+		new/ft_lstndup.c \
+		new/ft_lstdup.c \
 		\
 		\
 		1.base/ft_isalnum.c \
