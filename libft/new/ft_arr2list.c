@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reconfigure.c                                      :+:      :+:    :+:   */
+/*   ft_arr2list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 14:59:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/18 14:59:30 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/04/20 17:00:55 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/04/20 17:03:01 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../libft.h"
 
-int reconfigure(t_shell *vars)
+t_list	*ft_arr2list(char **arr)
 {
-    
+	t_list	*list;
+	t_list	*new;
+
+	if (!arr)
+		return (NULL);
+	list = NULL;
+	while (*arr)
+	{
+		new = ft_lstnew(ft_strdup(*arr));
+		if (!new)
+			return (ft_lstclear(&list, free), NULL);
+		ft_lstadd_back(&list, new);
+		arr++;
+	}
+	return (list);
 }

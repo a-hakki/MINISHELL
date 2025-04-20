@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   export_v.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:04:41 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/20 15:37:38 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 16:34:56 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*export_v(char *s)
+{
+	char	*value;
+
+	if (!s)
+		return (NULL);
+	value = getenv(s);
+	return (value);
+}
 
 char	*expand(char *str, char *var, int i)
 {
@@ -43,4 +53,20 @@ char	*expand(char *str, char *var, int i)
 	return (free(str), new);
 }
 
+int	main(int ac, char **av)
+{
+	char	*str;
+	char	*var;
+	char	*temp;
+	int		i;
 
+	str = ft_strdup(av[1]);
+	var = export_v(ft_strdup(av[2]));
+	i = ft_strchr_index(str, '$');
+	temp = expand(str, var, i);
+	if (i != -1)
+	{
+		printf("%s\n", temp);
+		free(temp);
+	}
+}
