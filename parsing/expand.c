@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:04:41 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/20 15:08:24 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/20 15:37:38 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,5 @@ char	*expand(char *str, char *var, int i)
 	new[j] = '\0';
 	return (free(str), new);
 }
+
 
