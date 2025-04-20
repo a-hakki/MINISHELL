@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:47:01 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/20 21:25:57 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/20 21:31:24 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char    *get_env(char *k, t_shell *vars)
     while (env[i])
     {
         if (ft_strnstr(env[i], k, ft_strlen(k)) == env[i] && env[i][ft_strlen(k)] == '=')
-            return (ft_strdup(env[i] + ft_strlen(k) + 1));
+            return (env[i] + ft_strlen(k) + 1);
         i++;
     }
     return (NULL);
