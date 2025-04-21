@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strinsert.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:50:56 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/20 21:23:52 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 17:17:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strinsert(char *base, char *insert, int index)
 
 	if (!base || !insert)
 		return (NULL);
-	len = ft_strlen(base) + ft_;
+	len = ft_strlen(base);
 	if (!(index >= 0 && index <= len))
 		index = (index < 0) * 0 + (index > len) * len;
 	expand = (char *)malloc(len + ft_strlen(insert) + 1);
