@@ -7,6 +7,9 @@
 - bdalt tartib dyal checks dok l khamssa
 - saba9t dyal join had taht mnha dart pop it means ila kan chihaja khassha joina tatjoina tatb9a ghi l white spaces li khasshom i tpopaw so mn ba3d tatcheckiw syntax
 - nta hwal t3ad ta9ra dakchi mzn
+## -----
+- ah o export mn lminishell fiha segv hit 100% machi nafss data li 3ndhom 
+- export m ghada b l main dyalha
 
 
 
