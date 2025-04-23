@@ -1,4 +1,16 @@
 
+
+# ----------------------------------------------------------#
+## read this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+- hawalt n9ad dak l error li sift lik f discord
+- bdalt tartib dyal checks dok l khamssa
+- saba9t dyal join had taht mnha dart pop it means ila kan chihaja khassha joina tatjoina tatb9a ghi l white spaces li khasshom i tpopaw so mn ba3d tatcheckiw syntax
+- nta hwal t3ad ta9ra dakchi mzn
+
+
+
+
 # SEGV
     ila mssahna l env : MAZAL MAKHDMNAHACH
 
