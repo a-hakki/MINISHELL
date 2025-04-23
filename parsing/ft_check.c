@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/20 17:56:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:46:54 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int	isvalid_syntax(t_shell *vars)
 
 int	ft_check(t_shell *vars)
 {
+	if (ft_nodejoin(vars) == FALSE)
+		return (FALSE);
+	pop_spaces(vars);
 	if (isvalid_quotes(vars) == FALSE)
 		return (FALSE);
 	if (isvalid_op(vars) == FALSE)
@@ -48,8 +51,6 @@ int	ft_check(t_shell *vars)
 	if (isvalid_syntax(vars) == FALSE)
 		return (FALSE);
 	if (isvalid_par(vars) == FALSE)
-		return (FALSE);
-	if (ft_nodejoin(vars) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/21 21:05:21 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/23 09:49:42 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,17 +126,15 @@ int	export(int ac, char **av, t_shell *vars)
 	return (TRUE);
 }
 
+// int main(int ac, char **av, char **envp)
+// {
+// 	t_shell vars;
 
-
-int main(int ac, char **av, char **envp)
-{
-	t_shell vars;
-
-	vars.env = ft_arr2list(envp);
-	// ft_lstiter(vars.env, printf);
-	printf("before---------------------------------------------------------------------\n");
-	export(ac, av, &vars);
-	printf("after---------------------------------------------------------------------\n");
-	ft_lstiter(vars.env, printf);
-	return (0);
-}
+// 	vars.env = ft_arr2list(envp);
+// 	// ft_lstiter(vars.env, printf);
+// 	printf("before---------------------------------------------------------------------\n");
+// 	export(ac, av, &vars);
+// 	printf("after---------------------------------------------------------------------\n");
+// 	ft_lstiter(vars.env, printf);
+// 	return (0);
+// }
