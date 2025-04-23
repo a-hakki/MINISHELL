@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/23 09:46:54 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/23 14:02:52 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ int	isvalid_syntax(t_shell *vars)
 
 int	ft_check(t_shell *vars)
 {
-	if (ft_nodejoin(vars) == FALSE)
-		return (FALSE);
-	pop_spaces(vars);
 	if (isvalid_quotes(vars) == FALSE)
 		return (FALSE);
 	if (isvalid_op(vars) == FALSE)
 		return (FALSE);
-	if (isvalid_syntax(vars) == FALSE)
-		return (FALSE);
 	if (isvalid_par(vars) == FALSE)
+		return (FALSE);
+	if (ft_nodejoin(vars) == FALSE)
+		return (FALSE);
+	pop_spaces(vars);
+	if (isvalid_syntax(vars) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }
