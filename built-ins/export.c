@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/24 17:44:04 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/24 19:25:23 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_append(char *v, char *av, t_shell *vars)
 	tmp = vars->env;
 	while (tmp)
 	{
-		if (ft_strncmp((char *)tmp->content, v, ft_strlen(v)) == 0 &&
+		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) &&
 			((char *)tmp->content)[ft_strlen(v)] == '=')
 		{
 			old_val = ft_strdup((char *)tmp->content + ft_strlen(v) + 1);
@@ -109,6 +109,34 @@ void	ft_printexp(t_shell	*vars)
 		tmp = tmp->next;
 	}
 }
+int	ft_isvn(char *v, int flag, t_shell *vars)
+{
+	int		i;
+	t_list	*tmp;
+
+	i = 0;
+	tmp = vars->env;
+	if (!ft_strncmp(v, "_", 1) && !ft_isdigit(*v))
+		return (FALSE);
+	while (v && v[i])
+	{
+		if (flag == 1 && ft_strchr("!@#$%^&*()-[]{}|\\:;\"'<>,.?/~` /", v[i]))
+			return (FALSE);
+		if (flag == 0 && ft_strchr("!@#$%^&*()-+=[]{}|\\:;\"'<>,.?/~` /", v[i]))
+			return (FALSE);
+		i++;
+	}
+	while (flag == 0 && tmp)
+	{
+		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) \
+		&& (char *)tmp->content[ft_strlen[v]] == '\0')
+			return (TRUE);
+		tmp = tmp->next;
+	}
+	if (!flag)
+		ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(v)));
+	return (TRUE);
+}
 
 int	export(int ac, char **av, t_shell *vars)
 {
@@ -121,20 +149,24 @@ int	export(int ac, char **av, t_shell *vars)
 	while (i < ac)
 	{
 		v = var_name(av[i], '+');
-		if (v && ft_strncmp(av[i] + ft_strlen(v), "+=", 2) == 0)
+		if (ft_isvn(v, 1, vars) && !ft_strncmp(av[i] + ft_strlen(v), "+=", 2))
 		{
 			ft_append(v, av[i++], vars);
 			continue;
 		}
 		v = var_name(av[i], '=');
-		if (v && !ft_strchr(v, '+'))
+		if (ft_isvn(v, 1, vars) && !ft_strchr(v, '+'))
 		{
 			ft_add(v, av[i++], vars);
 			continue;
 		}
-		printfd(2, "export: `%s': not a valid identifier\n", av[i]);
+		if (ft_isvn(av[i], 0, vars))
+		{
+			i++;
+			continue;
+		}
+		printfd(2, "export: `%s': not a valid identifier\n", av[i++]);
 		ft_free("1", v);
-		i++;
 	}
 	return (TRUE);
 }
