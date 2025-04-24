@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/17 18:43:31 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:11:03 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
 	vars.envp = ft_arrdup(envp);
+	vars.env = ft_arr2list(vars.envp);
 	signal(SIGINT, foo);
 	prompt_loop(&vars);
 	return (0);

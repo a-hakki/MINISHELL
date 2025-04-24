@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/23 09:48:50 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/23 23:01:30 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,13 +209,13 @@ int	fill_args(t_shell *vars)
 
 	if (!vars->cmd || !*(vars->cmd) || ft_iswhitespace(vars->cmd))
 		return (FALSE);
-	token = ft_strtok(vars->cmd, "'\"()|&");
+	token = ft_strtok(vars->cmd, "'\"()|&<>");
 	vars->args = NULL;
 	while (token)
 	{
 		ft_lstadd_back(&vars->args, ft_lstnew(token));
 		vars->args->arr = NULL;
-		token = ft_strtok(NULL, "'\"()|&");
+		token = ft_strtok(NULL, "'\"()|&<>");
 	}
 	if (!ft_check(vars))
 		return (FALSE);

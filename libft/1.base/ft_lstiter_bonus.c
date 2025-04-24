@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:25:23 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 17:05:42 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/24 17:30:44 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_lstiter(t_list *lst, int (*f)(char const *, ...))
 	{
 		while (lst)
 		{
-			f("%s$\n", (char *)lst->content);
+			f("%s\n", (char *)lst->content);
 			lst = lst->next;
 		}
 	}

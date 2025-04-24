@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/23 09:49:42 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/24 17:44:04 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,22 @@ char	*var_name(char *s, char flag)
 
 void	ft_add(char *v, char *av, t_shell *vars)
 {
-	vars->tmp = vars->env;
-	while (vars->tmp)
+	t_list	*tmp;
+
+	tmp = vars->env;
+	while (tmp)
 	{
-		if (ft_strncmp((char *)vars->tmp->content, v, ft_strlen(v)) == 0 \
-			&& ((char *)vars->tmp->content)[ft_strlen(v)] == '=' \
+		if (ft_strncmp((char *)tmp->content, v, ft_strlen(v)) == 0 \
+			&& ((char *)tmp->content)[ft_strlen(v)] == '=' \
 				&& ft_strlen(v) <= ft_strlen(av))
 		{
-			free(vars->tmp->content);
-			vars->tmp->content = ft_strdup(av);
+			free(tmp->content);
+			tmp->content = ft_strdup(av);
 			break;
 		}
-		vars->tmp = vars->tmp->next;
+		tmp = tmp->next;
 	}
-	if (!vars->tmp)
+	if (!tmp)
 		ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(av)));
 	free(v);
 }
@@ -67,35 +69,46 @@ char	*ft_strjoin_f(char *s1, char *s2, int free_s)
 	return (res);
 }
 
-
 void	ft_append(char *v, char *av, t_shell *vars)
 {
 	char	*new_val;
 	char	*old_val;
 	char	*appended;
+	t_list	*tmp;
 
 	if (ft_strncmp(av + ft_strlen(v), "+=", 2) != 0)
 		return (free(v));
-	vars->tmp = vars->env;
-	while (vars->tmp)
+	tmp = vars->env;
+	while (tmp)
 	{
-		if (ft_strncmp((char *)vars->tmp->content, v, ft_strlen(v)) == 0 &&
-			((char *)vars->tmp->content)[ft_strlen(v)] == '=')
+		if (ft_strncmp((char *)tmp->content, v, ft_strlen(v)) == 0 &&
+			((char *)tmp->content)[ft_strlen(v)] == '=')
 		{
-			old_val = ft_strdup((char *)vars->tmp->content + ft_strlen(v) + 1);
+			old_val = ft_strdup((char *)tmp->content + ft_strlen(v) + 1);
 			new_val = av + ft_strlen(v) + 2;
 			appended = ft_strjoin(old_val, new_val);
-			ft_free("11", old_val, vars->tmp->content);
-			vars->tmp->content = ft_strjoin(v, "=");
-			vars->tmp->content = ft_strjoin_f(vars->tmp->content, appended, 1);
+			ft_free("11", old_val, tmp->content);
+			tmp->content = ft_strjoin(v, "=");
+			tmp->content = ft_strjoin_f(tmp->content, appended, 1);
 			return ((void)ft_free("11", appended, v));
 		}
-		vars->tmp = vars->tmp->next;
+		tmp = tmp->next;
 	}
 	free(v);
 }
+void	ft_printexp(t_shell	*vars)
+{
+	t_list	*tmp;
+	char	*str;
 
-
+	tmp = vars->env;
+	while (tmp)
+	{
+		str = (char *)tmp->content;
+		printf("declare -x %s\n", str);
+		tmp = tmp->next;
+	}
+}
 
 int	export(int ac, char **av, t_shell *vars)
 {
@@ -103,20 +116,20 @@ int	export(int ac, char **av, t_shell *vars)
 	int		i;
 
 	i = 1;
+	if (ac == 1)
+		return (ft_printexp(vars), TRUE);
 	while (i < ac)
 	{
 		v = var_name(av[i], '+');
 		if (v && ft_strncmp(av[i] + ft_strlen(v), "+=", 2) == 0)
 		{
-			ft_append(v, av[i], vars);
-			i++;
+			ft_append(v, av[i++], vars);
 			continue;
 		}
 		v = var_name(av[i], '=');
 		if (v && !ft_strchr(v, '+'))
 		{
-			ft_add(v, av[i], vars);
-			i++;
+			ft_add(v, av[i++], vars);
 			continue;
 		}
 		printfd(2, "export: `%s': not a valid identifier\n", av[i]);
