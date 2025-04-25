@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/24 19:25:23 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:19:32 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ void	ft_append(char *v, char *av, t_shell *vars)
 	char	*appended;
 	t_list	*tmp;
 
-	if (ft_strncmp(av + ft_strlen(v), "+=", 2) != 0)
-		return (free(v));
 	tmp = vars->env;
 	while (tmp)
 	{
@@ -94,6 +92,9 @@ void	ft_append(char *v, char *av, t_shell *vars)
 		}
 		tmp = tmp->next;
 	}
+	new_val = av + ft_strlen(v) + 2;
+	appended = ft_strjoin_f(ft_strjoin(v, "="), new_val, 1);
+	ft_lstadd_back(&vars->env, ft_lstnew(appended));
 	free(v);
 }
 void	ft_printexp(t_shell	*vars)
@@ -116,27 +117,29 @@ int	ft_isvn(char *v, int flag, t_shell *vars)
 
 	i = 0;
 	tmp = vars->env;
-	if (!ft_strncmp(v, "_", 1) && !ft_isdigit(*v))
+	if (!v || (!ft_isalpha(v[0]) && v[0] != '_'))
 		return (FALSE);
 	while (v && v[i])
 	{
-		if (flag == 1 && ft_strchr("!@#$%^&*()-[]{}|\\:;\"'<>,.?/~` /", v[i]))
-			return (FALSE);
-		if (flag == 0 && ft_strchr("!@#$%^&*()-+=[]{}|\\:;\"'<>,.?/~` /", v[i]))
+		if ((flag == 1 && ft_strchr("!@#$%^&*()-[]{}|\\:;\"'<>,.?/~` /", v[i])) ||
+			(flag == 0 && ft_strchr("!@#$%^&*()-+=[]{}|\\:;\"'<>,.?/~` /", v[i])))
 			return (FALSE);
 		i++;
 	}
-	while (flag == 0 && tmp)
+	if (flag == 0)
 	{
-		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) \
-		&& (char *)tmp->content[ft_strlen[v]] == '\0')
-			return (TRUE);
-		tmp = tmp->next;
-	}
-	if (!flag)
+		while (tmp)
+		{
+			if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) &&
+				((char *)tmp->content)[ft_strlen(v)] == '\0')
+				return (TRUE);
+			tmp = tmp->next;
+		}
 		ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(v)));
+	}
 	return (TRUE);
 }
+
 
 int	export(int ac, char **av, t_shell *vars)
 {
@@ -149,14 +152,17 @@ int	export(int ac, char **av, t_shell *vars)
 	while (i < ac)
 	{
 		v = var_name(av[i], '+');
+		printf("%s\n", v);
 		if (ft_isvn(v, 1, vars) && !ft_strncmp(av[i] + ft_strlen(v), "+=", 2))
 		{
 			ft_append(v, av[i++], vars);
 			continue;
 		}
 		v = var_name(av[i], '=');
+		printf("%s\n", v);
 		if (ft_isvn(v, 1, vars) && !ft_strchr(v, '+'))
 		{
+			printf("%i\n", ft_isvn(v, 1, vars));			
 			ft_add(v, av[i++], vars);
 			continue;
 		}
