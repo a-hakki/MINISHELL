@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/25 15:19:32 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:35:41 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,16 @@ void	ft_append(char *v, char *av, t_shell *vars)
 void	ft_printexp(t_shell	*vars)
 {
 	t_list	*tmp;
+	char	*new_str;
 	char	*str;
 
 	tmp = vars->env;
 	while (tmp)
 	{
 		str = (char *)tmp->content;
+		new_str = ft_strinsert(str, "\"", ft_strchr_index(str, '=') + 1);
+		ft_free("1", str);
+		str = ft_strjoin_f(new_str, "\"", 1);
 		printf("declare -x %s\n", str);
 		tmp = tmp->next;
 	}
