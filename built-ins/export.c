@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/27 10:56:54 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/27 11:29:28 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ void	ft_add(char *v, char *av, t_shell *vars)
 	while (tmp)
 	{
 		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v))\
-			&& (((char *)tmp->content)[ft_strlen(v)] == '=' || !((char *)tmp->content)[ft_strlen(v)]) \
-				&& ft_strlen(v) <= ft_strlen(av))
+			&& (((char *)tmp->content)[ft_strlen(v)] == '=' \
+				|| ((char *)tmp->content)[ft_strlen(v)] == '\0') \
+					&& ft_strlen(v) <= ft_strlen(av))
 		{
 			free(tmp->content);
 			tmp->content = ft_strdup(av);

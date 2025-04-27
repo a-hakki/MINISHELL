@@ -16,11 +16,6 @@ lss="amine"
 ```
 
 
-## -----
-- ah o export mn lminishell fiha segv hit 100% machi nafss data li 3ndhom 
-- export m ghada b l main dyalha
-
-
 
 
 # SEGV
