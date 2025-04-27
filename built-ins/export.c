@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/26 15:15:05 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/27 10:56:54 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	ft_add(char *v, char *av, t_shell *vars)
 	tmp = vars->env;
 	while (tmp)
 	{
-		if (ft_strncmp((char *)tmp->content, v, ft_strlen(v)) == 0 \
-			&& ((char *)tmp->content)[ft_strlen(v)] == '=' \
+		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v))\
+			&& (((char *)tmp->content)[ft_strlen(v)] == '=' || !((char *)tmp->content)[ft_strlen(v)]) \
 				&& ft_strlen(v) <= ft_strlen(av))
 		{
 			free(tmp->content);
@@ -160,17 +160,14 @@ int	export(int ac, char **av, t_shell *vars)
 	while (i < ac)
 	{
 		v = var_name(av[i], '+');
-		printf("%s\n", v);
 		if (ft_isvn(v, 1, vars) && !ft_strncmp(av[i] + ft_strlen(v), "+=", 2))
 		{
 			ft_append(v, av[i++], vars);
 			continue;
 		}
 		v = var_name(av[i], '=');
-		printf("%s\n", v);
 		if (ft_isvn(v, 1, vars) && !ft_strchr(v, '+'))
-		{
-			printf("%i\n", ft_isvn(v, 1, vars));			
+		{			
 			ft_add(v, av[i++], vars);
 			continue;
 		}

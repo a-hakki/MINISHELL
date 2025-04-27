@@ -8,9 +8,9 @@
 ```bash
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-declare -x ls
-declare -x lss
-declare -x lss="amine"
+This issue has been addressed
+lss
+lss="amine"
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ```
