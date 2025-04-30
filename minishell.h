@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/23 09:49:25 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/30 03:51:23 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,31 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 // # include "pipex/pipex.h"
 
 # define M "Minishell"
 
 typedef enum error
 {
-	SYNTAX,
+	SYNTAX = 500,
 	CHARS,
 	OP,
 	CMD_NOT_FOUND
 }			t_error;
 
-// typedef enum type
-// {
-	// NONE,
-	// SUBSHELL,
-	// OR,
-	// AND,
-	// PIPE,
-	// READ,
-	// WRITE,
-	// APPEND,
-	// HEREDOC,
-	// CMD
-// }			t_type;
+typedef enum type
+{
+	SUBSHELL,
+	OR,
+	AND,
+	PIPE,
+	READ,
+	WRITE,
+	APPEND,
+	HEREDOC,
+	CMD
+}			t_type;
 
 typedef struct s_check
 {
@@ -57,14 +57,15 @@ typedef struct s_check
 
 typedef struct s_shell
 {
+	int			exit;
 	char		**envp;
-	t_list		*env;
 	char		*cmd;
 	char		*cmd_not_found;
+	t_list		*env;
 	t_list		*args;
 	t_list		*tmp;
 	t_check		check;
-	int			exit;
+	t_list		*ast;
 }				t_shell;
 
 // Parsing Functions
@@ -76,11 +77,14 @@ int		isvalid_op(t_shell *vars);
 int		is_op(char *str);
 int		is_par(char *str);
 int		isvalid_quotes(t_shell *vars);
-void	throw_error(int error);
+void	throw_error(int error, char *file);
 char	*removequotes(char *str);
+char	**removequotes_arr(char **arr);
 char	**_ft_split(char const *s, char b);
 void	pop_spaces(t_shell *vars);
-
+//
+t_list	*ast_builder(t_list **cursor);
+//
 // Built-ins Functions
 int		cd(int ac, char **av, t_shell *vars);
 int		echo(int ac, char **av, t_shell *vars);
@@ -89,6 +93,7 @@ int		ft_exit(int ac, char **av, t_shell *vars);
 int		export(int ac, char **av, t_shell *vars);
 int		pwd(int ac, char **av, t_shell *vars);
 int		unset(int ac, char **av, t_shell *vars);
+char	*get_env(char *k, t_shell *vars);
 
 // execution Functions
 void	execution(t_shell *vars);

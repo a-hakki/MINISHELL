@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/20 17:05:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/28 09:49:13 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,29 @@ char	*removequotes(char *str)
 	ft_init(3, &i, &j, &c);
 	while (str[i])
 	{
-		if ((str[i] == '\'' || str[i] == '"') && c == 0)
-			c = str[i++];
+		if ((str[i] == '\'' || str[i] == '"') && !c)
+			c = str[i];
 		else if (str[i] == c)
-		{
 			c = 0;
-			i++;
-		}
 		else
-			result[j++] = str[i++];
+			result[j++] = str[i];
+		i++;
 	}
 	result[j] = '\0';
 	return (free(str), result);
+}
+
+char	**removequotes_arr(char **arr)
+{
+	int		i;
+
+	if (!arr)
+		return (NULL);
+	i = 0;
+	while (arr[i])
+	{
+		arr[i] = removequotes(arr[i]);
+		i++;
+	}
+	return (arr);
 }

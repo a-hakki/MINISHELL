@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/24 17:23:31 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/30 04:47:38 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 
 extern t_shell	g_vars;
 
-int	path_index(char **envp, char *s)
-{
-	int	i;
+// int	path_index(char **envp, char *s)
+// {
+// 	int	i;
 
-	i = 0;
-	while (envp[i])
-	{
-		if (!strncmp(s, envp[i], 5))
-			return (i);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		if (!ft_strncmp(s, envp[i], 5))
+// 			return (i);
+// 		i++;
+// 	}
+// 	// need to review and remove and use get_env...
+// 	return (0);
+// }
 
 int	check_built_ins(char **arr, t_shell *vars)
 {
@@ -49,32 +50,55 @@ int	check_built_ins(char **arr, t_shell *vars)
 	return (FALSE);
 }
 
-char	*get_path(char **envp, char *cmd)
+int is_dir(const char *path)
+{
+	struct stat	sb;
+
+	if (stat(path, &sb) == -1)
+		return (0);
+	return (S_ISDIR(sb.st_mode));
+	// handle directory exit status and error
+}
+
+char	*handle_dir(char *path)
+{
+	if (is_dir(path))
+	{
+		printfd(2, M": %s: Is a directory\n", path);
+		g_vars.exit = 126;
+		return (NULL);
+	}
+	if (access(path, X_OK) == 0)
+		return (ft_strdup(path));
+	return (throw_error(ENOENT, path), NULL);
+}
+
+char	*get_path(char *cmd, t_shell *vars)
 {
 	char	**paths;
 	char	*checker;
 	char	*path;
 	int		i;
 
-	if (access(cmd, X_OK) == 0)
-		return (ft_strdup(cmd));
-	paths = ft_split(envp[path_index(envp, "PATH=")] + 5, ':');
-	if (!paths)
-		return (NULL);
+	if (ft_strchr(cmd, '/'))
+		return (handle_dir(cmd));
+	paths = ft_split(get_env("PATH", vars), ':');
+	if (!paths || !*paths)
+		return (throw_error(ENOENT, cmd), NULL);
 	i = 0;
 	while (paths && paths[i])
 	{
 		path = ft_strjoin(paths[i++], "/");
 		checker = ft_strjoin(path, cmd);
-		if (access(checker, X_OK) == 0)
+		if (!access(checker, X_OK) && !is_dir(checker))
+		{
 			if (!ft_strnstr(checker, "//", ft_strlen(checker)))
 				return (ft_free("21", paths, path), checker);
+		}
 		ft_free("11", checker, path);
 	}
-	ft_free("2", paths);
-	g_vars.cmd_not_found = cmd;
 	g_vars.exit = 0;
-	return (throw_error(CMD_NOT_FOUND), NULL);
+	return (ft_free("2", paths), throw_error(CMD_NOT_FOUND, cmd), NULL);
 }
 
 void	execution(t_shell *vars)
@@ -82,14 +106,14 @@ void	execution(t_shell *vars)
 	char	*cmd_path;
 
 	vars->tmp = vars->args;
-	while (vars->tmp && vars->tmp->arr)
+	while (vars->tmp)
 	{
 		if (check_built_ins(vars->tmp->arr, vars) == TRUE)
 		{
 			vars->tmp = vars->tmp->next;
 			continue ;
 		}
-		cmd_path = get_path(vars->envp, vars->tmp->arr[0]);
+		cmd_path = get_path(*vars->tmp->arr, vars);
 		if (!cmd_path)
 		{
 			vars->tmp = vars->tmp->next;

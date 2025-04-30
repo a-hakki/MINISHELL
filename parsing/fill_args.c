@@ -3,119 +3,117 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/26 15:14:20 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/30 04:12:38 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-extern t_shell	g_vars;
-
-void	throw_error(int error)
+void	print_ast(t_list *node, int depth)
 {
-	if (error == SYNTAX)
-		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
-	if (error == OP)
-		printfd(2, "Invalid Syntax : Error in operators input\n");
-	if (error == CMD_NOT_FOUND)
-		printfd(2, "Command not found : %s\n", g_vars.cmd_not_found);
-	g_vars.exit = 127;
-}
-
-int	ft_nodejoin(t_shell *vars)
-{
-	char *(new_content), *(tmp_content);
-	t_list *(to_delete), *(tmp) = vars->args;
-	if (tmp && is_op((char *)tmp->content))
-		return (throw_error(OP), FALSE);
-	while (tmp && tmp->next)
+	while (node)
 	{
-		tmp_content = (char *)tmp->content;
-		if (!is_op(tmp_content) && !is_op((char *)tmp->next->content) && \
-			!is_par(tmp_content) && !is_par((char *)tmp->next->content))
-		{
-			new_content = ft_strjoin(tmp_content, (char *)tmp->next->content);
-			if (!new_content)
-				return (FALSE);
-			free(tmp->content);
-			tmp->content = new_content;
-			to_delete = tmp->next;
-			tmp->next = tmp->next->next;
-			ft_lstdelone(to_delete, free);
-		}
+		for (int i = 0; i < depth; i++)
+			printf("	");
+		if (node->content)
+			printf("- %s\n", (char *)node->content);
 		else
-			tmp = tmp->next;
+			printf("- (group)\n");
+		if (node->arr)
+		{
+			printf("	Array elements:\n");
+			for (int i = 0; node->arr[i] != NULL; i++)
+			{
+				for (int j = 0; j < depth + 1; j++)
+					printf("	");
+				printf("- %s\n", node->arr[i]);
+			}
+		}
+		if (node->child)
+			print_ast(node->child, depth + 1);
+		node = node->next;
 	}
-	if (tmp && is_op((char *)tmp->content))
-		return (throw_error(OP), FALSE);
-	return (TRUE);
 }
 
-void	pop_spaces(t_shell *vars)
+t_type define_type(char *content)
+{
+	if (!content)
+		return (SUBSHELL);
+	if (!ft_strcmp(content, "||"))
+		return (OR);
+	if (!ft_strcmp(content, "&&"))
+		return (AND);
+	if (!ft_strcmp(content, "|"))
+		return (PIPE);
+	return (CMD);
+}
+
+t_list	*create_node(void *content)
 {
 	t_list	*new;
-	t_list	*tmp;
-	t_list	*next;
-	t_list	*node;
 
-	tmp = vars->args;
-	new = NULL;
-	while (tmp)
-	{
-		next = tmp->next;
-		if (ft_iswhitespace(tmp->content) == FALSE)
-		{
-			node = ft_lstnew(ft_strdup(tmp->content));
-			node->arr = ft_arrdup(tmp->arr);
-			ft_lstadd_back(&new, node);
-		}
-		ft_free("12", tmp->content, tmp->arr);
-		free(tmp);
-		tmp = next;
-	}
-	vars->args = new;
-}
-
-void	split_cmds_args(t_shell *vars)
-{
-	int	i;
-
-	vars->tmp = vars->args;
-	while (vars->tmp)
-	{
-		vars->tmp->arr = _ft_split(vars->tmp->content, ' ');
-		if (!vars->tmp->arr)
-			return ;
-		i = 0;
-		while (vars->tmp->arr[i])
-		{
-			vars->tmp->arr[i] = removequotes(vars->tmp->arr[i]);
-			i++;
-		}
-		vars->tmp = vars->tmp->next;
-	}
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->arr = removequotes_arr(_ft_split((char *)content, ' '));
+	new->type = define_type(content);
+	new->child = NULL;
+	new->next = NULL;
+	return (new);
 }
 
 int	fill_args(t_shell *vars)
 {
 	char	*token;
 
-	if (!vars->cmd || !*(vars->cmd) || ft_iswhitespace(vars->cmd))
+	if (!*vars->cmd)
 		return (FALSE);
-	token = ft_strtok(vars->cmd, "'\"()|&<>");
+	token = ft_strtok(vars->cmd, "'\"()|&");
 	vars->args = NULL;
 	while (token)
 	{
-		ft_lstadd_back(&vars->args, ft_lstnew(token));
-		vars->args->arr = NULL;
-		token = ft_strtok(NULL, "'\"()|&<>");
+		ft_lstadd_back(&vars->args, create_node(token));
+		token = ft_strtok(NULL, "'\"()|&");
 	}
 	if (!ft_check(vars))
 		return (FALSE);
-	split_cmds_args(vars);
-	// ft_lstclear(&vars->args, free);
+	vars->tmp = vars->args;
+	vars->ast = ast_builder(&vars->tmp);
+	// print_ast(vars->ast, 0);
 	return (TRUE);
+}
+
+// LET THE FUN BEGIN...!!
+
+t_list	*ast_builder(t_list **cursor)
+{
+	t_list	*node;
+	t_list	*sub;
+
+	node = NULL;
+	while (*cursor)
+	{
+		if (!ft_strcmp((char *)(*cursor)->content, "("))
+		{
+			(*cursor) = (*cursor)->next;
+			sub = create_node(NULL);
+			sub->child = ast_builder(cursor);
+			ft_lstadd_back(&node, sub);
+		}
+		else if (!ft_strcmp((char *)(*cursor)->content, ")"))
+		{
+			(*cursor) = (*cursor)->next;
+			return (node);
+		}
+		else
+		{
+			ft_lstadd_back(&node, create_node((char *)(*cursor)->content));
+			(*cursor) = (*cursor)->next;
+		}
+	}
+	return (node);
 }
