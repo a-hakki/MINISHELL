@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/30 15:12:05 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:22:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	change_dir(char *target, char **envp)
 
 int	cd(int ac, char **av, t_shell *vars)
 {
-	ft_free("2", vars->envp);
-	vars->envp = ft_list2arr(vars->env);
 	if (ac == 1)
 		return (printfd(2, \
 			"%s: cd: only relative or absolute path supported\n", M));
@@ -57,7 +55,7 @@ int	cd(int ac, char **av, t_shell *vars)
 	change_dir(av[1], vars->envp);
 	ft_lstclear(&vars->env, free);
 	vars->env = ft_arr2list(vars->envp);
-	return (ft_free("2", vars->envp), TRUE);
+	return (TRUE);
 }
 
 // int main(int ac, char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/30 16:04:05 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:11:53 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_list	*create_node(void *content)
 		return (NULL);
 	new->content = content;
 	new->arr = removequotes_arr(_ft_split((char *)content, ' '));
-	ft_putarr(new->arr);
 	new->type = define_type(content);
 	new->child = NULL;
 	new->next = NULL;
