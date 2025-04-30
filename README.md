@@ -15,18 +15,8 @@
 # I need to add a fct that switches the places of strings in an array
 
 ```bash
-we have a big problem  in redirection parsing unfortunately <br> 
-wa naaaaaaari treatement dial redirections 3ndna khaaaaaaaaaaari m3a ro7o waaaaaaaaa3 <br>
-
-
- we have a problem in echo !!!!!! april 29/30 
- when we unset a variable in the minishell u dont unset it in the array hhhhhhh
- bash mnin ndir unset PATH khasso ykhwa ta men dak l array dial envp 7it hwa li kan9leb fih 3la les commands o khassni nl9ah khawi
-
-
- sf rani handlito fl file dial unset 
- kan freeyi l array l9dim o kan3mro b list2arr() men be3d makat updati list dial dial vars->env
- sf sawbna ta had lblan bach mnin ndir unset PATH kolchi ywli command not FOUND ta trje3 3awd l PATH b export
+we have a big problem  in redirection parsing unfortunately 
+wa naaaaaaari treatement dial redirections 3ndna khaaaaaaaaaaari m3a ro7o waaaaaaaaa3 
 
 
  blan akhor
