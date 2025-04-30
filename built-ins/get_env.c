@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:47:01 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/30 14:38:25 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/30 14:39:51 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*get_env(char *k, t_shell *vars)
 		if (ft_strnstr((char *)tmp->content, k, ft_strlen(k)) == (char *)tmp->content \
 			&& ((char *)tmp->content)[ft_strlen(k)] == '=')
 			return ((char *)tmp->content + ft_strlen(k) + 1);
-		i++;
+		tmp = tmp->next;
 	}
 	return (NULL);
 }
