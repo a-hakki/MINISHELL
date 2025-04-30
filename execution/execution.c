@@ -6,28 +6,13 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/30 16:19:20 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:25:00 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 extern t_shell	g_vars;
-
-// int	path_index(char **envp, char *s)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (envp[i])
-// 	{
-// 		if (!ft_strncmp(s, envp[i], 5))
-// 			return (i);
-// 		i++;
-// 	}
-// 	// need to review and remove and use get_env...
-// 	return (0);
-// }
 
 int	check_built_ins(char **arr, t_shell *vars)
 {
