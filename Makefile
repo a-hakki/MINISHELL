@@ -16,6 +16,7 @@ sources = \
 		execution/execution.c \
 		execution/get_path.c \
 		execution/pipeline.c \
+		execution/execute_cmd.c\
 		\
 		\
 		built-ins/cd.c \

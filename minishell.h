@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/30 23:58:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:38:20 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,9 @@ char	*get_env(char *k, t_shell *vars);
 int		execution(t_shell *vars, t_list *ast);
 int		pipex(t_shell *vars, t_list **node);
 char	*get_path(char *cmd, t_shell *vars);
+int		execute_cmd(t_shell *vars, t_list *node);
+int		execute_node(t_shell *vars, t_list *node);
+int		check_builts(char **arr, t_shell *vars);
+
 
 #endif

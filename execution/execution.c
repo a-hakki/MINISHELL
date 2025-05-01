@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 11:26:37 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/01 11:45:21 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,14 @@ int	execution(t_shell *vars, t_list *ast)
 	node = ast;
 	while (node)
 	{
-		// if (node->type == CMD && node->next->type <= AND)
-		// 	vars->exit = execute_cmd(vars, node);
+		if (node->type == CMD && !node->next)
+		{
+			vars->exit = execute_node(vars, &node);
+			node = node->next;
+			continue;
+		}
+		if (node->type == CMD && node->next->type <= AND)
+			vars->exit = execute_cmd(vars, node);
 		if (node->type == CMD && node->next && node->next->type == PIPE)
 			vars->exit = pipex(vars, &node);
 		// if (node->type == SUBSHELL)
