@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 18:53:20 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:26:19 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <dirent.h>
 // # include "pipex/pipex.h"
 
 # define M "Minishell"
+#define MAX_MATCHES 1024
 
 typedef enum error
 {
@@ -49,6 +51,15 @@ typedef enum type
 	APPEND,
 	HEREDOC
 }			t_type;
+
+typedef enum e_wildcard_pos
+{
+	WILDCARD_NONE,
+	WILDCARD_BEGIN,
+	WILDCARD_END,
+	WILDCARD_MIDDLE,
+	WILDCARD_ONLY
+}			t_e_wildcard_pos;
 
 typedef struct s_pipe
 {
