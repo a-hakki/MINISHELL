@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 11:38:20 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/01 18:53:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		isvalid_op(t_shell *vars);
 int		is_op(char *str);
 int		is_par(char *str);
 int		isvalid_quotes(t_shell *vars);
-void	throw_error(int error, char *file);
+void	throw_error(int error, char *file, int *exitt);
 char	*removequotes(char *str);
 char	**removequotes_arr(char **arr);
 char	**_ft_split(char const *s, char b);
@@ -114,12 +114,10 @@ int		unset(int ac, char **av, t_shell *vars);
 char	*get_env(char *k, t_shell *vars);
 
 // execution Functions
-int		execution(t_shell *vars, t_list *ast);
+int		execution(t_shell *vars, t_list **ast);
 int		pipex(t_shell *vars, t_list **node);
 char	*get_path(char *cmd, t_shell *vars);
-int		execute_cmd(t_shell *vars, t_list *node);
-int		execute_node(t_shell *vars, t_list *node);
-int		check_builts(char **arr, t_shell *vars);
-
-
+void	exit_execve(char *cmd, t_shell *vars, t_list **ast);
+void	skip(t_list **node, int op);
+int	traverse_sub(t_shell *vars, t_list **node);
 #endif
