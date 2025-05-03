@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/03 13:09:53 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/03 17:08:44 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@ typedef enum type
 	HEREDOC
 }			t_type;
 
-typedef enum e_wildcard_pos
-{
-	WILDCARD_NONE,
-	WILDCARD_BEGIN,
-	WILDCARD_END,
-	WILDCARD_MIDDLE,
-	WILDCARD_ONLY
-}			t_e_wildcard_pos;
 
 typedef struct s_pipe
 {
@@ -130,5 +122,5 @@ int		pipex(t_shell *vars, t_list **node);
 char	*get_path(char *cmd, t_shell *vars);
 void	exit_execve(char *cmd, t_shell *vars, t_list **ast);
 void	skip(t_list **node, int op);
-int	traverse_sub(t_shell *vars, t_list **node);
+int		traverse_sub(t_shell *vars, t_list **node);
 #endif
