@@ -6,73 +6,86 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/02 20:20:00 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/03 13:52:07 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	match_pattern(const char *pattern, const char *filename)
+int	match_pattern(const char *pattern, const char *str)
 {
-	int	i;
-
-	i = 0;
-	while (pattern[i] && pattern[i] != '*')
+	if (!pattern || !str)
+		return (0);
+	while (*pattern)
 	{
-		if (pattern[i] != filename[i])
+		if (*pattern == '*')
+		{
+			pattern++;
+			if (!*pattern)
+				return (1);
+			while (*str)
+			{
+				if (match_pattern(pattern, str))
+					return (1);
+				str++;
+			}
 			return (0);
-		i++;
+		}
+		if (*pattern != *str)
+			return (0);
+		pattern++;
+		str++;
 	}
-	if (pattern[i] == '*')
-		return (1);
-	return (pattern[i] == '\0' && filename[i] == '\0');
+	return (*str == '\0');
 }
 
 char	**wildcard_match(const char *pattern)
 {
-	DIR *dir;
-	struct dirent *entry;
-	char **matches;
-	int count;
+	DIR				*dir;
+	struct dirent	*entry;
+	char			**matches;
+	int				count;
 
 	count = 0;
 	matches = malloc(sizeof(char *) * (MAX_MATCHES + 1));
 	dir = opendir(".");
 	if (!matches || !dir)
 		return (ft_free("1", matches), NULL);
-	while ((entry = readdir(dir)) != NULL)
+	entry = readdir(dir);
+	while (entry != NULL)
 	{
-		if (entry->d_name[0] == '.')
-			continue;
-		if (match_pattern(pattern, entry->d_name))
+		if (entry->d_name[0] != '.' && match_pattern(pattern, entry->d_name))
 		{
 			if (count < MAX_MATCHES)
 				matches[count++] = ft_strdup(entry->d_name);
 			else
-				break;
+				break ;
 		}
+		entry = readdir(dir);
 	}
 	matches[count] = NULL;
 	return (closedir(dir), matches);
 }
 
-
-int	main()
+int	main(int ac, char **av)
 {
-	char **matches;
+	char	**matches;
+	int		i;
 
-	matches = wildcard_match("*");
+	i = 0;
+	if (ac == 1)
+		return (0);
+	matches = wildcard_match(av[1]);
 	if (matches)
 	{
-		int i = 0;
 		while (matches[i] != NULL)
 		{
 			printf("Match: %s\n", matches[i]);
 			i++;
 		}
-		ft_free("2",matches);
+		ft_free("2", matches);
 	}
 	else
 		printf("No matches found or an error occurred.\n");
-	return 0;
+	return (0);
 }
