@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/03 22:06:08 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/03 22:11:06 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,23 @@ int	match_pattern(const char *pattern, const char *str)
 	return (*str == '\0');
 }
 
+int	ft_hssab(void)
+{
+	DIR				*dir;
+	struct dirent	*e;
+	int				i;
+
+	i = 0;
+	dir = opendir(".");
+	e = readdir(dir);
+	while (e != NULL)
+	{
+		i++;
+		e = readdir(dir);
+	}
+	return (closedir(dir), i);
+}
+
 char	**wildcard_match(const char *p)
 {
 	DIR				*dir;
@@ -47,7 +64,7 @@ char	**wildcard_match(const char *p)
 	int				count;
 
 	count = 0;
-	matches = malloc(sizeof(char *) * (MAX_MATCHES + 1));
+	matches = malloc(sizeof(char *) * (ft_hssab() + 1));
 	dir = opendir(".");
 	if (!matches || !dir)
 		return (ft_free("1", matches), NULL);
@@ -56,12 +73,7 @@ char	**wildcard_match(const char *p)
 	{
 		if (((e->d_name[0] != '.' && p[0] != '.') || (e->d_name[0] == '.' \
 			&& p[0] == '.'))  && match_pattern(p, e->d_name))
-		{
-			if (count < MAX_MATCHES)
 				matches[count++] = ft_strdup(e->d_name);
-			else
-				break ;
-		}
 		e = readdir(dir);
 	}
 	matches[count] = NULL;
