@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/03 17:08:44 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/03 21:33:28 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 // # include "pipex/pipex.h"
 
 # define M "Minishell"
-#define MAX_MATCHES 1024
+
+# define MAX_MATCHES 1024
 
 typedef enum error
 {

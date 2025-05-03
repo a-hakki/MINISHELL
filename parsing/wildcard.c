@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/03 16:11:02 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/03 22:06:08 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	match_pattern(const char *pattern, const char *str)
 	return (*str == '\0');
 }
 
-char	**wildcard_match(const char *pattern)
+char	**wildcard_match(const char *p)
 {
 	DIR				*dir;
-	struct dirent	*entry;
+	struct dirent	*e;
 	char			**matches;
 	int				count;
 
@@ -51,17 +51,18 @@ char	**wildcard_match(const char *pattern)
 	dir = opendir(".");
 	if (!matches || !dir)
 		return (ft_free("1", matches), NULL);
-	entry = readdir(dir);
-	while (entry != NULL)
+	e = readdir(dir);
+	while (e != NULL)
 	{
-		if (entry->d_name[0] != '.' && match_pattern(pattern, entry->d_name))
+		if (((e->d_name[0] != '.' && p[0] != '.') || (e->d_name[0] == '.' \
+			&& p[0] == '.'))  && match_pattern(p, e->d_name))
 		{
 			if (count < MAX_MATCHES)
-				matches[count++] = ft_strdup(entry->d_name);
+				matches[count++] = ft_strdup(e->d_name);
 			else
 				break ;
 		}
-		entry = readdir(dir);
+		e = readdir(dir);
 	}
 	matches[count] = NULL;
 	return (closedir(dir), matches);
@@ -85,7 +86,5 @@ int	main(int ac, char **av)
 		}
 		ft_free("2", matches);
 	}
-	else
-		printf("No matches found or an error occurred.\n");
 	return (0);
 }
