@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/02 19:33:40 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/02 20:20:00 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,44 +28,40 @@ int	match_pattern(const char *pattern, const char *filename)
 	return (pattern[i] == '\0' && filename[i] == '\0');
 }
 
-
 char	**wildcard_match(const char *pattern)
 {
 	DIR *dir;
 	struct dirent *entry;
-	char **matches = malloc(sizeof(char *) * (MAX_MATCHES + 1));
-	int count = 0;
+	char **matches;
+	int count;
 
-	if (!matches)
-		return NULL;
-
+	count = 0;
+	matches = malloc(sizeof(char *) * (MAX_MATCHES + 1));
 	dir = opendir(".");
-	if (!dir)
-		return (free(matches), NULL);
-
+	if (!matches || !dir)
+		return (ft_free("1", matches), NULL);
 	while ((entry = readdir(dir)) != NULL)
 	{
+		if (entry->d_name[0] == '.')
+			continue;
 		if (match_pattern(pattern, entry->d_name))
 		{
 			if (count < MAX_MATCHES)
-			{
-				matches[count] = ft_strdup(entry->d_name);
-				count++;
-			}
+				matches[count++] = ft_strdup(entry->d_name);
 			else
 				break;
 		}
 	}
 	matches[count] = NULL;
-	closedir(dir);
-	return matches;
+	return (closedir(dir), matches);
 }
+
 
 int	main()
 {
 	char **matches;
 
-	matches = wildcard_match("t*");
+	matches = wildcard_match("*");
 	if (matches)
 	{
 		int i = 0;
