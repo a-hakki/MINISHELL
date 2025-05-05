@@ -26,8 +26,7 @@
         "readline.h": "c",
         "stat.h": "c",
         "features.h": "c",
-        "errno-base.h": "c",
-        "algorithm": "c"
+        "errno-base.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

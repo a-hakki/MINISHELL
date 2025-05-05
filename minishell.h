@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/03 21:33:28 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/05 00:32:44 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-# include <dirent.h>
 // # include "pipex/pipex.h"
 
-# define M "Minishell"
-
 # define MAX_MATCHES 1024
+# define M "Minishell"
 
 typedef enum error
 {
-	IN,
+	IN = 512,
 	OUT,
 	SYNTAX,
 	CHARS,
@@ -53,7 +51,6 @@ typedef enum type
 	HEREDOC
 }			t_type;
 
-
 typedef struct s_pipe
 {
 	int		*fdo;
@@ -74,7 +71,7 @@ typedef struct s_check
 	int		fpar;
 	int		par;
 	int		special;
-}				t_check;
+}			t_check;
 
 typedef struct s_shell
 {
@@ -124,4 +121,14 @@ char	*get_path(char *cmd, t_shell *vars);
 void	exit_execve(char *cmd, t_shell *vars, t_list **ast);
 void	skip(t_list **node, int op);
 int		traverse_sub(t_shell *vars, t_list **node);
+int		execute_cmd(t_shell *vars, t_list **ast);
+int		check_builts(char **arr, t_shell *vars);
+//
+t_list	*ft_str2lst(char *str, int flag);
+char	*ft_lst2str(t_list	*node);
+void	ft_lstinsert(t_list *insert, t_list *pos);
+t_list	*get_node(t_list *lst, size_t pos);
+void	ft_lstpop(t_list *head, t_list *pos, size_t n);
+void	expand(t_shell *vars, char **str);
+
 #endif

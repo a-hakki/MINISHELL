@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/02 11:09:16 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/05 00:38:17 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 	throw_error(CMD_NOT_FOUND, cmd, &vars->exit);
 	skip(ast, AND);
 }
-int	check_builts(char **arr, t_shell *vars);
 int	execute_single_cmd(t_shell *vars, t_list *cmd_node)
 {
 	char	*cmd;
 	pid_t	pid;
 	int		status;
 
+	char **str = (char **)&(cmd_node->content);
+	expand(vars, str);
+	puts(cmd_node->content);
 	if (check_builts(cmd_node->arr, vars) == TRUE)
 		return (EXIT_SUCCESS);
 	cmd = get_path(cmd_node->content, vars);
@@ -59,7 +61,6 @@ int pipex(t_shell *vars, t_list **node)
 		t_list *next = (current->next && current->next->type == PIPE) ? current->next->next : NULL;
 		if (next && pipe(fd) == -1)
 			return (perror("pipe"), 1);
-
 		pid = fork();
 		if (pid == 0)
 		{
@@ -96,5 +97,5 @@ int pipex(t_shell *vars, t_list **node)
 		current = next;
 	}
 	*node = current; // Let parent continue traversal
-	return vars->exit;
+	return (vars->exit);
 }
