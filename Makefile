@@ -12,6 +12,8 @@ sources = \
 		parsing/ft_check.c \
 		parsing/custom_split.c \
 		parsing/expansion.c \
+		parsing/wildcard.c \
+		parsing/split_list.c \
 		\
 		\
 		execution/execution.c \
