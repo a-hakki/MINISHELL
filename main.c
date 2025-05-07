@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/05 14:12:02 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/06 20:59:55 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	prompt_loop(t_shell *vars)
 				&vars->check.lpar, &vars->exit);
 		vars->cmd = read_cmd(vars->cmd);
 		if (!vars->cmd)
-			return (rl_clear_history(), printf("exit\n"),exit(EXIT_SUCCESS));
+			return (rl_clear_history(), exit(EXIT_SUCCESS));
 		if (!*vars->cmd)
 		{
 			free(vars->cmd);
@@ -110,13 +110,15 @@ int	main(int ac, char **av, char **envp)
 	printfd(1, "pid = %d\n", getpid());
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
+	// if (write(1, 0, 0) == -1 || read(0, 0, 0) == -1)
+	// 	return (write(2, "amine\n", 6));
+	// we should handle 1 and 0 fd close
 	vars.envp = ft_arrdup(envp);
 	if (!*vars.envp)
 		ft_nullenv(&vars);
 	vars.env = ft_arr2list(vars.envp);
 	ft_shlvl(&vars);
 	signal(SIGINT, foo);
-	signal(SIGQUIT, SIG_IGN);
 	prompt_loop(&vars);
 	return (0);
 }

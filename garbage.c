@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 03:48:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/04 22:46:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 21:59:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,6 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 // }
 
 
-
-
-
-
 // int	pipex(t_shell *vars, t_list **node)
 // {
 // 	t_list	*pipeline;
@@ -248,3 +244,6 @@ int execute_pipeline(t_shell *vars, t_list *pipeline)
 	vars->exit = WIFEXITED(last_status) ? WEXITSTATUS(last_status) : 1;
 	return (vars->exit);
 }
+
+
+

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/05 00:31:16 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:16:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ int	fill_args(t_shell *vars)
 	return (TRUE);
 }
 
-// LET THE FUN BEGINS...!!
-
 t_list	*ast_builder(t_list **cursor)
 {
 	t_list	*node;
@@ -113,7 +111,7 @@ t_list	*ast_builder(t_list **cursor)
 		}
 		else
 		{
-			ft_lstadd_back(&node, create_node((char *)(*cursor)->content));
+			ft_lstadd_back(&node, create_node(ft_strdup((char *)(*cursor)->content)));
 			(*cursor) = (*cursor)->next;
 		}
 	}
