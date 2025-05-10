@@ -28,7 +28,7 @@ so many errors in the logic
      - `unset`
 
 3. 🧬 The wildcard is **not part of a variable name or value**  
-   - `export FILE=*` → ❌ Do not expand (already handled ✅)
+   - `export FILE*=` → ❌ Do not expand (already handled ✅)
 
 - I try to insert the wildcard function to our code + function to check if we have to expand it or not
 
