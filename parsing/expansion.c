@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/10 16:37:00 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/10 18:07:06 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,22 @@ void	handle_single_quotes(t_list **s, int *i, char *str)
 	if (str[*i] == '\'')
 		*i += add_char(s, '\'');
 }
+int	canbexpanded(char *str)
+{
+	char	cmd[256];
+	int		i = 0;
+
+	while (str[i] && str[i] != ' ')
+	{
+		cmd[i] = str[i];
+		i++;
+	}
+	cmd[i] = '\0';
+	if (!ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset"))
+		return (printf("should not be expanded\n"), 0);
+	return (1);
+}
+
 
 void	expand(t_shell *vars, char **str, char ***arr)
 {
@@ -90,8 +106,8 @@ void	expand(t_shell *vars, char **str, char ***arr)
 			handle_single_quotes(&s, &i, *str);
 		else if ((*str)[i] == '$')
 			i += add_value(vars, &s, &(*str)[i], q);
-		// else if ((*str)[i] == '*')
-			//
+		// else if ((*str)[i] == '*' && canbexpanded(*str) && !q && i++)
+		// 	i += expandwildcard(&s);
 		else
 			i += add_char(&s, (*str)[i]);
 	}
