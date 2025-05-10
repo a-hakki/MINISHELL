@@ -30,9 +30,14 @@ so many errors in the logic
 3. 🧬 The wildcard is **not part of a variable name or value**  
    - `export FILE=*` → ❌ Do not expand (already handled ✅)
 
-### ---------------------
-1. 1 try to insert the wildcard function to our code + function to check if we have to expand it or not
+- I try to insert the wildcard function to our code + function to check if we have to expand it or not
 
+## ------------------ 1 - read expand file ------------
 
+## ------------------ 2 - here !!!!!! !!!! ------------
 
-
+   - rah list kat3amarha omni tal9a * khassak ta3lamha
+   - hit mni ghadi tabghi thandliha khassa start dyal string li kayna fiha 
+      - examlpe `hello*` or `*sdiuh` or `ef*ege*eg`
+   - so n9ado lhaydo dik lpart kamla mn list o insertiw new list li fiha ga3 argument splited by ` `
+   - and we'll need arr 2 a flat list (each character in its node) so we can use instert funct or something like

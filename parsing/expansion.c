@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/10 18:07:06 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/10 18:22:26 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	expand(t_shell *vars, char **str, char ***arr)
 		else if ((*str)[i] == '$')
 			i += add_value(vars, &s, &(*str)[i], q);
 		// else if ((*str)[i] == '*' && canbexpanded(*str) && !q && i++)
-		// 	i += expandwildcard(&s);
+		// 	we should mark the poiter so we can work on it read the line 39 in readline life
 		else
 			i += add_char(&s, (*str)[i]);
 	}
