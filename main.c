@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 19:22:47 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:47:48 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,10 @@ void	ft_shlvl(t_shell *vars)
 	int		shlvl;
 	char	*arr[2];
 	char	*sh;
+	int 	i;
 
-	shlvl = ft_atoi(get_env("SHLVL", vars)) + 1;
+	i = ft_atoi(get_env("SHLVL", vars));
+	shlvl = (i < 0) * 0 + (i >= 0) * 1;
 	sh = ft_itoa(shlvl);
 	arr[0] = "export";
 	arr[1] = ft_strjoin("SHLVL=", sh);
@@ -120,6 +122,7 @@ int	main(int ac, char **av, char **envp)
 	vars.env = ft_arr2list(vars.envp);
 	ft_shlvl(&vars);
 	signal(SIGINT, foo);
+	signal(SIGQUIT, SIG_IGN);
 	prompt_loop(&vars);
 	return (0);
 }

@@ -35,3 +35,8 @@ int	ft_atoi(char const *str)
 	}
 	return (n * sign);
 }
+int main(int ac, char **av)
+{
+	printf("%i\n", ft_atoi(av[1]));
+	printf("%i\n", atoi(av[1]));
+}
