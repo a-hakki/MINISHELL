@@ -30,7 +30,8 @@ so many errors in the logic
 3. 🧬 The wildcard is **not part of a variable name or value**  
    - `export FILE=*` → ❌ Do not expand (already handled ✅)
 
-## 📌 Wildcard Expansion Rules (`*`)
+### ---------------------
+1. 1 try to insert the wildcard function to our code + function to check if we have to expand it or not
 
 
 
