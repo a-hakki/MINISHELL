@@ -16,26 +16,22 @@ so many errors in the logic
 ```
 
 
-```bash
-some test cases:
+## 📌 Wildcard Expansion Rules (`*`)
 
-minishell$ echo "$""HOME"
-echo $HOME
-$HOME
-minishell$ bash
-bash
-aelsayed@c3r9p8:~/Desktop/minishell$ echo "$""HOME"
-$HOME
-aelsayed@c3r9p8:~/Desktop/minishell$ echo $""HOME
-HOME
-minishell$ echo $""HOME
-echo $HOME
-$HOME
-```
+### ✅ You Should Expand Wildcards (`*`) **only if all are true**:
 
-```bash
-minishell$ echo $a
-a        b       c
-minishell$ echo "$a"
-a        b       c
-```
+1. 🔓 The wildcard is **not inside quotes**  
+   - `'*.txt'` or `"*.txt"` → ❌ Do not expand (treated as literal string)
+
+2. - ❌ No expansion for:  
+     - `export`
+     - `unset`
+
+3. 🧬 The wildcard is **not part of a variable name or value**  
+   - `export FILE=*` → ❌ Do not expand (already handled ✅)
+
+## 📌 Wildcard Expansion Rules (`*`)
+
+
+
+
