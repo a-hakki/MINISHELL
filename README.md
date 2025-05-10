@@ -38,3 +38,4 @@ so many errors in the logic
       - examlpe `hello*` or `*sdiuh` or `ef*ege*eg`
    - so n9ado lhaydo dik lpart kamla mn list o insertiw new list li fiha ga3 argument splited by ` `
    - and we'll need arr 2 a flat list (each character in its node) so we can use instert funct or something like
+   - o l9adiya dyal $a o a=* khassak tahadi dir liha mark hit ghadi tskippiha otchiki wash inside
