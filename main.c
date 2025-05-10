@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/09 20:47:48 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/10 12:11:46 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ void	ft_shlvl(t_shell *vars)
 	int 	i;
 
 	i = ft_atoi(get_env("SHLVL", vars));
-	shlvl = (i < 0) * 0 + (i >= 0) * 1;
+	shlvl = ft_atoi(get_env("SHLVL", vars)) + 1;
 	sh = ft_itoa(shlvl);
-	arr[0] = "export";
+	arr[0] = ft_strdup("export");
 	arr[1] = ft_strjoin("SHLVL=", sh);
 	export(2, arr, vars);
 	ft_free("11", arr[1], sh);
