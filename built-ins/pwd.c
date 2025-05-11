@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/11 12:16:07 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/11 17:42:00 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	pwd(int ac, char **av, t_shell *vars)
 		return (printf("%s\n", vars->pwd), TRUE);
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
-		return (perror("pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory"), FALSE);
+		return (perror("pwd: error retrieving current directory: getcwd: cannot \
+access parent directories: No such file or directory"), FALSE);
 	printf("%s\n", cwd);
 	free(cwd);
 	return (TRUE);
