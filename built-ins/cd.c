@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/11 17:37:39 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/11 18:17:12 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,18 @@ int	cd(int ac, char **av, t_shell *vars)
 	vars->pwd = ft_strdup(get_env("PWD", vars));
 	return (TRUE);
 }
+
+// int main(int ac, char **av, char **env)
+// {
+// 	char	**envp;
+// 	char	*a, *b;
+
+// 	envp = ft_arrdup(env);
+// 	a = getcwd(NULL, 0);
+// 	printf("%s\n", a);
+// 	cd(ac, av, envp);
+// 	b = getcwd(NULL, 0);
+// 	printf("%s\n", b);
+// 	ft_free("11", a, b);
+// 	return (0);
+// }
