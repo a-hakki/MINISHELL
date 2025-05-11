@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/10 13:52:15 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/10 22:56:30 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*read_cmd(char *cmd)
 {
 	char	*trim;
 
-	trim = readline("\033[1;32mminishell$ \033[0m");
+	trim = readline("minishell$ ");
 	cmd = ft_strtrim(trim, " \t\n\v\r\f");
 	free(trim);
 	if (!cmd || !ft_strcmp("exit", cmd))
@@ -99,23 +99,17 @@ int	ft_atoishell(char *str)
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (sign++ && (str[i] == '-' || str[i] == '+'))
-	{
-		if (str[i] == '-')
+		if (str[i++] == '-')
 			sign = -1;
-		i++;
-	}
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-		if (n > LONG_MAX / 10 || (n == LONG_MAX / 10 && str[i] - '0' > LONG_MAX % 10))
+		if (n > LONG_MAX / 10 || \
+			(n == LONG_MAX / 10 && str[i] - '0' > LONG_MAX % 10))
 			return (1);
 		n = n * 10 + (str[i++] - '0');
 	}
 	n *= sign;
-	if (n < 0)
-		return (0);
-	if (n > 1000)
-		return (1);
-	return ((int)n + 1);
+	return (n > 1000) + (n <= 1000 && n) * ((int)n + 1);
 }
 
 
