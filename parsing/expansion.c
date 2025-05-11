@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/11 18:21:27 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/11 18:57:10 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,12 @@ void	handle_single_quotes(t_list **s, int *i, char *str)
 }
 int	canbexpanded(char *str)
 {
-	char	cmd[256];
+	char	*cmd;
 	int		i = 0;
 
+	cmd = (char*)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!cmd)
+		return (0);
 	while (str[i] && str[i] != ' ')
 	{
 		cmd[i] = str[i];
@@ -82,8 +85,8 @@ int	canbexpanded(char *str)
 	}
 	cmd[i] = '\0';
 	if (!ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset"))
-		return (printf("should not be expanded\n"), 0);
-	return (1);
+		return (ft_free("1", cmd), 0);
+	return (ft_free("1", cmd), 1);
 }
 
 
@@ -106,13 +109,14 @@ void	expand(t_shell *vars, char **str, char ***arr)
 			handle_single_quotes(&s, &i, *str);
 		else if ((*str)[i] == '$')
 			i += add_value(vars, &s, &(*str)[i], q);
-		// else if ((*str)[i] == '*' && canbexpanded(*str) && !q && i++)
-		// 	(void)NULL;
+		else if ((*str)[i] == '*' && !q && canbexpanded(*str))
+			i += add_char(&s, (*str)[i]);
 		else
 			i += add_char(&s, (*str)[i]);
 	}
 	ft_free("12", *str, *arr);
 	*str = ft_lst2str(s);
+	
 	*arr = split_list(s, ' ');
 	ft_lstclear(&s, free);
 }

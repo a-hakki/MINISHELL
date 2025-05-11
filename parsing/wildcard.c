@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/09 16:31:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:47:57 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	match_pattern(const char *pattern, const char *str)
 	return (*str == '\0');
 }
 
-void	wildcard(const char *pattern, t_list **x)
+char	**wildcard(const char *pattern)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -64,8 +64,7 @@ void	wildcard(const char *pattern, t_list **x)
 		entry = readdir(dir);
 	}
 	matches[count] = NULL;
-	*x = ft_arr2list(matches);
-	return (closedir(dir), (void)ft_free("2", matches));
+	return (closedir(dir), matches);
 }
 
 // int	main(int ac, char **av)
