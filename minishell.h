@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/11 12:03:01 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/12 02:42:34 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ int		isvalid_quotes(t_shell *vars);
 
 /* Processing */
 int		ft_nodejoin(t_shell *vars);
-char	*removequotes(char *str);
-char	**removequotes_arr(char **arr);
+char	*removequotes(char *str, t_list *s);
+// char	**removequotes_arr(char **arr);
 t_list	*remove_quotes_from_list(t_list *lst);
 char	**_ft_split(char const *s, char b);
 void	pop_spaces(t_shell *vars);
@@ -137,7 +137,9 @@ void	throw_error(int error, char *file, int *status);
 /* Expansion */
 char	**split_list(t_list *lst, char sep);
 void	expand(t_shell *vars, char **str, char ***arr);
-void	wildcard(const char *pattern, t_list **x);
+char	**wildcard(char *pattern);
+int		add_char(t_list **s, char c);
+char	*expand_wildcard(t_shell *vars, char **str, t_list **s);
 t_list	*ft_str_to_lst(char *str, int flag);
 
 /*-------------------------------------- BUILTINS --------------------------------------*/

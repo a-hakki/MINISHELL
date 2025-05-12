@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/11 18:13:20 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/11 23:12:37 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_insert_char(char *str, int index, char c);
 char	*ft_strinsert(char *base, char *insert, int index);
 char	*ft_arr2str(char **arr, char sp);
+char	*ft_strextract(char *str, int index, char sep);
 
 // ft_is fuctions
 int		ft_isalpha(int c);
