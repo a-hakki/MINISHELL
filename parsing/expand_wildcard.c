@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/12 02:56:01 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:13:35 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 	if (arr)
 	{
 		node = ft_lstgetnode(*new, borders[0] - 1);
-		ft_lstclear(&node->next, free);
+		if (node && node->next)
+			ft_lstclear(&node->next, free);
 		pattern = ft_arr2str(arr, ' ');
 		ft_free("2", arr);
 	}
@@ -88,6 +89,25 @@ int	append(t_list **s, char c, int type)
 	return (1);
 }
 
+int	canbexpanded(char *str)
+{
+	char	*cmd;
+	int		i = 0;
+
+	cmd = (char*)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!cmd)
+		return (0);
+	while (str[i] && str[i] != ' ')
+	{
+		cmd[i] = str[i];
+		i++;
+	}
+	cmd[i] = '\0';
+	if (!ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset"))
+		return (ft_free("1", cmd), 0);
+	return (ft_free("1", cmd), 1);
+}
+
 char	*expand_wildcard(t_shell *vars, char **str, t_list **old)
 {
 	int		i;
@@ -105,7 +125,7 @@ char	*expand_wildcard(t_shell *vars, char **str, t_list **old)
 			handle_quotes(&q, (*str)[i], 0, 0);
 			i += append(&new, (*str)[i], 0);
 		}
-		else if (!q && (*str)[i] == '*')
+		else if (!q && (*str)[i] == '*' && canbexpanded((*str)))
 			i += extract_wildcard(*str, &new, i, *old);
 		else
 			i += append(&new, (*str)[i], ft_lstgetnode(*old, i)->type);
