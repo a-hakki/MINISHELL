@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 13:13:09 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 14:10:57 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	traverse_sub(t_shell *vars, t_list **node, int flag)
 {
 	if (flag == 1)
 		(*node) = (*node)->next;
-	if (vars->exit == 0 && (*node)->next && (*node)->next->type == OR)
+	else if (vars->exit == 0 && (*node)->next && (*node)->next->type == OR)
 		skip(node, OR);
 	else if (vars->exit != 0 && (*node)->next && (*node)->next->type == AND)
 		skip(node, AND);
@@ -120,6 +120,7 @@ int	execution(t_shell *vars, t_list **ast)
 	return (vars->exit);
 }
 // ls || (ls | ls | ls && ls) || ls && ls
-// p (char *)node->content
+// p (char *)(*str)
+// p (char *)(*new)->content
 // ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
 //(ls && (echo A || (echo B && echo C))) || ((echo D && echo E) && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))
