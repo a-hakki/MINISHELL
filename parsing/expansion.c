@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 09:56:42 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:53:19 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int	add_value(t_shell *vars, t_list **s, char *str, int q)
 	if (*str == '$' && ft_strchr("'\"", *(str + 1)) && !q)
 		return (1);
 	if (*str == '$' && *(str + 1) == '?')
-		var_value = ft_itoa(vars->exit);
-	if (*str == '$' && *(str + 1) == '*' )
 		var_value = ft_itoa(vars->exit);
 	else if (get_var_len(str + 1) == 0)
 		return (ft_lstadd_back(s, ft_lstnew(ft_strdup("$"))), 1);
