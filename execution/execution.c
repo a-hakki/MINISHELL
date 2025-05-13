@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 16:44:00 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:51:09 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	if (check_builts((*ast)->arr, vars) == TRUE)
 		return (skip(ast, OR), EXIT_SUCCESS);
 	if (!(*ast)->arr)
-		return (traverse_sub(vars, ast, 1), 0);
+		return (traverse_sub(vars, ast), 0);
 	cmd = get_path((*ast)->arr[0], vars);
 	if (!cmd)
 		return (skip(ast, AND), vars->exit);
@@ -74,13 +74,12 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	if (vars->exit == 0)
 		skip(ast, OR);
 	else
-		traverse_sub(vars, ast, 0);
+		traverse_sub(vars, ast);
 	return (vars->exit);
 }
 
-int	traverse_sub(t_shell *vars, t_list **node, int flag)
+int	traverse_sub(t_shell *vars, t_list **node)
 {
-	(void)flag;
 	if (vars->exit == 0 && (*node) && (*node)->next && (*node)->next->type == OR)
 		skip(node, OR);
 	else if (vars->exit != 0 && (*node) && (*node)->next && (*node)->next->type == AND)
@@ -104,13 +103,13 @@ int	execution(t_shell *vars, t_list **ast)
 		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL) && (*node)->next && (*node)->next->type == PIPE)
 		{
 			vars->exit = pipex(vars, node);
-			traverse_sub(vars, node, 0);
+			traverse_sub(vars, node);
 			continue ;
 		}
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
 			vars->exit = execution(vars, &(*node)->child);
-			traverse_sub(vars, node, 1);
+			traverse_sub(vars, node);
 			continue ;
 		}
 		else
@@ -121,4 +120,4 @@ int	execution(t_shell *vars, t_list **ast)
 // ls || (ls | ls | ls && ls) || ls && ls
 // p (char *)node->content
 // ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
-//(ls && (echo A || (echo B && echo C))) || ((echo D && echo E) && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))
+//(ls && (echo A || (echo B && echo C))) || ((echo D && echo 	E) && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))
