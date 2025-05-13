@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 15:43:24 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:44:00 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,12 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 
 int	traverse_sub(t_shell *vars, t_list **node, int flag)
 {
-	if (flag == 1)
-		(*node) = (*node)->next;
-	if (!*node || !(*node)->next)
-		return (vars->exit);
-	if (vars->exit == 0 && (*node)->next && (*node)->next->type == OR)
+	(void)flag;
+	if (vars->exit == 0 && (*node) && (*node)->next && (*node)->next->type == OR)
 		skip(node, OR);
-	else if (vars->exit != 0 && (*node)->next && (*node)->next->type == AND)
+	else if (vars->exit != 0 && (*node) && (*node)->next && (*node)->next->type == AND)
 		skip(node, AND);
-	else if ((*node)->next)
+	else if ((*node) && (*node)->next)
 		(*node) = (*node)->next->next;
 	else
 		(*node) = (*node)->next;
