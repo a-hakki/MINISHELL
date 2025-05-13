@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 09:09:22 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 10:10:56 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 	if (check_builts((*ast)->arr, vars) == TRUE)
 		return (skip(ast, OR), EXIT_SUCCESS);
+	// if (!(*ast)->arr)
+	// 	return (traverse_sub(vars, ast, 0), 0);
 	cmd = get_path((*ast)->arr[0], vars);
 	if (!cmd)
 		return (skip(ast, AND), vars->exit);
