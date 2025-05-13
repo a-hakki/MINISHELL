@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 10:10:56 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 13:13:09 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 	if (check_builts((*ast)->arr, vars) == TRUE)
 		return (skip(ast, OR), EXIT_SUCCESS);
-	// if (!(*ast)->arr)
-	// 	return (traverse_sub(vars, ast, 0), 0);
+	if (!(*ast)->arr)
+		return (traverse_sub(vars, ast, 1), 0);
 	cmd = get_path((*ast)->arr[0], vars);
 	if (!cmd)
 		return (skip(ast, AND), vars->exit);
@@ -82,8 +82,6 @@ int	traverse_sub(t_shell *vars, t_list **node, int flag)
 {
 	if (flag == 1)
 		(*node) = (*node)->next;
-	if (!*node || !(*node)->next)
-		return (vars->exit);
 	if (vars->exit == 0 && (*node)->next && (*node)->next->type == OR)
 		skip(node, OR);
 	else if (vars->exit != 0 && (*node)->next && (*node)->next->type == AND)
