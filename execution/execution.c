@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 08:54:39 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 09:09:22 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,14 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	if (vars->exit == 0)
 		skip(ast, OR);
 	else
-		traverse_sub(vars, ast);
+		traverse_sub(vars, ast, 0);
 	return (vars->exit);
 }
 
-int	traverse_sub(t_shell *vars, t_list **node)
+int	traverse_sub(t_shell *vars, t_list **node, int flag)
 {
+	if (flag == 1)
+		(*node) = (*node)->next;
 	if (!*node || !(*node)->next)
 		return (vars->exit);
 	if (vars->exit == 0 && (*node)->next && (*node)->next->type == OR)
@@ -103,13 +105,13 @@ int	execution(t_shell *vars, t_list **ast)
 		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL) && (*node)->next && (*node)->next->type == PIPE)
 		{
 			vars->exit = pipex(vars, node);
-			traverse_sub(vars, node);
+			traverse_sub(vars, node, 0);
 			continue ;
 		}
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
 			vars->exit = execution(vars, &(*node)->child);
-			traverse_sub(vars, node);
+			traverse_sub(vars, node, 1);
 			continue ;
 		}
 		else
@@ -120,5 +122,4 @@ int	execution(t_shell *vars, t_list **ast)
 // ls || (ls | ls | ls && ls) || ls && ls
 // p (char *)node->content
 // ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
-// (ls && (echo A || (echo B && echo C))) || ((echo D && echo E) && (echo F || echo G)) 
- // && (echo H || (echo I && (echo J || echo K)))
+//(ls && (echo A || (echo B && echo C))) || ((echo D && echo E) && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))
