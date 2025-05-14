@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/12 16:03:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:06:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	*extract_pattern(char *str, int index, char sep, t_list *s)
 
 int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 {
-	int     *bords;
+	int		*bords;
 	char	**arr;
 	char	*pattern;
 	int		diff;
@@ -78,16 +78,6 @@ int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 	return (free(bords), diff);
 }
 
-int	append(t_list **s, char c, int type)
-{
-	t_list	*new;
-
-	new = ft_lstnew(ft_strndup(&c, 1));
-	new->type = type;
-	ft_lstadd_back(s, new);
-	return (1);
-}
-
 int	canbexpanded(char *str, int i)
 {
 	if (!ft_strncmp(str, "export ", 7))
@@ -100,19 +90,19 @@ int	canbexpanded(char *str, int i)
 	return (TRUE);
 }
 
-char	*expand_wildcard(t_shell *vars, char **str, t_list **old)
+char	*expand_wildcard(char **str, t_list **old)
 {
 	int		i;
 	char	q;
 	char	*new_str;
 	t_list	*new;
 
-	(void)vars;
 	ft_init(2, &i, &q);
 	new = NULL;
 	while ((*str)[i])
 	{
-		if (!ft_lstgetnode(*old, i)->type && ((*str)[i] == '"' || (*str)[i] == '\''))
+		if (!ft_lstgetnode(*old, i)->type && \
+			((*str)[i] == '"' || (*str)[i] == '\''))
 		{
 			handle_quotes(&q, (*str)[i], 0, 0);
 			i += append(&new, (*str)[i], 0);
