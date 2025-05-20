@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/15 11:33:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/19 04:51:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_builts(char **arr, t_shell *vars, int i)
 		cd,
 	};
 
-	while (ft_strcmp(strs[i], *arr))
+	while (arr && *arr && ft_strcmp(strs[i], *arr))
 		i++;
 	if (i != 7)
 		return (fcts[i](ft_arrlen(arr), arr, vars), TRUE);
@@ -45,6 +45,7 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 {
 	if (flag == 0)
 	{
+		extract_redirections(vars, (char **)&((*ast)->content));
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 		if (check_builts((*ast)->arr, vars, 0) == TRUE)
 			return (skip(ast, OR), EXIT_SUCCESS);
@@ -75,6 +76,8 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (apply_redirections(vars) == FALSE)
+			exit(EXIT_FAILURE);
 		if (execve(cmd, (*ast)->arr, vars->envp) == -1)
 			exit_execve(cmd, vars, ast);
 	}

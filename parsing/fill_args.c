@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/15 11:05:00 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:58:56 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ t_type	define_type(char *content)
 		return (AND);
 	if (!ft_strcmp(content, "|"))
 		return (PIPE);
+	if (!ft_strcmp(content, ">"))
+		return (TRUNC);
+	if (!ft_strcmp(content, "<"))
+		return (READ);
+	if (!ft_strcmp(content, ">>"))
+		return (APPEND);
+	if (!ft_strcmp(content, "<<"))
+		return (HEREDOC);
 	return (CMD);
 }
 
@@ -53,8 +61,8 @@ int	validater(t_shell *vars)
 		ft_lstadd_back(&vars->args, create_node(token));
 		token = tokenizer(NULL, "'\"()|&<>");
 	}
-	if (!ft_check(vars))
-		return (FALSE);
+	// if (!ft_check(vars))
+	// 	return (FALSE);
 	ft_lstclear(&vars->args, free);
 	return (TRUE);
 }
@@ -72,6 +80,8 @@ int	fill_args(t_shell *vars)
 		ft_lstadd_back(&vars->args, create_node(token));
 		token = tokenizer(NULL, "'\"()|&");
 	}
+	if (!ft_check(vars))
+		return (TRUE); // u little idiot u told me no need to check again but the minishell failed beacause we dont join them heheheehehe (issue in quotes)
 	vars->tmp = vars->args;
 	vars->ast = ast_builder(&vars->tmp);
 	return (TRUE);

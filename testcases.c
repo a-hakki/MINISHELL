@@ -52,3 +52,10 @@ ls: cannot access '**': No such file or directory
 we should test if anyfile has "quotes" how it would work with us even mahndlia like touch '"' and ls *'"' shoould show us the file
 
 ls>(asd) :: syntax error
+
+minishell$ ls>*
+Command not found : ls>ls>*
+ls>$HOME
+$* should be handled !!
+
+close the fd 1 with close(1) in terminal
