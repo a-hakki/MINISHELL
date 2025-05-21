@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 03:19:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:36:24 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	ft_check(t_shell *vars)
 	return (TRUE);
 }
 
+
 void	throw_error(int error, char *file, int *exitt)
 {
 	if (error == ENOENT)
@@ -127,3 +128,4 @@ void	throw_error(int error, char *file, int *exitt)
 	if (error == REDIR)
 		printfd(2, M": %s: ambiguous redirect\n", file);
 }
+

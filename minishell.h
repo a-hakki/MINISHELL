@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 04:17:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:40:17 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ typedef enum error
 	PIP,
 	DIRECT,
 	REDIR,
-	CMD_NOT_FOUND
+	CMD_NOT_FOUND,
+	TOKEN
 }			t_error;
 
 typedef enum type
@@ -133,6 +134,7 @@ void	ft_shlvl(t_shell *vars);
 
 /* Validation */
 int		ft_check(t_shell *vars);
+int		ft_check_red(t_shell *vars);
 int		isvalid_par(t_shell *vars);
 int		isvalid_op(t_shell *vars);
 int		is_op(char *str);
