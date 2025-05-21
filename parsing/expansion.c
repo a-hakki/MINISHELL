@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 12:42:40 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/21 13:03:24 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ void	expand(t_shell *vars, char **str, char ***arr)
 	*str = ft_lst2str(lst);
 	*str = expand_wildcard(str, &lst);
 	ft_free("2", *arr);
-	t_list	*tmp = lst;
-	ft_lstiter(tmp, printf);
 	*arr = split_list(lst, ' ');
 	ft_lstclear(&lst, free);
 }
