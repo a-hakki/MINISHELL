@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 12:03:40 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/21 12:07:15 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	foo(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	// else
-	// 	write(1, "\n", 1);
 }
 
 
