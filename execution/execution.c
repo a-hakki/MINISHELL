@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/19 04:51:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 04:40:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_builts(char **arr, t_shell *vars, int i)
 
 	while (arr && *arr && ft_strcmp(strs[i], *arr))
 		i++;
-	if (i != 7)
+	if (i != 7 && arr)
 		return (fcts[i](ft_arrlen(arr), arr, vars), TRUE);
 	return (FALSE);
 }
@@ -69,7 +69,10 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 
 	if (process_cmd(vars, ast, 0) == EXIT_SUCCESS)
 		return (EXIT_SUCCESS);
-	cmd = get_path((*ast)->arr[0], vars);
+	if (!(*ast)->arr)
+		cmd = ft_strdup("");
+	else
+		cmd = get_path((*ast)->arr[0], vars);
 	if (!cmd)
 		return (skip(ast, AND), vars->exit);
 	status = 0;
@@ -77,7 +80,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	if (pid == 0)
 	{
 		if (apply_redirections(vars) == FALSE)
-			exit(EXIT_FAILURE);
+			exit(errno);
 		if (execve(cmd, (*ast)->arr, vars->envp) == -1)
 			exit_execve(cmd, vars, ast);
 	}
@@ -87,8 +90,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 		if (WIFEXITED(status))
 			vars->exit = WEXITSTATUS(status);
 	}
-	free(cmd);
-	return (process_cmd(vars, ast, 1));
+	return (ft_free("1",cmd), process_cmd(vars, ast, 1));
 }
 
 int	execution(t_shell *vars, t_list **ast)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/20 18:58:56 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/21 06:39:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	fill_args(t_shell *vars)
 		token = tokenizer(NULL, "'\"()|&");
 	}
 	if (!ft_check(vars))
-		return (TRUE); // u little idiot u told me no need to check again but the minishell failed beacause we dont join them heheheehehe (issue in quotes)
+		return (TRUE);
 	vars->tmp = vars->args;
 	vars->ast = ast_builder(&vars->tmp);
 	return (TRUE);
