@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 12:07:15 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/21 16:24:34 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
-	printfd(1, "pid = %d\n", getpid());
+	// printfd(1, "pid = %d\n", getpid());
 	vars.envp = ft_arrdup(envp);
 	if (!*vars.envp)
 		ft_nullenv(&vars);
