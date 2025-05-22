@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_red_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:54 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/21 10:46:07 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/22 02:37:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	throw_red_error(char *s)
-{
-	printfd(2, M": syntax error near unexpected token `%s'\n", s);
-}
 
 int	is_red(char *str)
 {
@@ -53,11 +48,11 @@ int	isvalid_red(t_shell *vars)
 		if (tmp->next)
 			n = (char *)tmp->next->content;
 		if (is_red(c) && !tmp->next)
-			return (throw_red_error("newline"), FALSE);
+			return (throw_error(PARSE_REDIR, "newline", NULL), FALSE);
 		if (is_red(c) && tmp->next && is_op(n))
-			return (throw_red_error(n), FALSE);
+			return (throw_error(PARSE_REDIR, n, NULL), FALSE);
 		if (is_red(c) && tmp->next && is_red(n))
-			return (throw_red_error(c), FALSE);
+			return (throw_error(PARSE_REDIR, c, NULL), FALSE);
 		tmp = tmp->next;
 	}
 	return (TRUE);
