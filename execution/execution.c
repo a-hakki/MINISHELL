@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 17:09:45 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/22 23:18:13 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	int		status;
 
 	if (process_cmd(vars, ast, 0) == EXIT_SUCCESS)
-		return (EXIT_SUCCESS);
+		return (vars->exit);
 	if (!(*ast)->arr)
 		cmd = ft_strdup("");
 	else

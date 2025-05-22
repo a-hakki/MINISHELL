@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/22 16:07:33 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/22 22:58:25 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	ft_nodejoin(t_shell *vars)
 {
 	char *(new_content), *(tmp_content);
 	t_list *(to_delete), *(tmp) = vars->args;
-	// if (tmp && is_op((char *)tmp->content))
-	// 	return (throw_error(OP, NULL, NULL), FALSE);
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
@@ -36,8 +34,6 @@ int	ft_nodejoin(t_shell *vars)
 		else
 			tmp = tmp->next;
 	}
-	// if (tmp && is_op((char *)tmp->content))
-	// 	return (throw_error(OP, NULL, NULL), FALSE);
 	return (TRUE);
 }
 
@@ -59,8 +55,6 @@ int	isvalid_syntax(t_shell *vars)
 			return (throw_error(OP, n, NULL), FALSE);
 		if (!is_par(c) && is_op(c) && tmp->next && is_par(n) && *n == ')')
 			return (throw_error(OP, n, NULL), FALSE);
-		// if (is_par(c) && *c == '(' && tmp->next && is_op(n) && *n != '<')
-		// 	return (throw_error(OP, NULL, NULL), FALSE);
 		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && !is_par(n))
 			return (throw_error(OP, n, NULL), FALSE);
 		tmp = tmp->next;

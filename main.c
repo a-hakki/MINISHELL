@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 16:24:34 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/22 23:01:59 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ void	free_args(int flag, t_shell *vars)
 
 void	prompt_loop(t_shell *vars)
 {
+	vars->exit = 0;
 	while (1)
 	{
-		ft_init(8, &vars->check.dquot, &vars->check.squot, \
+		ft_init(7, &vars->check.dquot, &vars->check.squot, \
 			&vars->check.par, &vars->check.special, &vars->check.fpar, \
-				&vars->check.lpar, &vars->exit, &g_var);
+				&vars->check.lpar, &g_var);
 		vars->cmd = read_cmd(vars->cmd);
 		if (!vars->cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));

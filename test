@@ -1,0 +1,15 @@
+total 144
+drwxr-xr-x 2 ahakki candidates    142 May 22 23:17 built-ins
+-rw-r--r-- 1 ahakki candidates    524 May 22 22:55 errors.sh
+drwxr-xr-x 2 ahakki candidates    134 May 22 23:17 execution
+drwxr-xr-x 2 ahakki candidates     86 May 22 15:18 garbage
+drwxr-xr-x 2 ahakki candidates     46 May 22 15:18 garbage-collector
+drwxr-xr-x 6 ahakki candidates    117 May 22 23:17 libft
+-rw-r--r-- 1 ahakki candidates   2479 May 22 23:01 main.c
+-rw-r--r-- 1 ahakki candidates   1659 May 22 15:18 Makefile
+-rwxr-xr-x 1 ahakki candidates 109232 May 22 23:17 minishell
+-rw-r--r-- 1 ahakki candidates   5023 May 22 15:18 minishell.h
+drwxr-xr-x 2 ahakki candidates   4096 May 22 23:17 parsing
+-rw-r--r-- 1 ahakki candidates   8019 May 22 15:18 README.md
+-rw-r--r-- 1 ahakki candidates      0 May 22 23:51 test
+-rw-r--r-- 1 ahakki candidates   2237 May 22 15:18 testcases
