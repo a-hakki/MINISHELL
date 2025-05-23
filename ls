@@ -1,4 +1,3 @@
-
 [?2004hminishell$ ^C[?2004l
 minishell$ [?2004h^C[?2004l
-minishell$ [?2004h^Z[?2004l
+minishell$ [?2004h[?2004l

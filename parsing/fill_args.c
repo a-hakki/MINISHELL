@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 20:47:54 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 20:59:34 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ int	validater(t_shell *vars)
 	}
 	if (!all_checks(vars))
 		return (FALSE);
-	if (vars->args && is_op((char *)vars->args->content))
-		return (throw_error(SYNTAX, (char *)vars->args->content, NULL), 0);
 	ft_lstclear(&vars->args, free);
 	return (TRUE);
 }

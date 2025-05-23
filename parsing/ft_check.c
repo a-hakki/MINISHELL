@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 20:25:39 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 20:59:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void	pop_spaces(t_shell *vars)
 
 int	all_checks(t_shell *vars)
 {
+	if (vars->args && is_op((char *)vars->args->content))
+		return (throw_error(SYNTAX, (char *)vars->args->content, NULL), 0);
 	if (isvalid_quotes(vars) == FALSE)
 		return (FALSE);
 	if (isvalid_op(vars) == FALSE)
