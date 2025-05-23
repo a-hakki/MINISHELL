@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 20:23:38 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 20:25:39 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,10 @@ int	all_checks(t_shell *vars)
 		return (FALSE);
 	if (isvalid_par(vars) == FALSE)
 		return (FALSE);
-	t_list *tmp = vars->args;
-	ft_lstiter(tmp, printf);
 	if (ft_nodejoin(vars) == FALSE)
 		return (FALSE);
-	tmp = vars->args;
-	ft_lstiter(tmp, printf);
 	pop_spaces(vars);
-	if (isvalid_syntax(vars) == FALSE) // i changed the place of this one before nodejoin to work
+	if (isvalid_syntax(vars) == FALSE)
 		return (FALSE);
 	if (isvalid_red(vars) == FALSE)
 		return (FALSE);
