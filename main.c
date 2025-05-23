@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/22 23:01:59 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 03:03:45 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,8 @@ void	prompt_loop(t_shell *vars)
 			execution(vars, &vars->ast);
 			free_args(1, vars);
 		}
-		g_var = 0;
 	}
 }
-
 
 int	main(int ac, char **av, char **envp)
 {

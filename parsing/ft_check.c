@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/22 22:58:25 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 03:11:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ int	isvalid_syntax(t_shell *vars)
 		if (tmp->next)
 			n = (char *)tmp->next->content;
 		if (is_par(c) && tmp->next && is_par(n) && *c != *n)
-			return (throw_error(OP, n, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (!is_par(c) && !is_op(c) && tmp->next && is_par(n) && *n == '(')
-			return (throw_error(OP, n, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (!is_par(c) && is_op(c) && tmp->next && is_par(n) && *n == ')')
-			return (throw_error(OP, n, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && !is_par(n))
-			return (throw_error(OP, n, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), FALSE);
 		tmp = tmp->next;
 	}
 	return (TRUE);
@@ -103,14 +103,11 @@ int	ft_check(t_shell *vars)
 	return (TRUE);
 }
 
-
 void	throw_error(int error, char *file, int *exitt)
 {
 	if (error == ENOENT)
 		printfd(2, M": %s: %s\n", file, strerror(ENOENT));
 	if (error == SYNTAX)
-		printfd(2, M": syntax error near unexpected token `%s'\n", file);
-	if (error == OP)
 		printfd(2, M": syntax error near unexpected token `%s'\n", file);
 	if (error == CMD_NOT_FOUND)
 	{
@@ -121,7 +118,4 @@ void	throw_error(int error, char *file, int *exitt)
 		printfd(2, M": Cannot open current working directory\n");
 	if (error == REDIR)
 		printfd(2, M": %s: ambiguous redirect\n", file);
-	if (error == PARSE_REDIR)
-		printfd(2, M": syntax error near unexpected token `%s'\n", file);
 }
-
