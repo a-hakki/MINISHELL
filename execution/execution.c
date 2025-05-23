@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 21:11:11 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 21:14:42 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 		is_builtin = check_builts((*ast)->arr, vars, 0);
 		if (is_builtin == -1)
 			return (FALSE);
-		return (skip(ast, !is_builtin), TRUE);
+		return (skip(ast, is_builtin), TRUE);
 	}
 	else if (flag == 1)
 	{
