@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 15:47:28 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 19:17:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 int	ft_nodejoin(t_shell *vars)
 {
-	char *(new_content), *(tmp_content);
-	t_list *(to_delete), *(tmp) = vars->args;
+	char	*new_content;
+	char	*tmp_content;
+	t_list	*to_delete;
+	t_list	*tmp;
+
+	tmp	= vars->args;
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
@@ -37,7 +41,15 @@ int	ft_nodejoin(t_shell *vars)
 	return (TRUE);
 }
 
+char	*ft_skip(char *str, char *set)
+{
+	int	i;
 
+	i = 0;
+	while (str[i] && ft_strchr(set, str[i]))
+		i++;
+	return (str + i);
+}
 
 int	isvalid_syntax(t_shell *vars)
 {
@@ -45,22 +57,25 @@ int	isvalid_syntax(t_shell *vars)
 	char	*c;
 	char	*n;
 
+	n = NULL;
 	tmp = vars->args;
 	while (tmp)
 	{
 		c = (char *)tmp->content;
 		if (tmp->next)
-			n = (char *)tmp->next->content;
+			n = ft_strtrim(tokenizer((char *)tmp->next->content, "<>"), WHITE);
 		if (is_par(c) && tmp->next && is_par(n) && *c != *n)
-			return (throw_error(SYNTAX, n, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), free(n), FALSE);
 		if (!is_par(c) && !is_op(c) && tmp->next && is_par(n) && *n == '(')
-			return (throw_error(SYNTAX, n, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), free(n), FALSE);
 		if (!is_par(c) && is_op(c) && tmp->next && is_par(n) && *n == ')')
-			return (throw_error(SYNTAX, n, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), free(n), FALSE);
 		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && \
 			!is_par(n) && !is_there_red(n))
-			return (throw_error(SYNTAX, n, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), free(n), FALSE);
 		tmp = tmp->next;
+		ft_free("1", n);
+		n = NULL;
 	}
 	return (TRUE);
 }
@@ -90,7 +105,7 @@ void	pop_spaces(t_shell *vars)
 	vars->args = new;
 }
 
-int	ft_check(t_shell *vars)
+int	all_checks(t_shell *vars)
 {
 	if (isvalid_quotes(vars) == FALSE)
 		return (FALSE);
@@ -101,7 +116,9 @@ int	ft_check(t_shell *vars)
 	if (ft_nodejoin(vars) == FALSE)
 		return (FALSE);
 	pop_spaces(vars);
-	if (isvalid_syntax(vars) == FALSE)
+	if (isvalid_syntax(vars) == FALSE) // i changed the place of this one before nodejoin to work
+		return (FALSE);
+	if (isvalid_red(vars) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }
@@ -114,7 +131,7 @@ void	throw_error(int error, char *file, int *exitt)
 		printfd(2, M": syntax error near unexpected token `%s'\n", file);
 	if (error == CMD_NOT_FOUND)
 	{
-		printfd(2, M": Command not found : %s\n", file);
+		printfd(2, "%s: command not found\n", file);
 		return (*exitt = 127, (void)file);
 	}
 	if (error == DIRECT)

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 02:58:34 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:22:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	validater(t_shell *vars)
 		ft_lstadd_back(&vars->args, create_node(token));
 		token = tokenizer(NULL, "'\"()|&<>");
 	}
-	if (!ft_check_red(vars))
+	if (!all_checks(vars))
 		return (FALSE);
 	ft_lstclear(&vars->args, free);
 	return (TRUE);
@@ -80,7 +80,7 @@ int	fill_args(t_shell *vars)
 		ft_lstadd_back(&vars->args, create_node(token));
 		token = tokenizer(NULL, "'\"()|&");
 	}
-	if (!ft_check(vars))
+	if (!nodejoin(vars))
 		return (FALSE);
 	vars->tmp = vars->args;
 	vars->ast = ast_builder(&vars->tmp);

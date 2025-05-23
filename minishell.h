@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 16:36:51 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 19:07:58 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,16 @@ void	ft_nullenv(t_shell *vars);
 void	ft_shlvl(t_shell *vars);
 
 /* Validation */
+int		all_checks(t_shell *vars);
 int		ft_check(t_shell *vars);
-int		ft_check_red(t_shell *vars);
 int		isvalid_par(t_shell *vars);
+int		isvalid_red(t_shell *vars);
 int		isvalid_op(t_shell *vars);
 int		is_op(char *str);
 int		is_par(char *str);
 int		isvalid_quotes(t_shell *vars);
 int		is_there_red(char *str);
+int		nodejoin(t_shell *vars);
 
 /* Processing */
 int		ft_nodejoin(t_shell *vars);
