@@ -50,7 +50,20 @@ but the reirection of the subshell is not working : (ls) > test #it is wokring i
 i fixed also the exit status all the built ins so the exit status is now perfectly working
 only the heredoc is left with the pipeline
 ```
-
+⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛
+⬛                                                                                                                ⬛
+⬛       ```bash                                                                                                  ⬛
+⬛       Introduced a global g_var pointer of type t_sig to track shell-wide exit_status and flag.                ⬛
+⬛                                                                                                                ⬛
+⬛       Moved its initialization to main() and added proper memory allocation with error handling.               ⬛
+⬛                                                                                                                ⬛
+⬛       Updated all relevant functions to use the new global exit_status via g_var.                              ⬛
+⬛                                                                                                                ⬛
+⬛       Implemented error handling when a redirection follows a subshell (e.g., (...) > file)                    ⬛
+⬛       ensuring correct parsing behavior and shell stability.                                                   ⬛
+⬛       ```                                                                                                      ⬛
+⬛                                                                                                                ⬛
+⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛
 ```bash
 ANOTHER IMPOSTANT ERROR : when we do Ctrl+C in bash while typing a command the exit status becomes equal to 130 hhhhhh
 for example: 
