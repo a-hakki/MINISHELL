@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 20:59:34 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 19:09:41 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	validater(t_shell *vars)
 		token = tokenizer(NULL, "'\"()|&<>");
 	}
 	if (!all_checks(vars))
+		return (FALSE);
+	if (process_heredocs(vars) == FALSE)
 		return (FALSE);
 	ft_lstclear(&vars->args, free);
 	return (TRUE);

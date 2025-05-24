@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 20:59:37 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:41:10 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_nodejoin(t_shell *vars)
 	t_list	*to_delete;
 	t_list	*tmp;
 
-	tmp	= vars->args;
+	tmp = vars->args;
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
@@ -38,16 +38,6 @@ int	ft_nodejoin(t_shell *vars)
 			tmp = tmp->next;
 	}
 	return (TRUE);
-}
-
-char	*ft_skip(char *str, char *set)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && ft_strchr(set, str[i]))
-		i++;
-	return (str + i);
 }
 
 int	isvalid_syntax(t_shell *vars)
@@ -126,15 +116,13 @@ int	all_checks(t_shell *vars)
 
 void	throw_error(int error, char *file, int *exitt)
 {
+	(void)exitt;
 	if (error == ENOENT)
 		printfd(2, M": %s: %s\n", file, strerror(ENOENT));
 	if (error == SYNTAX)
 		printfd(2, M": syntax error near unexpected token `%s'\n", file);
 	if (error == CMD_NOT_FOUND)
-	{
 		printfd(2, "%s: command not found\n", file);
-		return (*exitt = 127, (void)file);
-	}
 	if (error == DIRECT)
 		printfd(2, M": Cannot open current working directory\n");
 	if (error == REDIR)

@@ -47,6 +47,8 @@ SOURCES = \
 		new/ft_lstinsert.c \
 		new/ft_arr2str.c \
 		new/ft_strextract.c \
+		new/ft_isspace.c \
+		new/ft_strpbrk.c \
 		\
 		\
 		1.base/ft_isalnum.c \
