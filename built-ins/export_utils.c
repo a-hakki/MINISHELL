@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:14:29 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 18:46:31 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 13:42:07 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ void	append_value(char *v, char *av, t_shell *vars)
 			ft_free("11", old_val, tmp->content);
 			tmp->content = ft_strjoin(v, "=");
 			tmp->content = ft_strjoin_f(tmp->content, appended, 1);
-			return ((void)ft_free("11", appended, v));
+			return ((void)ft_free("1", appended));
 		}
 		tmp = tmp->next;
 	}
 	new_val = av + ft_strlen(v) + 2;
 	appended = ft_strjoin_f(ft_strjoin(v, "="), new_val, 1);
-	ft_lstadd_back(&vars->env, ft_lstnew(appended));
-	free(v);
+	ft_lstadd_back(&vars->env, alloc(0, ft_lstnew(appended), 0));
 }

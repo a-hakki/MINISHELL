@@ -1,6 +1,6 @@
 NAME := minishell
 CC := cc
-CFLAGS := -g -Wall -Wextra -Werror
+CFLAGS := -g -Wall -Wextra -Werror 
 LIB_DIR := ./libft
 lib = $(LIB_DIR)/libft.a
 
@@ -18,6 +18,8 @@ sources = \
 		parsing/shlvl.c \
 		parsing/ft_red_check.c \
 		parsing/process_heredocs.c \
+		parsing/alloc.c \
+		parsing/arr_utils.c \
 		\
 		\
 		execution/execution.c \
