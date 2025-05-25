@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 16:53:24 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/25 17:03:35 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	fill_heredoc(t_shell *vars, t_redir **r)
 		signal(SIGINT, foo);
 		if(WIFEXITED(status) && WEXITSTATUS(status) == 130)
 			*r = NULL;
-		g_var->exit_status = status;
+		g_var->exit_status =  WEXITSTATUS(status);
 	}
 }
 
