@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/26 17:00:30 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/26 17:11:16 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	update_env(char **env, char *key, char *nv, t_shell *vars)
 	{
 		if (!ft_strncmp(env[i], key, ft_strlen(key)))
 		{
-			free(env[i]);
-			env[i] = ft_strjoin(key, nv);
+			env[i] = alloc(0, ft_strjoin(key, nv), 0);
 			return ;
 		}
 		i++;

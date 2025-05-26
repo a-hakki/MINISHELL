@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 23:50:32 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:53:13 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	expand_target(t_shell *vars, char **str)
 	if (!arr || (ft_arrlen(arr) != 1 && *arr))
 		return (g_var->exit_status = 1,	\
 		throw_error(REDIR, original, NULL), FALSE);
+	*str = *arr;
 	return (TRUE);
 }
 
@@ -72,7 +73,7 @@ int	apply_redirections(t_shell *vars)
 			return (-1);
 		if (open_file(r, &expanded) == FALSE)
 		{
-			g_var->exit_status = errno;
+			g_var->exit_status = 1;
 			// close all open fds
 			return (-1);
 		}

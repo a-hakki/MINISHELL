@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 14:48:28 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/26 18:54:35 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 		is_builtin = check_builts((*ast)->arr, vars, 0);
 		if (is_builtin == -1)
-			return (FALSE);
+			return (skip(ast, AND), is_builtin);
+		if (is_builtin == -2)
+			return (is_builtin);
 		return (skip(ast, is_builtin), TRUE);
 	}
 	else if (flag == 1)
@@ -63,7 +65,8 @@ int	open_files(t_shell *vars)
 
 int	checks(t_shell *vars, t_list **ast, char **cmd)
 {
-	if (process_cmd(vars, ast, 0) == TRUE)
+	int i = process_cmd(vars, ast, 0);
+	if (i == TRUE || i == -1)
 		return (g_var->exit_status);
 	if (!*(char *)(*ast)->content)
 	{
