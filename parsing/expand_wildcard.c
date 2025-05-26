@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 00:42:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 23:47:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,15 @@ int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 	if (bords[0] - 1 <= 0)
 		*new = NULL;
 	if (arr)
-		pattern = ft_arr2str(arr, ' ');
+		pattern = alloc(0, ft_arr2str(arr, ' '), 0);
 	else
-		pattern = ft_substr(str, bords[0], bords[1] - bords[0]);
-	ft_lstadd_back(new, ft_str_to_lst(alloc(0, pattern, 0), 1));
+		pattern = alloc(0, ft_substr(str, bords[0], bords[1] - bords[0]), 0);
+	if (!*new)
+		pattern = old_removequotes(pattern);
+	else
+		pattern = removequotes(pattern, *new);
 	diff = bords[1] - index;
-	return (diff);
+	return (ft_lstadd_back(new, ft_str_to_lst(pattern, 1)), diff);
 }
 
 int	canbexpanded(char *str, int i)
