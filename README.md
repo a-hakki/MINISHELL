@@ -79,5 +79,7 @@ howa la rah khassak tskippi && fwahda fihom o || flokha
 o error akhor dyal permission deny o no such file or directory
 permission makanch l error dyalha shih o tal exit makanch l9itak ga3 makanti mhandlihom
 o dyla no such file or directory makanch l exit dyalha shih
-
+++++++++++++++++
+ghadit leak o double free li kan 3ndi f strjoin o strjoin_f
+dakchi kamal 9adito +++ hawal tb9a test ay haja b valgrind so we can found leak 
 ```
