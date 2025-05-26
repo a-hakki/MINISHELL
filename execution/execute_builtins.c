@@ -24,15 +24,15 @@ int	execute_builtins(t_shell *vars, t_fct *fct, char **arr)
 	if (in == -1 || out == -1)
 		return (perror("dup"), FALSE);
 	if (apply_redirections(vars) == -1)
-		return (-1);
+		return (INVALID_BUILT);
 	exit = fct(ft_arrlen(arr), arr, vars);
-	dup2(in, STDIN);
-	dup2(out, STDOUT);
-	if (in == -1 || out == -1)
+	if (dup2(in, STDIN) == -1 || dup2(out, STDOUT) == -1)
 		return (perror("dup2"), FALSE);
 	close(in);
 	close(out);
-	return (exit);
+	if (exit != EXIT_SUCCESS)
+		return (INVALID_BUILT);
+	return (VALID_BUILT);
 }
 
 int	check_builts(char **arr, t_shell *vars, int i)
@@ -61,5 +61,5 @@ int	check_builts(char **arr, t_shell *vars, int i)
 		i++;
 	if (i != 7 && arr)
 		return (execute_builtins(vars, fcts[i], arr));
-	return (-2);
+	return (NOT_BUILT);
 }
