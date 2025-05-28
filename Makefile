@@ -20,11 +20,13 @@ sources = \
 		parsing/process_heredocs.c \
 		parsing/alloc.c \
 		parsing/arr_utils.c \
+		parsing/custom_split.c \
 		\
 		\
 		execution/execution.c \
 		execution/get_path.c \
 		execution/pipeline.c \
+		execution/pipeline_utils.c \
 		execution/ast_traversal.c \
 		execution/redirections.c \
 		execution/apply_redirections.c \

@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 23:53:21 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:23:22 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 
 # define M "Minishell"
 # define MAX_MATCHES 1024
+# define IN 0
+# define OUT 1
 
 /* **************************************** */
 /*                 ENUMS                    */
@@ -46,6 +48,7 @@ typedef enum error
 	VALID_BUILT,
 	INVALID_BUILT,
 	NOT_BUILT,
+	EOOF,
 
 }			t_error;
 
@@ -66,17 +69,28 @@ typedef enum type
 /*             STRUCTURES                   */
 /* **************************************** */
 
+typedef struct s_pipeline
+{
+	int					type;
+	char				*cmd;
+	t_list				*sub;
+}						t_pipeline;
+
+typedef struct s_stream
+{
+	int	read;
+	int	write;
+}		t_stream;
+
 typedef struct s_pipe
 {
-	int		*fdo;
-	int		*fdi;
-	pid_t	pid1;
-	pid_t	pid2;
-	char	*path1;
-	char	*path2;
-	char	**args;
-	int		pipefd[2];
-}			t_pip;
+	t_list		*pipeline;
+	int			size;
+	int			pos;
+	int			exit_status;
+	pid_t		last_pid;
+	t_stream	*stream_line;
+}				t_pipe;
 
 typedef struct s_redir
 {
@@ -123,6 +137,7 @@ typedef struct s_err
 typedef struct s_shell
 {
 	int			exit;
+	int			bash_line_counter;
 	char		**envp;
 	char		*cmd;
 	char		*cmd_not_found;
@@ -166,6 +181,7 @@ int		isvalid_quotes(t_shell *vars);
 int		is_there_red(char *str);
 int		is_word(char *str);
 int		nodejoin(t_shell *vars);
+char	**_ft_split(char const *s, char b);
 
 /* Processing */
 int		ft_nodejoin(t_shell *vars);
@@ -205,7 +221,7 @@ char	*ft_strjoin_f(char *s1, char *s2, int free_s);
 void	ft_printexport(t_shell	*vars);
 void	append_value(char *v, char *av, t_shell *vars);
 int		check_builts(char **arr, t_shell *vars, int i);
-
+int		is_built(char **arr, t_shell *vars);
 /*---------------------------- execution ----------------------------*/
 
 int		pipex(t_shell *vars, t_list **node);
@@ -218,6 +234,25 @@ int		execute_cmd(t_shell *vars, t_list **ast);
 int		check_builts(char **arr, t_shell *vars, int i);
 void	extract_redirections(t_shell *vars, char **original);
 int		apply_redirections(t_shell *vars);
+int		checks(t_shell *vars, t_list **ast, char **cmd);
+int		process_cmd(t_shell *vars, t_list **ast, int flag);
+int		open_files(t_shell *vars);
+
+/*---------------------------- pipeline ----------------------------*/
+
+int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i);
+int	pipex(t_shell *vars, t_list **ast);
+pid_t	execute_pipe(t_shell *vars, t_pipe *pipe, int index);
+void	stream2io(t_stream *stream);
+void	shut_stream(t_stream *curr_stream);
+void	connect_pipe(t_stream *curr_stream);
+t_stream	*streams_init(int pipeline_len);
+int	exit_execve(char *cmd, t_shell *vars, t_list **ast);
+int	wait_child_processes(t_pipe *pipe);
+t_pipe	create_pipeline(t_list **ast);
+int	check_built(char **arr, t_shell *vars);
+
+/*---------------------------- allocations ----------------------------*/
 
 void	*alloc(size_t n, void *content, char c);
 char	**ft_arrdup(char **arr);
@@ -225,4 +260,5 @@ t_list	*ft_arr2list(char **arr);
 char	**ft_list2arr(t_list *lst);
 void	clear(int sig);
 void	foo(int sig);
+
 #endif

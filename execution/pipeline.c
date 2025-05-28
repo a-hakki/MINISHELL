@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 17:04:46 by ahakki           ###   ########.fr       */
+/*   Created: 2025/05/27 09:42:43 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/05/28 13:35:44 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,188 +15,124 @@
 int	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 {
 	(void)vars;
-	throw_error(CMD_NOT_FOUND, cmd, &g_var->exit_status);
+	g_var->exit_status = 127;
+	throw_error(CMD_NOT_FOUND, cmd, NULL);
 	skip(ast, AND);
 	return (errno);
 }
 
-int		exit_execves(char *cmd, t_shell *vars);
-t_list	*extract_pipeline(t_list **node);
-void	execute_pipeline(t_shell *vars, t_list *node);
-int		pipex(t_shell *vars, t_list **node);
-void	redirect(int pipefd[2]);
-int		parent(t_shell *vars, t_list *node);
-int		process_cmmd(t_shell *vars, t_list *node);
-int		open_files(t_shell *vars);
-int		check_cmd(t_shell *vars, t_list *node, char **cmd);
-int		execute_pipe(t_shell *vars, t_list *node);
-
-
-int	exit_execves(char *cmd, t_shell *vars)
+void	connect_pipe(t_stream *curr_stream)
 {
-	(void)vars;
-	throw_error(CMD_NOT_FOUND, cmd, &g_var->exit_status);
-	return (errno);
+	int	pipefd[2];
+
+	if (pipe(pipefd) == -1)
+		perror("pipe");
+	curr_stream->write = pipefd[OUT];
+	(curr_stream + 1)->read = pipefd[IN];
 }
 
-t_list	*extract_pipeline(t_list **node)
+void	shut_stream(t_stream *curr_stream)
 {
-	t_list	*pipeline;
-	t_list	*tmp;
-
-	pipeline = NULL;
-	tmp = *node;
-	while (tmp)
+	if (curr_stream->read > 0)
 	{
-		if (tmp->type == CMD && tmp->next && tmp->next->type == PIPE)
-		{
-			ft_lstadd_back(&pipeline, create_node(alloc(0, ft_strdup(tmp->content), 0)));
-			tmp = tmp->next;
-		}
-		else if (tmp->type == CMD)
-			ft_lstadd_back(&pipeline, create_node(alloc(0, ft_strdup(tmp->content), 0)));
-		else
-			break ;
-		tmp = tmp->next;
+		close(curr_stream->read);
+		curr_stream->read = -1;
 	}
-	return (pipeline);
+	if (curr_stream->write >= 0 && curr_stream->write != STDOUT)
+	{
+		close(curr_stream->write);
+		curr_stream->write = -1;
+	}
 }
 
-int	pipex(t_shell *vars, t_list **node)
+void	stream2io(t_stream *stream)
 {
-	t_list	*pipeline;
+	if (stream->read != -1 && stream->read != STDIN_FILENO)
+	{
+		dup2(stream->read, STDIN_FILENO);
+		close(stream->read);
+	}
 
-	(void)vars;
-	pipeline = extract_pipeline(node);
-	execute_pipeline(vars, pipeline);
-	traverse_sub(vars, node);
-	return (1);
+	if (stream->write != -1 && stream->write != STDOUT_FILENO)
+	{
+		dup2(stream->write, STDOUT_FILENO);
+		close(stream->write);
+	}
 }
-
-// void	redirect(int pipefd[2], int *fd)
-// {
-// 	if (*fd != -1)
-// 		close(*fd);
-// 	*fd = -1;
-// 	close(pipefd[OUT]);
-// 	if (dup2(pipefd[IN], STDIN) == -1)
-// 		perror("dup2");
-// 	close(pipefd[IN]);
-// 	//signals
-// }
-
-// int	parent(t_shell *vars, t_list *node)
-// {
-// 	char	*cmd;
-// 	pid_t pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		if (check_cmd(vars, node, &cmd) != -1)
-// 			return (g_var->exit_status);
-// 		signal(SIGINT, SIG_IGN);
-// 		if (apply_redirections(vars) == -1)
-// 			clear(0);
-// 		execve(cmd, node->arr, vars->envp);
-// 		g_var->exit_status = exit_execves(cmd, vars);
-// 		clear(0);
-// 		signal(SIGINT, foo);
-// 	}
-// 	return (g_var->exit_status);
-// }
-
-void	execute_pipeline(t_shell *vars, t_list *node)
+		
+int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 {
-	// int		pipefd[2];
-	// pid_t	pid;
-	// int 	prev_fd = -1;
-
-	// while (node && node->next && node->next->next)
-	// {
-	// 	if (pipe(pipefd) == -1)
-	// 		return (perror("pipe"));
-	// 	pid = fork();
-	// 	if (pid == 0)
-	// 	{
-	// 		if (prev_fd != -1)
-    //         {
-    //             dup2(prev_fd, STDIN_FILENO);
-    //             close(prev_fd);
-    //         }
-	// 		close(pipefd[IN]);
-	// 		if (dup2(pipefd[OUT], STDOUT) == -1)
-	// 			return (perror("dup2"));
-	// 		close(pipefd[OUT]);
-	// 		execute_pipe(vars, node);
-	// 		exit(exit_execves(node->content, vars));
-	// 	}
-	// 	else
-	// 	{
-	// 		if (prev_fd != -1)
-	// 			close(prev_fd);
-	// 		if (node->next && node->next->type == PIPE)
-	// 		{
-	// 			close(pipefd[1]);
-	// 			prev_fd = pipefd[0];
-	// 		}
-	// 		else
-	// 			prev_fd = -1;
-	// 		if (node->next && node->next->type == PIPE)
-	// 			node = node->next->next;
-	// 		else
-	// 			node = NULL;
-	// 	}
-	// }
-	execute_cmd(vars, &node);
-}
-
-int	process_cmmd(t_shell *vars, t_list *node)
-{
-	int	is_builtin;
-
-	node->raw = ft_strdup(node->content);
-	alloc(0, node->raw, 0);
-	extract_redirections(vars, (char **)&(node->content));
-	expand(vars, (char **)&(node->content), &(node->arr));
-	is_builtin = check_builts(node->arr, vars, 0);
-	if (is_builtin == -1)
-		return (FALSE);
-	return (TRUE);
-}
-
-int	check_cmd(t_shell *vars, t_list *node, char **cmd)
-{
-	if (process_cmmd(vars, node) == TRUE)
-		return (g_var->exit_status);
-	if (!*(char *)node->content)
+	t_list	*node;
+	char	*cmd;
+	
+	cmd = "";
+	node = ft_lstgetnode(pipe.pipeline, i);
+	if (node->type == SUBSHELL)
+		return (execution(vars, &node->child));
+	node->raw = alloc(0, ft_strdup(node->content), 0);
+	extract_redirections(vars, (char **)&node->content);
+	expand(vars, (char **)&node->content, &node->arr);
+	if (!*(char *)node->content && ft_strpbrk(node->raw, "'\""))
 	{
 		if (open_files(vars) == FALSE)
-			return (g_var->exit_status);
-		g_var->exit_status = 0;
-		return (g_var->exit_status);
+			return (1);
+		return (g_var->exit_status = 0, 0);
 	}
-	else
-		*cmd = alloc(0, get_path(node->arr[0], vars), 0);
-	if (!*cmd)
+	else if (!is_built(node->arr, vars))
+		cmd = alloc(0, get_path(node->arr[0], vars), 0);
+	if (!cmd)
 	{
 		if (open_files(vars) == FALSE)
-			return (g_var->exit_status);
+			return (1);
 		throw_error(vars->err.errn, vars->err.str, NULL);
-		return (g_var->exit_status);
+		return (g_var->exit_status = 0, 0);
 	}
+	if (apply_redirections(vars) == -1)
+		return (1);
+	if (check_built(node->arr, vars) != NOT_BUILT)
+		clear(0);
+	execve(cmd, node->arr, vars->envp);
+	g_var->exit_status = 127;
+	clear(0);
 	return (-1);
 }
 
-int	execute_pipe(t_shell *vars, t_list *node)
+pid_t	execute_pipe(t_shell *vars, t_pipe *pipe, int index)
 {
-	char	*cmd;
+	pid_t	pid;
 
-	if (check_cmd(vars, node, &cmd) != -1)
-		return (g_var->exit_status);
-	signal(SIGINT, SIG_DFL);
-	if (apply_redirections(vars) == -1)
-		clear(0);
-	execve(cmd, node->arr, vars->envp);
-	g_var->exit_status = exit_execves(cmd, vars);
+	pid = fork();
+	if (pid < 0)
+		return (perror("fork"), -1);
+	else if (pid > 0)
+	{
+		signal(SIGINT, SIG_IGN);
+		if (index == pipe->size - 1)
+			signal(SIGINT, foo);
+		return (pid);
+	}
+	signal(SIGINT, clear);
+	stream2io(&pipe->stream_line[index]);
+	if (index != pipe->size - 1)
+		shut_stream(&pipe->stream_line[index + 1]);
+	g_var->exit_status = execute_cmd_pipe(vars, *pipe, index);
 	clear(0);
-	return (g_var->exit_status);
+	return (-1);
+}
+
+int	pipex(t_shell *vars, t_list **ast)
+{
+	t_pipe	pipe;
+
+	pipe = create_pipeline(ast);
+	while (pipe.pos < pipe.size)
+	{
+		if (pipe.pos < pipe.size - 1)
+			connect_pipe(&pipe.stream_line[pipe.pos]);
+		pipe.last_pid = execute_pipe(vars, &pipe, pipe.pos);
+		shut_stream(&pipe.stream_line[pipe.pos++]);
+	}
+	pipe.exit_status = wait_child_processes(&pipe);
+	skip(ast, (pipe.exit_status != 0));
+	return (pipe.exit_status);
 }

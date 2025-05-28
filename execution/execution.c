@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 22:19:26 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/28 13:33:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,11 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 
 	if (flag == 0)
 	{
-		(*ast)->raw = ft_strdup((*ast)->content);
-		alloc(0, (*ast)->raw, 0);
 		extract_redirections(vars, (char **)&((*ast)->content));
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 		is_builtin = check_builts((*ast)->arr, vars, 0);
-		if (is_builtin == INVALID_BUILT)
-			return (skip(ast, AND), is_builtin);
-		if (is_builtin == VALID_BUILT)
-			return (skip(ast, OR), is_builtin);
+		if (is_builtin == INVALID_BUILT || is_builtin == VALID_BUILT)
+			return (skip(ast, is_builtin / 2), is_builtin);
 		if (is_builtin == NOT_BUILT)
 			return (is_builtin);
 	}
@@ -66,8 +62,10 @@ int	open_files(t_shell *vars)
 
 int	checks(t_shell *vars, t_list **ast, char **cmd)
 {
-	int i = process_cmd(vars, ast, 0);
-	if (i == VALID_BUILT || i == INVALID_BUILT)
+	int is_valid;
+
+	is_valid = process_cmd(vars, ast, 0);
+	if (is_valid == VALID_BUILT || is_valid == INVALID_BUILT)
 		return (g_var->exit_status);
 	if (!*(char *)(*ast)->content)
 	{
@@ -134,16 +132,11 @@ int	execution(t_shell *vars, t_list **ast)
 			g_var->exit_status = execute_cmd(vars, node);
 		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL)
 			&& (*node)->next && (*node)->next->type == PIPE)
-		{
 			g_var->exit_status = pipex(vars, node);
-			traverse_sub(vars, node);
-			continue ;
-		}
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
 			g_var->exit_status = execution(vars, &(*node)->child);
 			traverse_sub(vars, node);
-			continue ;
 		}
 		else
 			(*node) = (*node)->next;
