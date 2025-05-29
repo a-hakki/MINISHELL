@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 17:29:25 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 18:06:00 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ void		ft_printexport(t_shell	*vars);
 void		append_value(char *v, char *av, t_shell *vars);
 int			check_builts(char **arr, t_shell *vars, int i);
 int			is_built(char **arr, t_shell *vars);
+int			ft_isvn(char *v, int flag, t_shell *vars);
 
 /*---------------------------- EXECUTION ----------------------------*/
 

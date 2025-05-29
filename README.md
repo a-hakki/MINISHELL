@@ -54,13 +54,6 @@ gcl https://github.com/LucasKuhn/minishell_tester.git
 
 export a=a
 unset a=a
-aelsayed@c3r10p10:~/Desktop/minishell$ echo *in*****
-built-ins *main main main.c main.o minishell minishell.h parsing readline.supp
-aelsayed@c3r10p10:~/Desktop/minishell$ echo *ins*****
-built-ins
-aelsayed@c3r10p10:~/Desktop/minishell$ echo .*
-. .. .git .vscode
-
 
 ```bash
 minishell$ echo * *  *
