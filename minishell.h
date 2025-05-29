@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 22:51:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:29:25 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ typedef struct s_pipeline
 	char				*cmd;
 	t_list				*sub;
 }						t_pipeline;
+
+typedef struct s_wildcard
+{
+	DIR				*dir;
+	struct dirent	*entry;
+	char			**matches;
+	int				count;
+	char			*tmp;
+}					t_wc;
 
 typedef struct s_stream
 {
