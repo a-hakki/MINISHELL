@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/29 17:46:19 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:59:47 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,11 @@ char	**wildcard(char *pattern)
 	wc.entry = readdir(wc.dir);
 	while (wc.entry)
 	{
-		if (wc.entry->d_name[0] != '.' && match_pattern(wc.tmp, wc.entry->d_name))
+		if (match_pattern(wc.tmp, wc.entry->d_name))
 		{
-			if (wc.count < MAX_MATCHES)
-				wc.matches[wc.count++] = alloc(0, ft_strdup(wc.entry->d_name), 0);
-			else
-				break ;
+			if (wc.entry->d_name[0] != '.' || (*pattern == '.' && wc.entry->d_name[0] == '.'))
+				wc.matches[wc.count++] = alloc(0, \
+					ft_strdup(wc.entry->d_name), 0);
 		}
 		wc.entry = readdir(wc.dir);
 	}

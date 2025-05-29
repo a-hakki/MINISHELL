@@ -61,22 +61,6 @@ built-ins
 aelsayed@c3r10p10:~/Desktop/minishell$ echo .*
 . .. .git .vscode
 
-minishell$ echo *ins*
-built-ins
-minishell$ echo *ins***********
-*ins***********
-minishell$ echo *ins**
-*ins**
-minishell$ echo *ins*
-built-ins
-minishell$ echo *ins****
-*ins****
-minishell$ echo *ins*
-built-ins
-minishell$ echo *in****
-built-ins main.c minishell.h parsing readline.supp main.o minishell
-minishell$ echo *ins*
-built-ins
 
 ```bash
 minishell$ echo * *  *
