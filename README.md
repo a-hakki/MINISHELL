@@ -39,7 +39,6 @@ redirections errors should be displayed before  command not found
 
 ## READ THAT
 ```bash
-
     after bzaf dyal lhandlage
     l9it l heardoc kan fih mochkil bdok WIFE macros so mchi tankharba9 ana o mos3ab ta l9ina fihom lmockil l9ina lhall
     daba we need to understand chno tidiro dok lmacros
@@ -47,61 +46,64 @@ redirections errors should be displayed before  command not found
 ```
 
 ```bash
-but the reirection of the subshell is not working : (ls) > test #it is wokring in bash#
-we have an error in shlvl i guess when env -i
-when we have a yes command like  then we do Ctrl+C the exit status is wrong and the minishell is wrongly placed
 little problem in makefile when we change in libft and make it says all done
 pwd exit status
 ```
 
-```bash
-mnin hatb9a testi l wildcard f minishell hatl9a bzf dial leaks BZZAAAAAAAAAAAAAF
-we have a problem exaclty withe thie file of expand wilcard and wildacrd.c
-i fixed one error for thw wildcard when it is at the begining of the string 
-like 
-minishell$ M*
-it gives me MMakefile instead of Makefile cuz the first one is not removed
-```
-
-```c
-if (line == NULL)
-{
-	printf(WARN_HEREDOC_DELIM" (wanted `%s')\n", delimiter);
-    break ;
-}
-```
 gcl https://github.com/LucasKuhn/minishell_tester.git
 
-```bash
-l9itak tatskibbi && mnni tatkon INVALID_BUILT || VALID_BUILT li yallah ztti
-tatskippi fiha &&
-howa la rah khassak tskippi && fwahda fihom o || flokha
-o error akhor dyal permission deny o no such file or directory
-permission makanch l error dyalha shih o tal exit makanch l9itak ga3 makanti mhandlihom
-o dyla no such file or directory makanch l exit dyalha shih
-++++++++++++++++
-ghadit leak o double free li kan 3ndi f strjoin o strjoin_f
-dakchi kamal 9adito +++ hawal tb9a test ay haja b valgrind so we can found leak 
-```
-```bash
-we have an error in validating syntax
-(ls && ls | grep a) | cat -e | ( | cat) | wc -l
-minishell$ (ls && ls | grep a) | cat -e | ( |& cat) | wc -l
-Minishell: syntax error near unexpected token `&'
-minishell$ (ls && ls | grep a) | cat -e | ( & cat) | wc -l
-Minishell: syntax error near unexpected token `newline'
-minishell$ (ls && ls | grep a) | cat -e | ( && cat) | wc -l
+export a=a
+unset a=a
+aelsayed@c3r10p10:~/Desktop/minishell$ echo *in*****
+built-ins *main main main.c main.o minishell minishell.h parsing readline.supp
+aelsayed@c3r10p10:~/Desktop/minishell$ echo *ins*****
+built-ins
+aelsayed@c3r10p10:~/Desktop/minishell$ echo .*
+. .. .git .vscode
 
-```
+minishell$ echo *ins*
+built-ins
+minishell$ echo *ins***********
+*ins***********
+minishell$ echo *ins**
+*ins**
+minishell$ echo *ins*
+built-ins
+minishell$ echo *ins****
+*ins****
+minishell$ echo *ins*
+built-ins
+minishell$ echo *in****
+built-ins main.c minishell.h parsing readline.supp main.o minishell
+minishell$ echo *ins*
+built-ins
+
 ```bash
-minishell$ (|ls
-Minishell: syntax error near unexpected token `newline'
-minishell$ (|ls)
-built-ins  garbage  main.c  Makefile   minishell.h  readline.supp  testcases
-execution  libft    main.o  minishell  parsing	    README.md	   test.sh
-minishell$ (ls|)
-Minishell: syntax error near unexpected token `)'
+minishell$ echo * *  *
+MaMaMakefile README.md built-ins execution garbage libft main.c minishell.h parsing readline.supp test.sh testcases main.o *m *main a aa main minishell
 minishell$ 
-free(): double free detected in tcache 2
-[1]    1571024 IOT instruction (core dumped)  ./minishell
+minishell$ * ls *
+MakefMakefile: command not found
+minishell$ * * * 
+MaMaMakefile: command not found
+minishell$ * das
+Makefile: command not found
+minishell$ * da *
+MakefMakefile: command not found
+minishell$ * da * * *  * * *
+MakefMaMaMaMaMaMakefile: command not found
+minishell$ * da * * *  * * * 
+```
+
+```bash
+minishell$ $123asdasd
+$123asdasd: command not found
+minishell$ $asdsd
+minishell$ $asd
+minishell$ 
+check exit_ status of builts
+<< heredoc exit when find delim
+minishell$ << $''a
+> 
+
 ```

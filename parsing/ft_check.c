@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 14:10:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:34:25 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-// i found leaks here too in node join
+
 int	ft_nodejoin(t_shell *vars)
 {
 	char	*new_content;
@@ -22,7 +22,8 @@ int	ft_nodejoin(t_shell *vars)
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
-		if (is_word(tmp_content) && is_word((char *)tmp->next->content))
+		if (is_red(tmp_content, 'w') && \
+			is_red((char *)tmp->next->content, 'w'))
 		{
 			new_content = alloc(0, ft_strjoin(tmp_content, \
 				(char *)tmp->next->content), 0);
@@ -48,8 +49,7 @@ int	isvalid_syntax(t_shell *vars)
 	{
 		c = (char *)tmp->content;
 		if (tmp->next)
-			n = alloc(0, ft_strtrim(alloc(0, \
-				tokenizer((char *)tmp->next->content, "<>"), 0), WHITE), 0);
+			n = alloc(0, ft_strtrim((char *)tmp->next->content, WHITE), 0);
 		if (is_par(c) && tmp->next && is_par(n) && *c != *n)
 			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (!is_par(c) && !is_op(c) && tmp->next && is_par(n) && *n == '(')
@@ -58,6 +58,8 @@ int	isvalid_syntax(t_shell *vars)
 			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && \
 			!is_par(n) && !is_there_red(n))
+			return (throw_error(SYNTAX, n, NULL), FALSE);
+		if (is_par(c) && *c == '(' && tmp->next && is_op(n))
 			return (throw_error(SYNTAX, n, NULL), FALSE);
 		tmp = tmp->next;
 	}
@@ -111,7 +113,7 @@ void	throw_error(int error, char *file, int *exitt)
 {
 	if (error == EOOF)
 		printfd(1, M": warning: here-document at line \
-			%d delimited by end-of-file (wanted `%s')\n	", *exitt, file);
+			%d delimited by end-of-file (wanted `%s')\n", *exitt, file);
 	if (error == ENOENT || error == EACCES)
 		printfd(2, M": %s: %s\n", file, strerror(error));
 	if (error == SYNTAX)
