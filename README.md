@@ -52,25 +52,6 @@ pwd exit status
 
 gcl https://github.com/LucasKuhn/minishell_tester.git
 
-export a=a
-unset a=a
-
-```bash
-minishell$ echo * *  *
-MaMaMakefile README.md built-ins execution garbage libft main.c minishell.h parsing readline.supp test.sh testcases main.o *m *main a aa main minishell
-minishell$ 
-minishell$ * ls *
-MakefMakefile: command not found
-minishell$ * * * 
-MaMaMakefile: command not found
-minishell$ * das
-Makefile: command not found
-minishell$ * da *
-MakefMakefile: command not found
-minishell$ * da * * *  * * *
-MakefMaMaMaMaMaMakefile: command not found
-minishell$ * da * * *  * * * 
-```
 
 ```bash
 minishell$ $123asdasd
