@@ -27,22 +27,9 @@
 ⬛🟥⬛⬛🟥⬛🟥🟥🟥🟥⬛🟥🟥🟥⬛⬛🟥⬛🟥⬛⬛🟥⬛🟥🟥🟥🟥⬛🟥🟥🟥🟥⬛🟥⬛⬛⬛🟥⬛⬛⬛🟥⬛⬛🟥🟥🟥⬛⬛🟥⬛⬛🟥🟥⬛
 ⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛
 
-mzl machft wach kayn khtilaf f redirect b nsba l pipeline wla subshell
-```
 ```bash
 we should not forget about splitting with the white spaces not only with the space
 redirections errors should be displayed before  command not found
-```
-    
-### all this has been handled 
-
-
-## READ THAT
-```bash
-    after bzaf dyal lhandlage
-    l9it l heardoc kan fih mochkil bdok WIFE macros so mchi tankharba9 ana o mos3ab ta l9ina fihom lmockil l9ina lhall
-    daba we need to understand chno tidiro dok lmacros
-    o 9alliya daba rah dak lhal li l9ina ana wyyah blli rah ghi dyal lplastic ya3ni temp so as I said khassna ntistiw bzaf
 ```
 
 ```bash
@@ -64,4 +51,43 @@ check exit_ status of builts
 minishell$ << $''a
 > 
 
+```
+```bash
+minishell$ (cat | wc -l )|grep a > p | ls
+built-ins  execution  garbage  libft  main.c  Makefile	minishell  minishell.h	p  parsing  readline.supp  README.md  testcases  test.sh
+^Cminishell$ (cat | wc -l )|grep a > p | ls
+```
+
+```bash
+minishell$ bash
+aelsayed@c3r9p1:~/Desktop/minishel$ << e"f" | asdd aSD|ASD ASD}ASD| (ls << e"  "f-l ) << e""""""""''f
+> 
+bash: warning: here-document at line 1 delimited by end-of-file (wanted `ef')
+> 
+bash: warning: here-document at line 1 delimited by end-of-file (wanted `e  f-l')
+> 
+bash: warning: here-document at line 1 delimited by end-of-file (wanted `ef')
+built-ins  execution  libft  main.c  Makefile  minishell  minishell.h  parsing	readline.supp  README.md  testcases  test.sh
+ASD: command not found
+Command 'asdd' not found, did you mean:
+  command 'ssdd' from deb rt-tests (2.2-1)
+  command 'wsdd' from deb wsdd (2:0.7.0-1)
+  command 'ascd' from deb ascd (0.13.2-7)
+Try: apt install <deb name>
+aelsayed@c3r9p1:~/Desktop/minishel$ make
+./m	Minishell Compiled Successfully! ✅
+aelsayed@c3r9p1:~/Desktop/minishel$ ./minishell 
+minishell$ << e"f" | asdd aSD|ASD ASD}ASD| (ls << e"  "f'-l ) << e""""""""''f
+Minishell: syntax error near unexpected token `newline'
+minishell$ << e"f" | asdd aSD|ASD ASD}ASD| (ls << e"  "f-l ) << e""""""""''f
+> 
+Minishell: warning: here-document at line 2 delimited by end-of-file (wanted `ef')
+> 
+Minishell: warning: here-document at line 2 delimited by end-of-file (wanted `e  f-l')
+> 
+Minishell: warning: here-document at line 2 delimited by end-of-file (wanted `ef')
+asdd: command not found
+ASD: command not found
+/tmp/minishell0: No such file or directory
+minishell$ 
 ```

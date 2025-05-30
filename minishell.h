@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 18:06:00 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/30 15:50:49 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ typedef struct s_pipe
 	t_list		*pipeline;
 	int			size;
 	int			pos;
-	int			exit_status;
 	pid_t		last_pid;
 	t_stream	*stream_line;
 }				t_pipe;
@@ -220,6 +219,7 @@ int			extract_var_value(t_shell *vars, t_list **s, char *str, int q);
 t_list		*breakdown(t_shell *vars, char *str);
 int			expand_target(t_shell *vars, char **str);
 t_list		*skip_nodes(t_list **head, t_list *node);
+char		*expand_heredoc_line(t_shell *vars, char **str);
 
 /*---------------------------- BUILTINS ----------------------------*/
 
@@ -237,11 +237,13 @@ void		append_value(char *v, char *av, t_shell *vars);
 int			check_builts(char **arr, t_shell *vars, int i);
 int			is_built(char **arr, t_shell *vars);
 int			ft_isvn(char *v, int flag, t_shell *vars);
+int			check_built(char **arr, t_shell *vars);
+int			is_built(char **arr, t_shell *vars);
 
 /*---------------------------- EXECUTION ----------------------------*/
 
 int			pipex(t_shell *vars, t_list **node);
-int			execution(t_shell *vars, t_list **ast, t_list **parent);
+int			execution(t_shell *vars, t_list **ast, t_list *parent);
 char		*get_path(char *cmd, t_shell *vars);
 int			exit_execve(char *cmd, t_shell *vars, t_list **ast);
 void		skip(t_list **node, int op);
@@ -275,6 +277,9 @@ int			exit_execve(char *cmd, t_shell *vars, t_list **ast);
 int			wait_child_processes(t_pipe *pipe);
 t_pipe		create_pipeline(t_list **ast);
 int			check_built(char **arr, t_shell *vars);
+void		connect_pipe(t_stream *curr_stream);
+void		stream2io(t_stream *stream);
+void		shut_stream(t_stream *curr_stream);
 
 /*---------------------------- ALLOCS ----------------------------*/
 

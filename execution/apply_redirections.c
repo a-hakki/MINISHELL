@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 15:52:14 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:51:54 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	expand_target(t_shell *vars, char **str)
 	*str = expand_wildcard(str, &lst);
 	arr = split_list(lst, ' ');
 	if (!arr || (ft_arrlen(arr) != 1 && *arr))
-		return (g_var->exit_status = 1,	\
+		return (g_var->exit_status = 1, \
 		throw_error(REDIR, original, NULL), FALSE);
 	*str = *arr;
 	return (TRUE);
@@ -61,12 +61,14 @@ int	open_file(t_redir *r, char **filename)
 
 void	perform_dups(int save_in, int save_out)
 {
-	int i;
+	int	i;
 
 	i = dup2(save_in, STDIN_FILENO);
 	i = dup2(save_out, STDOUT_FILENO);
-	close(save_in);
-	close(save_out);
+	if (save_in != -1)
+		close(save_in);
+	if (save_out != -1)
+		close(save_out);
 	if (i <= -1)
 		return (perror("dup2"));
 }
