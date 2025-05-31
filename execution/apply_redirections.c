@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 15:51:54 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/31 06:40:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	expand_target(t_shell *vars, char **str)
 	lst = breakdown(vars, *str);
 	*str = alloc(0, ft_lst2str(lst), 0);
 	*str = expand_wildcard(str, &lst);
-	arr = split_list(lst, ' ');
+	arr = split_list(lst, WHITE);
 	if (!arr || (ft_arrlen(arr) != 1 && *arr))
 		return (g_var->exit_status = 1, \
 		throw_error(REDIR, original, NULL), FALSE);
@@ -53,8 +53,6 @@ int	open_file(t_redir *r, char **filename)
 		dup = dup2(r->fd, STDOUT);
 	if (dup == -1)
 		return (perror("dup2"), close(r->fd), FALSE);
-	if (r->mode == HEREDOC)
-		unlink(r->target);
 	close(r->fd);
 	return (TRUE);
 }

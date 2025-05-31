@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 15:50:49 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/31 06:43:55 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_sig
 {
 	int		flag;
 	int		exit_status;
+	int		fst_cmd;
 }			t_sig;
 
 typedef struct s_check
@@ -140,6 +141,13 @@ typedef struct s_err
 	char	*str;
 }			t_err;
 
+typedef struct s_ast
+{
+	t_list	*node;
+	t_list	*sub;
+	char	*content;	
+}			t_ast;
+
 // Main shell structure
 typedef struct s_shell
 {
@@ -152,6 +160,7 @@ typedef struct s_shell
 	char		*cmd_not_found;
 	char		*pwd;
 	t_list		*heredoc;
+	t_list		*hd;
 	t_list		*env;
 	t_list		*args;
 	t_list		*tmp;
@@ -208,7 +217,7 @@ int			process_heredocs(t_shell *vars);
 t_redir		*get_heredoc_node(t_shell *vars);
 
 /* Expansion */
-char		**split_list(t_list *lst, char sep);
+char		**split_list(t_list *lst, char *sep);
 void		expand(t_shell *vars, char **str, char ***arr);
 char		**wildcard(char *pattern);
 int			append(t_list **s, char c, int type);
@@ -252,6 +261,7 @@ int			execute_cmd(t_shell *vars, t_list **ast);
 int			check_builts(char **arr, t_shell *vars, int i);
 int			checks(t_shell *vars, t_list **ast, char **cmd);
 int			process_cmd(t_shell *vars, t_list **ast, int flag);
+int			is_valid_pipex(t_list **node);
 
 /*---------------------------- REIRECTIONS ----------------------------*/
 
@@ -263,6 +273,7 @@ int			open_file(t_redir *r, char **filename);
 void		return_original_std(t_shell *vars);	
 int			*redirect_sub(t_shell *vars, t_list **ast, t_list *node);
 int			open_files(t_shell *vars);
+void		clean_heredoc(t_shell *vars);
 
 /*---------------------------- PIPELINE ----------------------------*/
 
